@@ -8,9 +8,9 @@ const App = () => {
     return (
         <div>
             <Button startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}>Whishlist</Button>
-            <Button variant="primary">Buy item</Button>
+            <Button color="primary">Buy item</Button>
             <Button variant="text">Buy item</Button>
-            <Button icon={<FavoriteFilledIcon color={theme.palette.primary.main} />} variant="icon" />
+            <Button variant="icon" color="primary" icon={<FavoriteFilledIcon color={theme.palette.primary.main} />} />
             <Typography variant="h1">The quick brown fox jumps over the lazy dog</Typography>
             <Typography variant="h2">The quick brown fox jumps over the lazy dog</Typography>
             <Typography variant="h3">The quick brown fox jumps over the lazy dog</Typography>
