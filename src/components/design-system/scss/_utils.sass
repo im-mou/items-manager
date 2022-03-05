@@ -1,0 +1,29 @@
+// Design system: Spacing
+
+// minimum spacing unit
+$spacing-unit: 4px
+
+@mixin spacing($property, $direction, $amount)
+    @if $direction == all
+        #{$property}: $spacing-unit * $amount
+    @if $direction == x
+        #{$property}-left: $spacing-unit * $amount
+        #{$property}-right: $spacing-unit * $amount
+    @if $direction == y
+        #{$property}-top: $spacing-unit * $amount
+        #{$property}-bottom: $spacing-unit * $amount
+
+@mixin box-shadow($left, $top, $blur, $color)
+    box-shadow: $left $top $blur $color
+    -webkit-box-shadow: $left $top $blur $color
+    -moz-box-shadow: $left $top $blur $color
+
+@mixin transition($property, $duration, $easing: linear)
+    transition: $property $duration $easing
+    -webkit-transition: $property $duration $easing
+    -moz-transition: $property $duration $easing
+
+@mixin border-radius($radius)
+    border-radius: $radius
+    -webkit-border-radius: $radius
+    -moz-border-radius: $radius

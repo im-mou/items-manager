@@ -1,0 +1,61 @@
+// Button
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+@import ../scss/_variables
+@import ../scss/_utils
+
+// Mixins
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+// Mixin to generate variant specific button styling
+@mixin button-variant-mods($color, $color-dark)
+    background-color: $color
+    border: 1px solid $color-dark
+
+    @include box-shadow($left: 0, $top: 2px, $blur: 1px, $color: $color-dark)
+    @include transition($property: box-shadow, $duration: 200ms, $easing: ease-out)
+    @include transition($property: background-color, $duration: 100ms, $easing: ease-out)
+
+    &:hover
+        background-color: darken($color, 3%)
+    &:active
+        background-color: darken($color, 10%)
+
+// Classes
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+.button
+    $self: &
+    font-size: 14px
+    cursor: pointer
+
+    @include border-radius($radius: $spacing-unit)
+    @include spacing($property: padding, $direction: x, $amount: 6)
+    @include spacing($property: padding, $direction: y, $amount: 3)
+
+    // button body
+    #{ $self }__content
+        display: flex
+        flex-direction: row
+        align-items: center
+
+    // Button variants
+    &--default
+        color: $gray-100
+        @include button-variant-mods($color: $white-color, $color-dark: darken($white-color, 25%))
+
+    &--primary
+        color: $white-color
+        @include button-variant-mods($color: $primary-color, $color-dark: darken($primary-color, 10%))
+
+    // Icons
+    #{ $self }__start-icon
+        margin-right: $spacing-unit * 2
+
+    #{ $self }__end-icon
+        margin-left: $spacing-unit * 2
+
+    #{ $self }__start-icon svg,
+    #{ $self }__end-icon svg
+        font-size: 12px
+        width: 20px
+        height: 20px
