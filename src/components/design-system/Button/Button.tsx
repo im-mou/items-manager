@@ -12,9 +12,9 @@ export interface IButton
 
 const Button = React.forwardRef<HTMLButtonElement, IButton>(function Button(props: IButton, ref) {
     // initial variant value is set to 'default'
-    const { variant = 'default', startIcon, endIcon, children, ...other } = props;
+    const { variant = 'default', startIcon, endIcon, children, className, ...other } = props;
     return (
-        <button className={`button button--${variant}`} ref={ref} {...other}>
+        <button className={`button button--${variant} ${className || ''}`} ref={ref} {...other}>
             <span className="button__content">
                 {startIcon ? <span className="button__start-icon">{startIcon}</span> : undefined}
                 <span>{children}</span>

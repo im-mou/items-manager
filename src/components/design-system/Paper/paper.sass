@@ -1,0 +1,24 @@
+// Paper
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+@import ../scss/_variables
+@import ../scss/_utils
+
+// Classes
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+.paper
+    display: flex
+    background-color: $white-color
+    @include border-radius($radius: $spacing-unit * 2)
+
+    &--default
+        @include transition($property: box-shadow, $duration: 100ms, $easing: ease-in)
+        @include box-shadow($left: 0, $top: 1px, $blur: 1px, $color: $gray-700)
+        &:hover
+            @include box-shadow($left: 0, $top: 9px, $blur: 20px, $color: rgba(0,0,0,0.1))
+
+    &--outlined
+        border: 1px solid transparent
+        @include transition($property: border, $duration: 100ms, $easing: ease-in)
+        &:hover
+            border: 1px solid rgba(0, 0, 0, .1)

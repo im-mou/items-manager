@@ -1,0 +1,43 @@
+// Input
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+@import ../scss/_variables
+@import ../scss/_utils
+
+// Classes
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+.input
+    line-height: 1.2
+    position: relative
+    display: inline-flex
+    align-items: center
+    color: $gray-100
+    border: 0
+    box-sizing: border-box
+    background: none
+    display: block
+    height: 19px // Reset (19px) match the native input line-height
+    margin: 0 // Reset for Safari
+    width: 100% // For IE 11
+
+    @include spacing($property: padding, $direction: x, $amount: 2)
+    @include spacing($property: padding, $direction: y, $amount: 4)
+
+    // Make the flex item shrink with Firefox
+    min-width: 0
+    &:focus
+        outline: 0
+
+    // Variants
+    &--default
+        background-color: $white-color
+        border: 1px solid rgba(0, 0, 0, .15)
+        &:hover
+            border: 1px solid rgba(0, 0, 0, 25)
+
+        &:focus
+            border: 1px solid $primary-color
+
+    &--naked
+        @include spacing($property: padding, $direction: x, $amount: 0)
+        border: none

@@ -18,6 +18,7 @@
         }
     },
     "fontfamily": {
-        "primary": "\"Red Rose\", \"Helvetica\", \"Arial\", sans-serif"
+        "primary": "'Red Rose', \"Helvetica\", \"Arial\", sans-serif",
+        "secondary": "'Montserrat', sans-serif"
     }
 }
