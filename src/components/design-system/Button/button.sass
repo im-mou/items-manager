@@ -14,7 +14,6 @@
 
     @include box-shadow($left: 0, $top: 2px, $blur: 1px, $color: $color-dark)
     @include transition($property: box-shadow, $duration: 200ms, $easing: ease-out)
-    @include transition($property: background-color, $duration: 100ms, $easing: ease-out)
 
     &:hover
         background-color: darken($color, 3%)
@@ -27,10 +26,12 @@
     $self: &
     font-size: 14px
     cursor: pointer
+    vertical-align: top
 
     @include border-radius($radius: $spacing-unit)
-    @include spacing($property: padding, $direction: x, $amount: 6)
-    @include spacing($property: padding, $direction: y, $amount: 3)
+    @include spacing($property: padding, $direction: x, $amount: 5)
+    @include spacing($property: padding, $direction: y, $amount: 2.5)
+    @include transition($property: background-color, $duration: 100ms, $easing: ease-out)
 
     // button body
     #{ $self }__content
@@ -47,6 +48,20 @@
         color: $white-color
         @include button-variant-mods($color: $primary-color, $color-dark: darken($primary-color, 10%))
 
+    &--text, &--icon
+        border-color: transparent
+        color: $primary-color
+        background-color: transparent
+
+        &:hover
+            background-color: rgba($primary-color, 0.2)
+        &:active
+            background-color: rgba($primary-color, 0.3)
+
+    &--icon
+        border-radius: 100px
+        @include spacing($property: padding, $direction: all, $amount: 2)
+
     // Icons
     #{ $self }__start-icon
         margin-right: $spacing-unit * 2
@@ -54,8 +69,13 @@
     #{ $self }__end-icon
         margin-left: $spacing-unit * 2
 
+    #{ $self }__center-icon svg,
     #{ $self }__start-icon svg,
     #{ $self }__end-icon svg
         font-size: 12px
         width: 20px
         height: 20px
+
+    #{ $self }__center-icon svg
+        height: 24px
+        width: 24px
