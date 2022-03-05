@@ -5,4 +5,4 @@ module.exports = {
         () => 'tsc-files --noEmit',
     ],
     '*.{js,jsx,ts,tsx,json,css,js}': ['prettier --write'],
-}
+};
