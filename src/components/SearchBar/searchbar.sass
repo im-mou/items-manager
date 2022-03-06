@@ -41,6 +41,10 @@
     @include spacing($property: padding, $direction: x, $amount: 3)
     @include transition($property: all, $duration: 200ms, $easing: linear)
 
+    display: none
+    @include breakpoint($point: phablet)
+        display: inherit
+
     &--active
         @include active-input-color()
         padding-right: $spacing-unit

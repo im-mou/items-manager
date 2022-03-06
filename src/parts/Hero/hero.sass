@@ -1,0 +1,28 @@
+// Hero
+@import ../../scss/_variables
+
+.hero
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    height: 150px
+    position: relative
+
+    &__title
+        color: $gray-300
+        animation: 1s ease-out 1s 1 slide-in-bottom, 1s ease-out 1s 1 fade-in
+
+    &__subtitle
+        color: $gray-500
+        animation: 1s ease-in 1s 1 slide-in-bottom, 1s ease-out 1s 1 fade-in
+
+    &__icon
+        z-index: -100
+        position: absolute
+        right: 0
+        fill: rgba(0,0,0,0.04)
+        width: 260px
+        height: 260px
+        transform: rotate(20deg)
+        animation: 10s ease-in infinite rotate-infitity

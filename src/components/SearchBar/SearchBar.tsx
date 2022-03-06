@@ -3,21 +3,27 @@ import { Button, CloseIcon, EuroIcon, Input, Paper, SearchIcon, theme } from '..
 import clsx from 'clsx';
 import './searchbar.sass';
 
+// Main component
 const SearchBar = () => {
     const [searchValue, setSearchValue] = React.useState('');
+    const [priceValue, setPriceValue] = React.useState('');
     const [isInputActive, setIsInputActive] = React.useState<boolean>(false);
     const [isPriceInputActive, setIsPriceInputActive] = React.useState<boolean>(false);
 
+    // Toggle search input focus
     const activateInput = (activate: boolean) => () => {
-        // do not deactivate input if there is value present
+        // do not de-activate input if there is value present
         if (!activate && searchValue.length > 0) {
             return;
         }
         setIsInputActive(activate);
     };
 
+    // Toggle price input focus
     const activatePriceInput = (activate: boolean) => () => {
         setIsPriceInputActive(activate);
+        // reset price input
+        setPriceValue('');
     };
 
     return (
@@ -43,7 +49,13 @@ const SearchBar = () => {
                     <EuroIcon color={isPriceInputActive ? theme.palette.primary.main : theme.palette.gray[500]} />
                 </div>
                 <div className="price__input">
-                    <Input type="number" variant="naked" placeholder="price..." />
+                    <Input
+                        type="number"
+                        variant="naked"
+                        placeholder="price..."
+                        value={priceValue}
+                        onChange={(e) => setPriceValue(e.target.value)}
+                    />
                 </div>
                 <div className="price__close">
                     <Button

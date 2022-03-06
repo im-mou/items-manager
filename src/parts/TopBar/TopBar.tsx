@@ -1,7 +1,7 @@
-import './topbar.sass';
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
 import { Button, FavoriteFilledIcon, theme } from '../../components/design-system';
+import './topbar.sass';
 
 const TopBar = () => {
     return (
