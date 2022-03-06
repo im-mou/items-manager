@@ -22,3 +22,6 @@
         @include transition($property: border, $duration: 100ms, $easing: ease-in)
         &:hover
             border: 1px solid rgba(0, 0, 0, .1)
+
+    &--shadow
+        @include box-shadow($left: 0, $top: 12px, $blur: 20px, $color: rgba(0,0,0,0.1))

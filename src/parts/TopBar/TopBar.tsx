@@ -2,6 +2,7 @@ import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
 import { Button, FavoriteFilledIcon, theme } from '../../components/design-system';
 import './topbar.sass';
+import Dialog from '../../components/design-system/Dialog';
 
 const TopBar = () => {
     return (
@@ -14,7 +15,14 @@ const TopBar = () => {
 
             {/** Whishlist Button for Desktop or Mobile */}
             <div className="topbar__whishlist--desktop">
-                <Button startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}>Whishlist</Button>
+                <Dialog
+                    title="My favorite items"
+                    trigger={() => (
+                        <Button startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}>Favorites</Button>
+                    )}
+                >
+                    Menuuuuu
+                </Dialog>
             </div>
             <div className="topbar__whishlist--mobile">
                 <Button
