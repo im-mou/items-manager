@@ -6,9 +6,9 @@ export interface NakedInputProps
     variant?: 'default' | 'naked';
 }
 
-const Input = (props: NakedInputProps) => {
+const Input = React.forwardRef<HTMLInputElement, NakedInputProps>(function Input(props: NakedInputProps, ref) {
     const { className, variant = 'default', ...other } = props;
-    return <input className={`input input--${variant} ${className || ''}`} {...other} />;
-};
+    return <input ref={ref} className={`input input--${variant} ${className || ''}`} {...other} />;
+});
 
 export default Input;

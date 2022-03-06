@@ -1,0 +1,90 @@
+// Card
+@import ../../scss/_variables
+@import ../../scss/_utils
+
+.item-card
+    @include display-flex()
+    align-items: stretch
+
+    background: $white-color
+    margin: $spacing-unit * 2
+    padding: $spacing-unit * 2
+    @include border-radius($radius: $spacing-unit * 2)
+    @include box-shadow($left: 0, $top: 1px, $blur: 1px, $color: $gray-700)
+
+    cursor: pointer
+    position: relative
+
+    // shadow
+    &::after
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        z-index: -1
+        width: 100%
+        height: 100%
+        opacity: 0
+        border-radius: 5px
+        @include box-shadow($left: 0, $top: 12px, $blur: 20px, $color: rgba(0,0,0,0.1))
+        @include transition($property: opacity, $duration: 0.3s, $easing: ease-in-out)
+
+
+    //responsiveness
+    flex-direction: column
+    flex-basis: calc(100% - $spacing-unit * 4)
+
+    @include breakpoint($point: phablet)
+        flex-basis: calc(50% - $spacing-unit * 4)
+
+    @include breakpoint($point: tablet)
+        flex-direction: row
+        flex-basis: calc(50% - $spacing-unit * 4)
+
+
+    &:hover
+        &::after
+            opacity: 1
+
+    &__image
+        min-width: 140px
+        min-height: 140px
+        overflow: hidden
+        @include border-radius($radius: $spacing-unit)
+
+        & > img
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+    &__content
+        flex-grow: 1
+        @include display-flex()
+        flex-direction: column
+        padding-left: $spacing-unit * 4
+        padding-right: $spacing-unit * 2
+
+        // responsive
+        @include spacing($property: padding, $direction: y, $amount: 4)
+
+        @include breakpoint($point: tablet)
+            @include spacing($property: padding, $direction: y, $amount: 1)
+
+        &__title
+            margin-bottom: $spacing-unit * 2
+            color: lighten($gray-100, 10%)
+
+        &__body
+            flex-grow: 1
+            line-height: 1.2
+            color: $gray-500
+
+        &__footers
+            @include display-flex()
+            flex-direction: row
+            justify-content: space-between
+            align-items: flex-end
+            margin-top: $spacing-unit * 2
+
+            & > h1
+                color: $gray-100

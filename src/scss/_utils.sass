@@ -13,6 +13,14 @@ $spacing-unit: 4px
         #{$property}-top: $spacing-unit * $amount
         #{$property}-bottom: $spacing-unit * $amount
 
+@mixin display-flex()
+    display: -webkit-box
+    display: -moz-box
+    display: -ms-flexbox
+    display: -moz-flex
+    display: -webkit-flex
+    display: flex
+
 @mixin box-shadow($left, $top, $blur, $color)
     box-shadow: $left $top $blur $color
     -webkit-box-shadow: $left $top $blur $color

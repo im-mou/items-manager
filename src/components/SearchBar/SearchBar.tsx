@@ -5,6 +5,10 @@ import './searchbar.sass';
 
 // Main component
 const SearchBar = () => {
+    // refs
+    const priceInputRef = React.useRef<HTMLInputElement>(null);
+
+    // Local state
     const [searchValue, setSearchValue] = React.useState('');
     const [priceValue, setPriceValue] = React.useState('');
     const [isInputActive, setIsInputActive] = React.useState<boolean>(false);
@@ -24,18 +28,23 @@ const SearchBar = () => {
         setIsPriceInputActive(activate);
         // reset price input
         setPriceValue('');
+
+        // focus input on click
+        if (activate) {
+            setTimeout(() => {
+                priceInputRef.current?.focus();
+            }, 300);
+        }
     };
 
     return (
-        <div className="searchbar">
-            <Paper
-                className={clsx('searchbar__wrapper', { ['searchbar__wrapper--active']: isInputActive })}
-                variant="outlined"
-            >
-                <div className="searchbar__wrapper__icon">
+        <div className="searchbar-wrapper">
+            <Paper className={clsx('text-search', { ['text-search--active']: isInputActive })} variant="outlined">
+                <div className="text-search__icon">
                     <SearchIcon color={theme.palette.gray[500]} />
                 </div>
                 <Input
+                    max="10"
                     variant="naked"
                     placeholder="Search items..."
                     value={searchValue}
@@ -44,20 +53,23 @@ const SearchBar = () => {
                     onBlur={activateInput(false)}
                 />
             </Paper>
-            <Paper variant="outlined" className={clsx('price', { ['price--active']: isPriceInputActive })}>
-                <div className="price__icon" onClick={activatePriceInput(true)}>
+            <Paper
+                variant="outlined"
+                className={clsx('price-search', { ['price-search--active']: isPriceInputActive })}
+            >
+                <div className="price-search__icon" onClick={activatePriceInput(true)}>
                     <EuroIcon color={isPriceInputActive ? theme.palette.primary.main : theme.palette.gray[500]} />
                 </div>
-                <div className="price__input">
+                <div className="price-search__input">
                     <Input
-                        type="number"
+                        ref={priceInputRef}
                         variant="naked"
                         placeholder="price..."
                         value={priceValue}
                         onChange={(e) => setPriceValue(e.target.value)}
                     />
                 </div>
-                <div className="price__close">
+                <div className="price-search__close">
                     <Button
                         variant="icon"
                         onClick={activatePriceInput(false)}

@@ -7,40 +7,43 @@
     background-color: $white-color
     @include box-shadow($left: 0, $top: 9px, $blur: 20px, $color: rgba(0,0,0,0.1))
 
-// Search input
-.searchbar
-    display: flex
+// Searchbar wrapper
+.searchbar-wrapper
+    @include display-flex()
     flex-grow: 0.9
 
     @include breakpoint($point: laptop)
         flex-grow: 0.5
 
-    &__wrapper
-        flex-grow: 1
-        align-items: center
-        background-color: rgba($gray-700, 0.4)
 
-        @include spacing($property: padding, $direction: x, $amount: 4)
-        @include transition($property: background, $duration: 200ms, $easing: linear)
+// Search input
+.text-search
+    flex-grow: 1
+    align-items: center
+    background-color: #E8E7E7
 
-        &--active
-            @include active-input-color()
+    @include spacing($property: padding, $direction: x, $amount: 4)
+    @include transition($property: background, $duration: 200ms, $easing: linear)
 
-        &__icon
-            width: 24px
-            margin-right: $spacing-unit * 2
+    &--active
+        @include active-input-color()
+
+    &__icon
+        width: 24px
+        margin-right: $spacing-unit * 2
 
 // Price input
-.price
+.price-search
     $self: &
     margin-left: $spacing-unit * 2
     cursor: pointer
-    display: flex
+    @include display-flex()
     align-items: center
-    background-color: rgba($gray-700, 0.4)
+    background-color: #E8E7E7
     @include spacing($property: padding, $direction: x, $amount: 3)
-    @include transition($property: all, $duration: 200ms, $easing: linear)
+    @include transition($property: padding, $duration: 200ms, $easing: linear)
 
+    // Hide price input/button on phablet
     display: none
     @include breakpoint($point: phablet)
         display: inherit
@@ -64,7 +67,7 @@
     &__input
         display: none
         margin-left: $spacing-unit * 2
-        max-width: 70px
+        max-width: 60px
 
     &__close
         display: none
