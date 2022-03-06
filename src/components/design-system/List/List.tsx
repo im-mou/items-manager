@@ -1,9 +1,10 @@
-import React from 'react'
+import './list.sass';
 
-const List = () => {
-  return (
-    <ul>List</ul>
-  )
-}
+export type ListProps = HTMLUListElement;
 
-export default List
+const List = (props: ListProps) => {
+    const { children } = props;
+    return <ul className="list">{children}</ul>;
+};
+
+export default List;

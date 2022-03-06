@@ -12,7 +12,9 @@ const Menu = (props: MenuProps) => {
 
     return (
         <Popover closeOnClickAway arrow trigger={trigger}>
-            <Paper shadow variant="outlined">{children}</Paper>
+            <Paper shadow variant="outlined">
+                {children}
+            </Paper>
         </Popover>
     );
 };
