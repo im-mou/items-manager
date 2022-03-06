@@ -2,7 +2,7 @@ import React from 'react';
 import './typography.sass';
 
 export interface TypographyProps extends Omit<Partial<HTMLHeadElement>, 'children'> {
-    variant: 'h1' | 'h2' | 'h3' | 'h4' | 'body';
+    variant: 'h1' | 'h2' | 'h3' | 'h4' | 'body' | 'caption';
     children: React.ReactNode;
 }
 
@@ -12,6 +12,8 @@ const getHtmlTag = (variant: TypographyProps['variant']) => {
 
     if (variant === 'body') {
         component = 'p';
+    } else if (variant === 'caption') {
+        component = 'span';
     }
 
     return component;

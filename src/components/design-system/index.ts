@@ -1,4 +1,4 @@
-export { default as theme } from './theme.json';
+export { default as theme } from './theme';
 
 export * from './Icons';
 
@@ -13,3 +13,5 @@ export * from './Paper';
 
 export { default as Input } from './Input';
 export * from './Input';
+
+export { default as Container } from './Container';

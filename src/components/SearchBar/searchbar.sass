@@ -1,0 +1,68 @@
+// SearchBar
+@import ../../scss/_utils
+@import ../../scss/_variables
+
+// Mixin
+@mixin active-input-color()
+    background-color: $white-color
+    @include box-shadow($left: 0, $top: 9px, $blur: 20px, $color: rgba(0,0,0,0.1))
+
+// Search input
+.searchbar
+    display: flex
+    flex-grow: 0.9
+
+    @include breakpoint($point: laptop)
+        flex-grow: 0.5
+
+    &__wrapper
+        flex-grow: 1
+        align-items: center
+        background-color: rgba($gray-700, 0.4)
+
+        @include spacing($property: padding, $direction: x, $amount: 4)
+        @include transition($property: background, $duration: 200ms, $easing: linear)
+
+        &--active
+            @include active-input-color()
+
+        &__icon
+            width: 24px
+            margin-right: $spacing-unit * 2
+
+// Price input
+.price
+    $self: &
+    margin-left: $spacing-unit * 2
+    cursor: pointer
+    display: flex
+    align-items: center
+    background-color: rgba($gray-700, 0.4)
+    @include spacing($property: padding, $direction: x, $amount: 3)
+    @include transition($property: all, $duration: 200ms, $easing: linear)
+
+    &--active
+        @include active-input-color()
+        padding-right: $spacing-unit
+
+        // show price input and close button
+        #{ $self }__input,
+        #{ $self }__close
+            display: initial
+
+    &__icon
+        min-width: 20px
+
+        & > svg
+            height: 16px
+            width: 16px
+
+    &__input
+        display: none
+        margin-left: $spacing-unit * 2
+        max-width: 70px
+
+    &__close
+        display: none
+        @include breakpoint($point: mobileonly)
+            min-width: 42px

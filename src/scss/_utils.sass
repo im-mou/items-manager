@@ -1,4 +1,4 @@
-// Design system: Spacing
+// Design system: Utils
 
 // minimum spacing unit
 $spacing-unit: 4px
@@ -27,3 +27,26 @@ $spacing-unit: 4px
     border-radius: $radius
     -webkit-border-radius: $radius
     -moz-border-radius: $radius
+
+// The breakpoint rules are applied from the lowest resolution to the highest.
+// ex.: apply [x] when [size] > [breakpoint]
+@mixin breakpoint($point)
+    @if $point == desktop
+        @media (min-width: 70em)
+            @content
+
+    @else if $point == laptop
+        @media (min-width: 64em)
+            @content
+
+    @else if $point == tablet
+        @media (min-width: 50em)
+            @content
+
+    @else if $point == phablet
+        @media (min-width: 37.5em)
+            @content
+
+    @else if $point == mobileonly
+        @media (max-width: 37.5em)
+            @content

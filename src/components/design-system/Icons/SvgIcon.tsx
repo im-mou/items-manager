@@ -1,5 +1,5 @@
 import React from 'react';
-import theme from '../theme.json';
+import { theme } from '../';
 
 export type SvgIconProps = React.SVGProps<SVGSVGElement>;
 
