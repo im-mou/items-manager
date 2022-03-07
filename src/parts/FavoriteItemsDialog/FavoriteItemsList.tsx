@@ -113,8 +113,9 @@ const FavoriteItemsList = () => {
 
             <div className="favorite-items__list">
                 {/** items list */}
-                {data.map((item) => (
+                {data.map((item, index) => (
                     <Paper
+                        tabIndex={0}
                         variant="outlined"
                         key={`${item.title}_${item.email}`}
                         className="favorite-items__list__item"
@@ -127,6 +128,7 @@ const FavoriteItemsList = () => {
                         </div>
                         <div className="favorite-items__list__item__action">
                             <Button
+                                tabIndex={0}
                                 variant="icon"
                                 aria-label="Delete favourite item"
                                 icon={<DeleteIcon color={theme.palette.gray[500]} />}

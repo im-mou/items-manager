@@ -36,10 +36,8 @@ const Popover = (props: PopoverProps) => {
         });
     }, [setActive]);
 
-    // When menu is visible, calculate the absolute position to place the menu below the trigger
-    React.useLayoutEffect(() => {
-        if (!active) return;
-
+    // function to calculate position of the popover
+    const setPopOverPosition = useCallback(() => {
         if (popoverRef.current && triggerRef.current) {
             // Focus trap for accesibility
             popoverRef.current?.focus();
@@ -70,6 +68,22 @@ const Popover = (props: PopoverProps) => {
                 popoverRef.current.style.top = menuVerticalPosition + 'px';
             }
         }
+    }, []);
+
+    // When menu is visible, calculate the absolute position to place the menu below the trigger
+    React.useLayoutEffect(() => {
+        if (!active) return;
+
+        // attach resixe listener
+        window.addEventListener('resize', setPopOverPosition);
+
+        // recalculate position
+        setPopOverPosition();
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', setPopOverPosition);
+        };
     }, [active]);
 
     return (
