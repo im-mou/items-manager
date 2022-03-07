@@ -3,6 +3,7 @@
 @import ../../scss/_utils
 
 .item-card
+    $self: &
     @include display-flex()
     align-items: stretch
 
@@ -12,8 +13,18 @@
     @include border-radius($radius: $spacing-unit * 2)
     @include box-shadow($left: 0, $top: 1px, $blur: 1px, $color: $gray-700)
 
-    cursor: pointer
     position: relative
+
+    //responsiveness
+    flex-direction: column
+    flex-basis: calc(100% - $spacing-unit * 4)
+
+    @include breakpoint($point: phablet)
+        flex-basis: calc(50% - $spacing-unit * 4)
+
+    @include breakpoint($point: tablet)
+        flex-direction: row
+        flex-basis: calc(50% - $spacing-unit * 4)
 
     // shadow
     &::after
@@ -28,19 +39,6 @@
         border-radius: 5px
         @include box-shadow($left: 0, $top: 12px, $blur: 20px, $color: rgba(0,0,0,0.1))
         @include transition($property: opacity, $duration: 0.3s, $easing: ease-in-out)
-
-
-    //responsiveness
-    flex-direction: column
-    flex-basis: calc(100% - $spacing-unit * 4)
-
-    @include breakpoint($point: phablet)
-        flex-basis: calc(50% - $spacing-unit * 4)
-
-    @include breakpoint($point: tablet)
-        flex-direction: row
-        flex-basis: calc(50% - $spacing-unit * 4)
-
 
     &:hover
         &::after
@@ -71,8 +69,14 @@
             @include spacing($property: padding, $direction: y, $amount: 1)
 
         &__title
-            margin-bottom: $spacing-unit * 2
             color: lighten($gray-100, 10%)
+
+        &__user
+            @include display-flex()
+            align-items: center
+            flex-direction: row
+            color: darken($primary-color, 5%)
+            margin-bottom: $spacing-unit * 3
 
         &__body
             flex-grow: 1
@@ -84,7 +88,36 @@
             flex-direction: row
             justify-content: space-between
             align-items: flex-end
-            margin-top: $spacing-unit * 2
 
             & > h1
                 color: $gray-100
+
+    // Detailed card
+    &.detailed
+        box-shadow: none
+        flex-direction: column
+
+        #{ $self }__content
+
+            &__title
+                color: $gray-100
+                @include spacing($property: margin, $direction: y, $amount: 2)
+
+                & > *
+                    font-size: 20px
+
+            &__user
+                margin-top: $spacing-unit * 4
+                & > span
+                    font-size: 12px
+                & > svg
+                    height: 24px
+                    width: 24px
+                    fill: $primary-color
+                    margin-right: $spacing-unit * 2
+            &__body
+                & > p
+                    font-size: 16px
+            &__footers
+                & > *
+                    font-size: 30px

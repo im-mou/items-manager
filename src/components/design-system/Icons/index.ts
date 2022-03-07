@@ -8,3 +8,5 @@ export { default as FlagIcon } from './FlagIcon';
 export { default as ItemManagerIcon } from './ItemManagerIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as DeleteIcon } from './DeleteIcon';
+export { default as FaceIcon } from './FaceIcon';
+export { default as UnfoldIcon } from './UnfoldIcon';

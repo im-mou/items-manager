@@ -1,9 +1,8 @@
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
 import { Button, FavoriteFilledIcon, theme } from '../../components/design-system';
-import Dialog from '../../components/design-system/Dialog';
-import './topbar.sass';
 import FavoriteItemsDialog from '../FavoriteItemsDialog';
+import './topbar.sass';
 
 const TopBar = () => {
     return (

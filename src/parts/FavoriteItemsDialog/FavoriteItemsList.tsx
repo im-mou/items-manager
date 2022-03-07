@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, DeleteIcon, Paper, theme, Typography } from '../../components/design-system';
 import { IItem } from '../../types/types';
 import './favorite-items.sass';
@@ -36,70 +35,6 @@ const data: IItem[] = [
         email: 'watchmail@wallapop.com',
         image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/watch.png',
     },
-    {
-        title: 'Coche antiguo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche DSHSFHSDFHantiguo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Cochasdsdvxcgse antiguo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche antasdasdhasdhiguo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche antigasdfuo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche antiguo amerfgjdfgjicano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche asdfasdfantiguo americano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
-    {
-        title: 'Coche antiguo amerxcbvxcvbxicano',
-        description:
-            'Coche antiguo americano de color marrón. Se tiene que cambiar el motor pero aparte de eso todo funciona correctamente. Interior de piel clara. Ideal para coleccionistas',
-        price: '210000',
-        email: 'carmail@wallapop.com',
-        image: 'https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/car.png',
-    },
 ];
 
 // Main component
@@ -108,12 +43,12 @@ const FavoriteItemsList = () => {
         <div className="favorite-items">
             {/** info */}
             <div className="favorite-items__info">
-                <Typography variant="caption">{data.length} items added to list</Typography>{' '}
+                <Typography variant="caption">{data.length} items added to list</Typography>
             </div>
 
             <div className="favorite-items__list">
                 {/** items list */}
-                {data.map((item, index) => (
+                {data.map((item) => (
                     <Paper
                         tabIndex={0}
                         variant="outlined"

@@ -1,4 +1,7 @@
-import Card from '../../components/Card';
+import React from 'react';
+import Card from '../../components/Card/Card';
+import CardDetailed from '../../components/Card/CardDetailed';
+import Dialog, { DialogProps } from '../../components/design-system/Dialog';
 import { IItem } from '../../types/types';
 import './itemsview.sass';
 
@@ -45,14 +48,42 @@ const data: IItem[] = [
     },
 ];
 
-const ItemsView = () => {
+const ItemsView = React.memo(function ItemsView() {
+    const openDialogFnRef = React.useRef<Parameters<DialogProps['trigger']>['0']>();
+    const [itemToShowInDialog, setItemToShowInDialog] = React.useState<IItem>(data[0]);
+
+    // open dialog event handler
+    const openItemDetailsDialog = React.useCallback(
+        (item: IItem) => () => {
+            // save open dialog function instance
+            if (openDialogFnRef.current) {
+                openDialogFnRef.current?.();
+            }
+
+            // Save item to be shown when dialog is open
+            setItemToShowInDialog(item);
+        },
+        [setItemToShowInDialog],
+    );
+
     return (
         <section className="itemsview">
+            <Dialog
+                title="Item details"
+                trigger={(open) => {
+                    openDialogFnRef.current = open;
+                    return null;
+                }}
+            >
+                <CardDetailed item={itemToShowInDialog} />
+            </Dialog>
+
+            {/** Items card list */}
             {data.map((item) => (
-                <Card key={`${item.title}_${item.email}`} item={item} />
+                <Card key={`${item.title}_${item.email}`} item={item} openDetails={openItemDetailsDialog(item)} />
             ))}
         </section>
     );
-};
+});
 
 export default ItemsView;
