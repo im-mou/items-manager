@@ -7,3 +7,4 @@ export { default as FavoriteIcon } from './FavoriteIcon';
 export { default as FlagIcon } from './FlagIcon';
 export { default as ItemManagerIcon } from './ItemManagerIcon';
 export { default as SearchIcon } from './SearchIcon';
+export { default as DeleteIcon } from './DeleteIcon';

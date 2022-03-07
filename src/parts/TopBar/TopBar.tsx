@@ -1,8 +1,9 @@
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
 import { Button, FavoriteFilledIcon, theme } from '../../components/design-system';
-import './topbar.sass';
 import Dialog from '../../components/design-system/Dialog';
+import './topbar.sass';
+import FavoriteItemsDialog from '../FavoriteItemsDialog';
 
 const TopBar = () => {
     return (
@@ -14,23 +15,27 @@ const TopBar = () => {
             <SearchBar />
 
             {/** Whishlist Button for Desktop or Mobile */}
-            <div className="topbar__whishlist--desktop">
-                <Dialog
-                    title="My favorite items"
-                    trigger={() => (
-                        <Button startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}>Favorites</Button>
-                    )}
-                >
-                    Menuuuuu
-                </Dialog>
-            </div>
-            <div className="topbar__whishlist--mobile">
-                <Button
-                    variant="icon"
-                    color="primary"
-                    icon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
-                />
-            </div>
+            <FavoriteItemsDialog>
+                <span>
+                    {/** Text button */}
+                    <Button
+                        className="topbar__whishlist--desktop"
+                        aria-label="Open favorite items list"
+                        startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
+                    >
+                        Favorite
+                    </Button>
+
+                    {/** Icon button */}
+                    <Button
+                        className="topbar__whishlist--mobile"
+                        variant="icon"
+                        color="primary"
+                        aria-label="Open favorite items list"
+                        icon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
+                    />
+                </span>
+            </FavoriteItemsDialog>
         </header>
     );
 };

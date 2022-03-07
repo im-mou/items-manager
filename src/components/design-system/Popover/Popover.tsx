@@ -50,7 +50,7 @@ const Popover = (props: PopoverProps) => {
             if (isDialog) {
                 // set position props to dialog
                 popoverRef.current.style.left = `calc(50% - ${popoverRef.current.offsetWidth / 2}px)`;
-                popoverRef.current.style.top = `calc(20% - ${popoverRef.current.offsetHeight / 2}px)`;
+                popoverRef.current.style.top = `calc(50% - ${popoverRef.current.offsetHeight / 2}px)`;
             } else {
                 /**
                  * position the menu to the position of the trigger

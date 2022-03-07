@@ -5,13 +5,14 @@ import './dialog.sass';
 
 export interface DialogProps {
     title: React.ReactNode;
+    icon?: JSX.Element;
     trigger: PopoverProps['trigger'];
     children: React.ReactNode;
 }
 
 const Dialog = (props: DialogProps) => {
     // Props
-    const { trigger, children, title } = props;
+    const { trigger, children, title, icon } = props;
     const closeFuncRef = React.useRef<{ close: () => void }>({ close: () => null });
 
     // close dialog event handler
@@ -35,6 +36,7 @@ const Dialog = (props: DialogProps) => {
         >
             <Paper shadow className="dialog-wrapper">
                 <div className="dialog-wrapper__title">
+                    {icon ? React.cloneElement(icon, { style: { height: 24, width: 24 } }, null) : undefined}
                     <Typography variant="h3">{title}</Typography>
                     <Button onClick={closeDialog} variant="icon" icon={<CloseIcon />} />
                 </div>

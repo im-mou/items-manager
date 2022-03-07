@@ -1,0 +1,50 @@
+// Hero
+@import ../../scss/_variables
+@import ../../scss/_utils
+
+.favorite-items
+
+    &__info
+        color: $gray-300
+        background: $white-color
+        border-bottom: 1px solid rgba(0,0,0,0.1)
+        @include spacing($property: padding, $direction: x, $amount: 5)
+        @include spacing($property: padding, $direction: y, $amount: 2)
+        position: sticky
+        top: 0
+
+    &__list
+        @include display-flex()
+        flex-direction: column
+        margin-bottom: $spacing-unit * 2
+
+        @include spacing($property: padding, $direction: x, $amount: 4)
+        @include spacing($property: padding, $direction: y, $amount: 2)
+
+        &__item
+            $self: &
+            align-items: center
+            width: 100%
+            background: rgba(0,0,0,0.03)
+            margin-bottom: $spacing-unit
+            @include spacing($property: padding, $direction: all, $amount: 2)
+
+            &__title
+                flex-grow: 1
+
+            &__action
+                display: none
+
+            &:hover
+                #{ $self }__action
+                    display: inherit
+
+            &__image
+                margin-right: $spacing-unit * 4
+                height: 60px
+                width: 60px
+                border-radius: $spacing-unit
+                overflow: hidden
+
+                & > img
+                    object-fit: fill
