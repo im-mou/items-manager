@@ -2,6 +2,9 @@
 @import ../../scss/_variables
 @import ../../scss/_utils
 
+// local vars
+$sparation-width: $spacing-unit
+
 .item-card
     $self: &
     @include display-flex()
@@ -9,7 +12,7 @@
     position: relative
 
     background: $white-color
-    margin: $spacing-unit * 2
+    margin: $sparation-width
     padding: $spacing-unit * 2
     @include border-radius($radius: $spacing-unit * 2)
     @include box-shadow($left: 0, $top: 1px, $blur: 1px, $color: $gray-700)
@@ -19,18 +22,18 @@
 
     //responsiveness
     flex-direction: column
-    flex-basis: calc(100% - $spacing-unit * 4)
+    flex-basis: calc(100% - $sparation-width * 2)
 
     @include breakpoint($point: phablet)
-        flex-basis: calc(50% - $spacing-unit * 4)
+        flex-basis: calc(50% - $sparation-width * 2)
 
     @include breakpoint($point: tablet)
         flex-direction: row
-        flex-basis: calc(50% - $spacing-unit * 4)
+        flex-basis: calc(50% - $sparation-width * 2)
 
     @include breakpoint($point: desktop)
         flex-direction: column
-        flex-basis: calc(25% - $spacing-unit * 4)
+        flex-basis: calc(25% - $sparation-width * 2)
 
     // shadow
     &::after

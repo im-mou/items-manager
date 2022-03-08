@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Backdrop, Container, Typography } from './components/design-system';
 import HomeView from './parts/HomeView';
@@ -5,7 +6,7 @@ import SearchView from './parts/SearchView';
 import TopBar from './parts/TopBar';
 import { useStore } from './store';
 
-const App = () => {
+const App = observer(function App() {
     // Hooks
     const { ItemsStore } = useStore();
 
@@ -40,7 +41,7 @@ const App = () => {
     return (
         <Container>
             <TopBar />
-            {ItemsStore.searchViewActive ? (
+            {ItemsStore.search.active ? (
                 // Show search view if search is active
                 <SearchView />
             ) : (
@@ -49,6 +50,6 @@ const App = () => {
             )}
         </Container>
     );
-};
+});
 
 export default App;

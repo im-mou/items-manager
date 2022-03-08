@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { itemsService } from '../services/items.service';
-import { IItem, IPaginator } from '../types/types';
+import { IItem, IPaginator, ISearchQuery } from '../types/types';
 import { ITEMS_PER_PAGE } from '../utils/constants';
 
 // Reactive global Store for items
@@ -14,7 +14,11 @@ class ItemsStore {
     favouriteitemsList: IItem[] = [];
 
     // UI Variables
-    searchViewActive = false;
+    search: ISearchQuery = {
+        active: false,
+        term: '',
+        price: [null, null],
+    };
 
     // Home page pagination info (Load more... button)
     pagination: IPaginator = {
@@ -98,6 +102,21 @@ class ItemsStore {
             throw new Error('No item id was provided');
         }
     };
+
+    // Set search query parametes
+    setSearchQuery(searchQuery: ISearchQuery) {
+        if (!searchQuery) throw new Error('No search query was provided');
+        this.search = searchQuery;
+    }
+
+    // clear search
+    closeSearchView() {
+        this.search = {
+            active: false,
+            term: '',
+            price: [null, null],
+        };
+    }
 }
 
 export default ItemsStore;

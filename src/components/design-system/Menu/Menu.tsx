@@ -4,38 +4,49 @@ import Popover from '../Popover';
 
 export interface MenuProps {
     trigger: (open: () => void) => React.ReactNode;
-    triggerRef: React.MutableRefObject<HTMLElement>;
     children: React.ReactNode;
 }
 
 const Menu = (props: MenuProps) => {
-    const [open, setOpen] = React.useState(false);
-
     // Props
-    const { trigger, triggerRef, children } = props;
+    const { trigger, children } = props;
+
+    // Local state
+    const [open, setOpen] = React.useState(false);
+    const [position, setPosition] = React.useState({
+        top: 0,
+        left: 0,
+    });
+
+    // Refs
+    const triggerRef = React.useRef<HTMLDivElement>(null);
 
     // Function to align menu with the trigger
-    const getMenuPosition = React.useCallback(() => {
-        // get the horizontal coord to place the menu
-        const top = triggerRef.current.offsetLeft + triggerRef.current.offsetWidth / 2;
-        // get the vertical coord to place the menu
-        const left = triggerRef.current.offsetTop + triggerRef.current.offsetHeight;
+    const openMenu = () => {
+        if (triggerRef.current) {
+            // get the horizontal coord to place the menu
+            const left = triggerRef.current.offsetLeft + triggerRef.current.offsetWidth / 2;
+            // get the vertical coord to place the menu
+            const top = triggerRef.current.offsetTop + triggerRef.current.offsetHeight + 6;
 
-        // return abs position
-        return {
-            top,
-            left,
-        };
-    }, []);
+            // return abs position
+            setPosition({
+                top,
+                left,
+            });
+
+            setOpen(true);
+        }
+    };
 
     return (
         <>
-            <Popover open={open} closeOnClickAway arrow position={getMenuPosition()}>
+            <Popover open={open} onClickAway={() => setOpen(false)} closeOnClickAway arrow position={position}>
                 <Paper shadow variant="outlined">
                     {children}
                 </Paper>
             </Popover>
-            {trigger(() => setOpen(true))}
+            <div ref={triggerRef}>{trigger(openMenu)}</div>
         </>
     );
 };

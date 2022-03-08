@@ -15,7 +15,6 @@
     @include breakpoint($point: laptop)
         flex-grow: 0.5
 
-
 // Search input
 .text-search
     flex-grow: 1
@@ -29,8 +28,11 @@
         @include active-input-color()
 
     &__icon
-        width: 24px
-        margin-right: $spacing-unit * 2
+        margin-left: -$spacing-unit * 2
+        margin-right: $spacing-unit
+
+    &__input
+        width: 100%
 
 // Price input
 .price-search
@@ -40,7 +42,7 @@
     @include display-flex()
     align-items: center
     background-color: #E8E7E7
-    @include spacing($property: padding, $direction: x, $amount: 3)
+    @include spacing($property: padding, $direction: x, $amount: 1)
     @include transition($property: padding, $duration: 200ms, $easing: linear)
 
     // Hide price input/button on phablet
@@ -50,26 +52,9 @@
 
     &--active
         @include active-input-color()
-        padding-right: $spacing-unit
-
-        // show price input and close button
-        #{ $self }__input,
-        #{ $self }__close
-            display: initial
 
     &__icon
         min-width: 20px
-
         & > svg
             height: 16px
             width: 16px
-
-    &__input
-        display: none
-        margin-left: $spacing-unit * 2
-        max-width: 60px
-
-    &__close
-        display: none
-        @include breakpoint($point: mobileonly)
-            min-width: 42px

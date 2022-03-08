@@ -6,7 +6,7 @@ import Dialog from '../../components/design-system/Dialog';
 import { useStore } from '../../store';
 import FavoriteItemsList from './FavoriteItemsList';
 
-const FavoriteItems = observer(function FavoriteItems() {
+const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
     // Global state
     const { ItemsStore } = useStore();
 
@@ -60,4 +60,4 @@ const FavoriteItems = observer(function FavoriteItems() {
     );
 });
 
-export default FavoriteItems;
+export default FavoriteItemsDialog;

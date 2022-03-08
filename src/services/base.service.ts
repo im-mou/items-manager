@@ -4,7 +4,6 @@ export default class BaseService {
     protected apiBaseUrl = process.env.REACT_APP_API_URL;
 
     protected clientConfig = {
-        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -15,7 +14,7 @@ export default class BaseService {
 
     // get request
     protected get = async <T>(url: string): Promise<T> => {
-        const response = await this.client(url, this.clientConfig);
+        const response = await this.client(url, { method: 'GET', ...this.clientConfig });
         return await response.json();
     };
 

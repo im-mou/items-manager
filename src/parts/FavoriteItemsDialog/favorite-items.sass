@@ -33,7 +33,10 @@
             height: 92px
             width: 92px
 
-    &__info
+    &__toolbar
+        @include display-flex()
+        justify-content: space-between
+        align-items: center
         color: $gray-300
         background: $white-color
         border-bottom: 1px solid rgba(0,0,0,0.1)
@@ -41,6 +44,9 @@
         @include spacing($property: padding, $direction: y, $amount: 2)
         position: sticky
         top: 0
+
+        &__search
+            min-width: 50%
 
     &__list
         @include display-flex()

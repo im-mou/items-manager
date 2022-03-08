@@ -24,3 +24,16 @@ export interface IPaginator {
     currentOffset: number;
     lastPage: boolean;
 }
+
+export interface ISearchQuery {
+    active: boolean;
+    term: string;
+    price: [number | null, number | null];
+}
+
+type TInputValue = string;
+export interface IPriceRangeForm {
+    value: TInputValue;
+    error: boolean;
+    errMsg: string;
+}

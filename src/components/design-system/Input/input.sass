@@ -7,26 +7,13 @@
 // Classes
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 .input
-    line-height: 1.2
-    position: relative
-    display: inline-flex
+
+    $self: &
+    @include display-flex()
     align-items: center
-    color: $gray-100
-    border: 0
-    box-sizing: border-box
-    background: none
-    display: block
-    height: 19px // Reset (19px) match the native input line-height
-    margin: 0 // Reset for Safari
-    width: 100% // For IE 11
-
     @include spacing($property: padding, $direction: x, $amount: 2)
-    @include spacing($property: padding, $direction: y, $amount: 4)
-
-    // Make the flex item shrink with Firefox
-    min-width: 0
-    &:focus
-        outline: 0
+    // @include spacing($property: padding, $direction: y, $amount: 2)
+    // height: 19px
 
     // Variants
     &--default
@@ -34,12 +21,45 @@
         border: 1px solid rgba(0, 0, 0, .15)
         @include border-radius($radius: $spacing-unit)
 
-        &:hover
-            border: 1px solid rgba(0, 0, 0, 0.3)
-
-        &:focus
-            border: 1px solid $primary-color
-
     &--naked
         @include spacing($property: padding, $direction: x, $amount: 0)
         border: none
+
+    &:hover:not(#{$self}--naked, #{$self}--error)
+        border: 1px solid $primary-color-light
+
+    &--focus
+        border: 1px solid $primary-color
+        box-shadow: 0 0 1px 3px rgba($primary-color, 0.2)
+
+    &--error
+        border: 1px solid $error-color
+        box-shadow: 0 0 1px 3px rgba($error-color, 0.2)
+
+    // Icon
+    &__icon
+        margin-right: $spacing-unit
+        & > svg
+            height: 20px
+            width: 24px
+
+    // native html input element
+    &__element
+        line-height: 1.2
+        position: relative
+        display: inline-flex
+        align-items: center
+        color: $gray-100
+        border: 0
+        box-sizing: border-box
+        background: none
+        display: block
+        margin: 0 // Reset for Safari
+        height: 100%
+        width: 100% // For IE 11
+        @include spacing($property: padding, $direction: y, $amount: 2)
+
+        // Make the flex item shrink with Firefox
+        min-width: 0
+        &:focus
+            outline: 0

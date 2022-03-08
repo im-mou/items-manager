@@ -1,6 +1,6 @@
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
-import FavoriteItems from '../FavoriteItems';
+import FavoriteItemsDialog from '../FavoriteItemsDialog';
 import './topbar.sass';
 
 const TopBar = () => {
@@ -13,7 +13,7 @@ const TopBar = () => {
             <SearchBar />
 
             {/** Whishlist Button + dialog */}
-            <FavoriteItems />
+            <FavoriteItemsDialog />
         </header>
     );
 };

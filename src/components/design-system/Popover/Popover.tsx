@@ -6,6 +6,7 @@ import './popover.sass';
 export interface PopoverProps {
     open?: boolean;
     closeOnClickAway: boolean;
+    onClickAway?: () => void;
     children: React.ReactNode;
     className?: string;
     isDialog?: boolean;
@@ -19,7 +20,7 @@ export interface PopoverProps {
 // component
 const Popover = (props: PopoverProps) => {
     // Props
-    const { open, closeOnClickAway, children, className, isDialog, arrow, position } = props;
+    const { open, closeOnClickAway, children, className, isDialog, arrow, position, onClickAway } = props;
 
     // Local states
     const [active, setActive] = React.useState(false);
@@ -27,6 +28,9 @@ const Popover = (props: PopoverProps) => {
 
     // On render component, set active state from 'open' prop
     React.useLayoutEffect(() => {
+        // This is the only place where we can toggle 'active' prop.
+        // This code only run if the parent components modifies the 'open' props
+        // So, this means that only the parent component can change the 'active' state.
         setActive(!!open);
     }, [open]);
 
@@ -57,7 +61,7 @@ const Popover = (props: PopoverProps) => {
                 popoverRef.current.style.top = position.top + 'px';
             }
         }
-    }, []);
+    }, [position]);
 
     // When menu is visible, calculate the absolute position to place the menu below the trigger
     React.useLayoutEffect(() => {
@@ -85,7 +89,8 @@ const Popover = (props: PopoverProps) => {
         // Don't close popover if closeOnClickAway prop is set to false
         // It can be useful for dialogs that have their own close trigger i.e. button
         if (closeOnClickAway) {
-            setActive(false);
+            // this function is to plugin in close popover funcion
+            onClickAway?.();
 
             // enable body scroll
             disableBodyScroll(false);

@@ -21,6 +21,9 @@ const theme = {
             main: '#F4D06F',
             light: '#F4D06F',
         },
+        error: {
+            main: '#c74949',
+        },
         white: '#fff',
         gray: {
             '100': '#333333',

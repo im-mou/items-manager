@@ -1,6 +1,15 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Button, DeleteIcon, FavoriteFilledIcon, Paper, theme, Typography } from '../../components/design-system';
+import {
+    Button,
+    DeleteIcon,
+    FavoriteFilledIcon,
+    Input,
+    Paper,
+    SearchIcon,
+    theme,
+    Typography,
+} from '../../components/design-system';
 import { useStore } from '../../store';
 import './favorite-items.sass';
 
@@ -16,7 +25,13 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
             {ItemsStore.favouriteitemsList.length ? (
                 <React.Fragment>
                     {/** info */}
-                    <div className="favorite-items__info">
+                    <div className="favorite-items__toolbar">
+                        <Input
+                            className="favorite-items__toolbar__search"
+                            variant="naked"
+                            startIcon={<SearchIcon color={theme.palette.primary.main} />}
+                            placeholder="Seach your favourite items..."
+                        />
                         <Typography variant="caption">
                             {ItemsStore.favouriteitemsList.length} items added to list
                         </Typography>
