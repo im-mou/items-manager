@@ -1,0 +1,25 @@
+// Badge
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+@import ../../../scss/_variables
+@import ../../../scss/_utils
+
+// Classes
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+.badge
+    position: relative
+    &__bubble
+        position: absolute
+        @include display-flex()
+        justify-content: center
+        align-items: center
+        right: -5px
+        top: -5px
+        height: 20px
+        width: 20px
+        background: $primary-color
+        color: $white-color
+        font-weight: bold
+        font-size: 14px
+        @include border-radius($radius: 24px)
+        animation: heartbeat 200ms 1 linear

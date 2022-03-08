@@ -1,22 +1,24 @@
-// Container
+// Backdrop
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 
+@import ../../../scss/_variables
 @import ../../../scss/_utils
 
 // Classes
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
-.container
-    width: 100%
-    box-sizing: border-box
-    margin-left: auto
-    margin-right: auto
-    display: block
-    @include spacing($property: padding, $direction: x, $amount: 4)
+.backdrop
+    position: fixed
+    height: 100vh
+    width: 100vw
+    @include display-flex()
+    justify-content: center
+    align-items: center
+    background: $white-color
+    flex-direction: column
 
-    @include breakpoint(laptop)
-        width: 900px
-        padding: 0
+    & svg
+        height: 34px
+        width: 34px
 
-    @include breakpoint(desktop)
-        width: 1200px
-        padding: 0
+    &__body
+        margin-top: $spacing-unit * 4

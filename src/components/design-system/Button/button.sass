@@ -14,18 +14,19 @@
     @include box-shadow($left: 0, $top: 2px, $blur: 1px, $color: $color-dark)
     @include transition($property: box-shadow, $duration: 200ms, $easing: ease-out)
 
-    &:hover
+    &:hover:not(:disabled)
         background-color: darken($color, 3%)
-    &:active
+    &:active:not(:disabled)
         background-color: darken($color, 10%)
 
 // Mixin to generate color styling for text button
 @mixin button-text-color-mods($color)
     border-color: transparent
     background-color: transparent
-    &:hover
+
+    &:hover:not(:disabled)
         background-color: rgba($color, 0.1)
-    &:active
+    &:active:not(:disabled)
         background-color: rgba($color, 0.2)
 
 // Classes
@@ -40,6 +41,10 @@
     @include spacing($property: padding, $direction: x, $amount: 5)
     @include spacing($property: padding, $direction: y, $amount: 2.5)
     @include transition($property: background-color, $duration: 100ms, $easing: ease-out)
+
+    &:disabled
+        cursor: not-allowed
+        opacity: 0.6
 
     // button body
     #{ $self }__content

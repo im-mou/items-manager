@@ -1,12 +1,12 @@
 import { IItem } from '../../types/types';
 import { FaceIcon, Typography } from '../design-system';
-import './card.sass';
+import './item-card.sass';
 
-export interface CardDetailedProps {
+export interface ItemCardDetailedProps {
     item: IItem;
 }
 
-const CardDetailed = ({ item }: CardDetailedProps) => {
+const ItemCardDetailed = ({ item }: ItemCardDetailedProps) => {
     return (
         <article className="item-card detailed">
             <div className="item-card__image">
@@ -31,4 +31,4 @@ const CardDetailed = ({ item }: CardDetailedProps) => {
     );
 };
 
-export default CardDetailed;
+export default ItemCardDetailed;

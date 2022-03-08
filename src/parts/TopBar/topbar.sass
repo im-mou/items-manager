@@ -6,20 +6,8 @@
     flex-direction: row
     justify-content: space-between
     align-items: stretch
-    @include spacing($property: padding, $direction: y, $amount: 6)
+    padding-top: $spacing-unit * 6
 
 
     & > *
         margin-right: $spacing-unit * 2
-
-    // swap whishlist button on viewport width change
-    &__whishlist
-        &--desktop
-            display: none
-            @include breakpoint($point: laptop)
-                display: initial
-
-        &--mobile
-            display: inherit
-            @include breakpoint($point: laptop)
-                display: none

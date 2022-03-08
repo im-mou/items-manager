@@ -6,66 +6,55 @@ import './popover.sass';
 export interface PopoverProps {
     open?: boolean;
     closeOnClickAway: boolean;
-    trigger: (open: () => void, close: () => void, state: boolean) => React.ReactNode;
     children: React.ReactNode;
     className?: string;
     isDialog?: boolean;
     arrow?: boolean;
+    position?: {
+        top: number;
+        left: number;
+    };
 }
 
 // component
 const Popover = (props: PopoverProps) => {
     // Props
-    const { closeOnClickAway, trigger, children, className, isDialog, arrow } = props;
+    const { open, closeOnClickAway, children, className, isDialog, arrow, position } = props;
 
     // Local states
     const [active, setActive] = React.useState(false);
-    const triggerRef = React.useRef<HTMLDivElement>(null);
     const popoverRef = React.useRef<HTMLDivElement>(null);
 
-    // Toggle active state
-    const toggleActive = useCallback(() => {
-        setActive((curr) => {
-            // Don't close popover if closeOnClickAway prop is set to false
-            // It can be useful for dialogs that have their own close trigger i.e. button
-            if (curr && closeOnClickAway === false) {
-                return curr;
-            }
-
-            return !curr;
-        });
-    }, [setActive]);
+    // On render component, set active state from 'open' prop
+    React.useLayoutEffect(() => {
+        setActive(!!open);
+    }, [open]);
 
     // function to calculate position of the popover
     const setPopOverPosition = useCallback(() => {
-        if (popoverRef.current && triggerRef.current) {
+        if (popoverRef.current) {
             // Focus trap for accesibility
             popoverRef.current?.focus();
+
+            // Disable body scroll
+            disableBodyScroll(true);
 
             /**
              * position the dialog to the central position
              *  */
             if (isDialog) {
                 // set position props to dialog
-                popoverRef.current.style.left = `calc(50% - ${popoverRef.current.offsetWidth / 2}px)`;
                 popoverRef.current.style.top = `calc(50% - ${popoverRef.current.offsetHeight / 2}px)`;
-            } else {
-                /**
-                 * position the menu to the position of the trigger
-                 *  */
+                popoverRef.current.style.left = `calc(50% - ${popoverRef.current.offsetWidth / 2}px)`;
+            }
 
-                // get the horizontal coord to place the menu
-                const menuHorizontalPosition =
-                    triggerRef.current.offsetLeft +
-                    triggerRef.current.offsetWidth / 2 -
-                    popoverRef.current.offsetWidth / 2;
-
-                // get the vertical coord to place the menu
-                const menuVerticalPosition = triggerRef.current.offsetTop + triggerRef.current.offsetHeight;
-
-                // set position props to menu
-                popoverRef.current.style.left = menuHorizontalPosition + 'px';
-                popoverRef.current.style.top = menuVerticalPosition + 'px';
+            /**
+             * position the popover to the position of the trigger
+             *  */
+            if (position) {
+                // set position props to popover
+                popoverRef.current.style.left = position.left - popoverRef.current.offsetWidth / 2 + 'px';
+                popoverRef.current.style.top = position.top + 'px';
             }
         }
     }, []);
@@ -76,6 +65,7 @@ const Popover = (props: PopoverProps) => {
 
         // attach resixe listener
         window.addEventListener('resize', setPopOverPosition);
+        window.addEventListener('scroll', setPopOverPosition); // for mobile
 
         // recalculate position
         setPopOverPosition();
@@ -83,24 +73,38 @@ const Popover = (props: PopoverProps) => {
         // Cleanup
         return () => {
             window.removeEventListener('resize', setPopOverPosition);
+            window.removeEventListener('scroll', setPopOverPosition); // for mobile
+
+            // enable body scroll
+            disableBodyScroll(false);
         };
     }, [active]);
 
+    // Function: Toggle active state when back drop is pressed
+    const closeDialog = useCallback(() => {
+        // Don't close popover if closeOnClickAway prop is set to false
+        // It can be useful for dialogs that have their own close trigger i.e. button
+        if (closeOnClickAway) {
+            setActive(false);
+
+            // enable body scroll
+            disableBodyScroll(false);
+        }
+    }, [setActive]);
+
+    // toggle body scroll
+    const disableBodyScroll = (disable: boolean) => {
+        // enable body scroll
+        document.body.style.overflow = disable ? 'hidden' : 'initial';
+    };
+
     return (
         <div className="popover">
-            <div ref={triggerRef} onClick={toggleActive}>
-                {/** render props for menu trigger */}
-                {trigger(
-                    () => setActive(true),
-                    () => setActive(false),
-                    active,
-                )}
-            </div>
             {ReactDOM.createPortal(
                 <div className={clsx('popover-portal', { ['popover-portal--active']: active })}>
                     {/** backdrop for clickaways event */}
                     <div
-                        onClick={toggleActive}
+                        onClick={closeDialog}
                         className={clsx('popover-portal__backdrop', {
                             ['popover-portal__backdrop--visible']: isDialog,
                         })}
@@ -110,10 +114,9 @@ const Popover = (props: PopoverProps) => {
                     <div
                         tabIndex={0}
                         ref={popoverRef}
-                        className={clsx('popover-portal__body', {
+                        className={clsx({ [className as string]: className }, 'popover-portal__body', {
                             ['popover-portal__body--active']: active,
                             ['popover-portal__body--arrow']: arrow,
-                            [className as string]: className,
                         })}
                     >
                         {children}

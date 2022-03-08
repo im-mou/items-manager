@@ -15,3 +15,16 @@ export { default as Input } from './Input';
 export * from './Input';
 
 export { default as Container } from './Container';
+
+export { default as Loader } from './Loader';
+
+export { default as Dialog } from './Dialog';
+export * from './Dialog';
+
+export { default as Menu } from './Menu';
+export * from './Menu';
+
+export { default as Badge } from './Badge';
+export * from './Badge';
+
+export { default as Backdrop } from './Backdrop';

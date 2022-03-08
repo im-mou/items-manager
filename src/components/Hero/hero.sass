@@ -1,6 +1,7 @@
 // Hero
 @import ../../scss/_variables
 @import ../../scss/_utils
+@import ../../scss/_animations
 
 .hero
     @include display-flex()
@@ -14,11 +15,11 @@
 
     &__title
         color: $gray-300
-        animation: 1s ease-out 0s 1 slide-in-bottom, 1s ease-out 0s 1 fade-in
+        animation: 1s ease-out 0s 1 hero-slide-in, 1s ease-out 0s 1 fade-in
 
     &__subtitle
         color: $gray-500
-        animation: 1.3s ease-in 0s 1 slide-in-bottom, 3s ease-out 0s 1 fade-in
+        animation: 1.3s ease-in 0s 1 hero-slide-in, 3s ease-out 0s 1 fade-in
 
     &__icon
         z-index: -100
@@ -27,7 +28,7 @@
         width: 660px
         height: 660px
         transform: rotate(20deg)
-        animation: 30s ease-in infinite rotate-infitity
+        animation: 30s ease-in infinite rotate-hero
 
         & > path:last-child
             stroke: #a6e8c0
@@ -40,3 +41,6 @@
 @keyframes dash
     to
         stroke-dashoffset: 100
+
+// animation
+@include slide-in($name: hero-slide-in, $start: 20%, $finish: 0%)

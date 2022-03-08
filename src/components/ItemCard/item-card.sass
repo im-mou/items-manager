@@ -6,6 +6,7 @@
     $self: &
     @include display-flex()
     align-items: stretch
+    position: relative
 
     background: $white-color
     margin: $spacing-unit * 2
@@ -13,7 +14,8 @@
     @include border-radius($radius: $spacing-unit * 2)
     @include box-shadow($left: 0, $top: 1px, $blur: 1px, $color: $gray-700)
 
-    position: relative
+    // animate on load
+    animation: fade-in 350ms 1 ease-in
 
     //responsiveness
     flex-direction: column
@@ -25,6 +27,10 @@
     @include breakpoint($point: tablet)
         flex-direction: row
         flex-basis: calc(50% - $spacing-unit * 4)
+
+    @include breakpoint($point: desktop)
+        flex-direction: column
+        flex-basis: calc(25% - $spacing-unit * 4)
 
     // shadow
     &::after
@@ -48,12 +54,28 @@
         min-width: 140px
         min-height: 140px
         overflow: hidden
+        cursor: pointer
         @include border-radius($radius: $spacing-unit)
+
+        // Responsive
+        height: 400px
+        @include breakpoint($point: tablet)
+            height: 160px
+            width: 140px
+
+        @include breakpoint($point: desktop)
+            height: 200px
+            width: 100%
 
         & > img
             width: 100%
             height: 100%
             object-fit: cover
+
+            // animate image on hover
+            @include transition($property: transform, $duration: 100ms, $easing: linear)
+            &:hover
+                transform: scale(1.1)
 
     &__content
         flex-grow: 1
@@ -67,6 +89,11 @@
 
         @include breakpoint($point: tablet)
             @include spacing($property: padding, $direction: y, $amount: 1)
+
+        @include breakpoint($point: desktop)
+            padding-top: $spacing-unit * 4
+            padding-bottom: $spacing-unit
+            @include spacing($property: padding, $direction: x, $amount: 3)
 
         &__title
             color: lighten($gray-100, 10%)
@@ -92,13 +119,28 @@
             & > h1
                 color: $gray-100
 
+            @include breakpoint($point: desktop)
+                margin-top: $spacing-unit * 2
+
+            // Animate on click 'add to favourite' button
+            &__liked
+                animation: heartbeat 200ms 1 linear
+
     // Detailed card
     &.detailed
         box-shadow: none
         flex-direction: column
 
-        #{ $self }__content
+        #{ $self }__image
+            height: 70%
+            width: 100%
+            cursor: initial
+            & > img
+                // don't apply animation with details card view
+                transform: none
+                transition: none
 
+        #{ $self }__content
             &__title
                 color: $gray-100
                 @include spacing($property: margin, $direction: y, $amount: 2)

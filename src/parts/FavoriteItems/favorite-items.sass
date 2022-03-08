@@ -1,8 +1,37 @@
 // Hero
 @import ../../scss/_variables
 @import ../../scss/_utils
+@import ../../scss/_animations
 
+// swap favourite button on viewport width change
+.favourite-button
+    &--desktop
+        display: none
+        @include breakpoint($point: laptop)
+            display: initial
+
+    &--mobile
+        display: inherit
+        @include breakpoint($point: laptop)
+            display: none
+
+// favourite dialog classes
 .favorite-items
+    &__empty-state
+        @include display-flex()
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        min-height: 300px
+
+        & > *
+            color: $gray-300
+
+        & > svg
+            margin-bottom: $spacing-unit * 4
+            fill: $gray-700
+            height: 92px
+            width: 92px
 
     &__info
         color: $gray-300

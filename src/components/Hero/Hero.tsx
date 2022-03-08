@@ -1,4 +1,4 @@
-import { ItemManagerIcon, Typography } from '../../components/design-system';
+import { ItemManagerIcon, Typography } from '../design-system';
 import './hero.sass';
 
 const Hero = () => {

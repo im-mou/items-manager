@@ -1,6 +1,7 @@
 // PopOver
 @import ../../../scss/_variables
 @import ../../../scss/_utils
+@import ../../../scss/_animations
 
 .popover-portal
     display: none
@@ -20,7 +21,7 @@
         opacity: 0
         visibility: hidden
         position: absolute
-        animation: slide-in-bottom 500ms 1 cubic-bezier(0.75, 0, 0.2, 0.9)
+        animation: grow 300ms 1 ease-out, fade-in 200ms 1 ease-out
 
         &--arrow
             &:before
@@ -45,7 +46,7 @@
         height: 100vh
         width: 100vw
         z-index: 1
-        animation: fade-in 250ms 1 cubic-bezier(0.75, 0, 0.2, 0.9)
+        animation: fade-in 200ms 1 linear
 
         &--visible
             background: rgba($gray-100, 0.2)

@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import './button.sass';
 
 // Button component
@@ -17,7 +18,9 @@ const Button = React.forwardRef<HTMLButtonElement, IButton>(function Button(prop
     const { variant = 'contained', color = 'default', icon, startIcon, endIcon, children, className, ...other } = props;
     return (
         <button
-            className={`button button--color-${color} button--variant-${variant} ${className || ''}`}
+            className={clsx('button', `button--color-${color}`, `button--variant-${variant}`, {
+                [className as string]: className,
+            })}
             ref={ref}
             {...other}
         >

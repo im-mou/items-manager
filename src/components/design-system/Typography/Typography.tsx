@@ -38,7 +38,9 @@ const Typography = (props: TypographyProps) => {
             console.error('Warning: When using ellipsis prop in <Typography />, the children should be a string');
         } else {
             // cut the string
-            body = children.slice(0, ellipsis) + '...';
+            if (children.length > ellipsis) {
+                body = children.slice(0, ellipsis) + '...';
+            }
         }
     }
 
