@@ -33,7 +33,7 @@ const ItemsGrid = observer(function ItemsGrid({ items }: ItemsGridProps) {
     return (
         <React.Fragment>
             {/** Dialog to show the details of a card */}
-            <Dialog title="Item details" open={detailsDialogOpen} onClose={closeDetailsDialog}>
+            <Dialog title="Item details" open={detailsDialogOpen} onClose={closeDetailsDialog} keepMounted>
                 {itemToShowInDialog ? <ItemCardDetailed item={itemToShowInDialog} /> : null}
             </Dialog>
 

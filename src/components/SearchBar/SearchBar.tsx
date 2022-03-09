@@ -23,9 +23,15 @@ const SearchBar = observer(function SearchBar() {
     // update search input value
     const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput((prev) => ({ ...prev, value: e.target.value }));
+
+        // If search view is active and the user empties the input
+        // we'll close the search view and go back to homepage.
+        if (e.target.value.trim().length === 0 && ItemsStore.search.active) {
+            ItemsStore.closeSearchView();
+        }
     };
 
-    // Toggle search input focus
+    // Toggle search input focus to apply White background to it.
     const activateSearchInput = (activate: boolean) => () => {
         // do not de-activate input if there is value present
         if (!activate && searchInput.value.length > 0) {
@@ -34,7 +40,7 @@ const SearchBar = observer(function SearchBar() {
         setIsSearchInputActive(activate);
     };
 
-    // Toggle price button to white to indicate that price filter has some value
+    // Toggle price button to white to indicate that price filter has some value (apply white background).
     const activatePriceInput = (activate: boolean) => {
         setIsPriceInputActive(activate);
     };

@@ -20,3 +20,25 @@
 
     &__subtitle
         color: $gray-500
+
+// search view classes
+.searchview
+    padding-bottom: $spacing-unit * 16
+
+    &__empty-state
+        @include display-flex()
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        min-height: 300px
+        padding-top: $spacing-unit * 32
+
+        & > *
+            color: $gray-300
+            font-size: 1rem
+
+        & > svg
+            margin-bottom: $spacing-unit * 4
+            fill: rgba(0,0,0, 0.1)
+            height: 140px
+            width: 140px

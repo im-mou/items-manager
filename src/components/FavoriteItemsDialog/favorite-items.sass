@@ -17,6 +17,7 @@
 
 // favourite dialog classes
 .favorite-items
+
     &__empty-state
         @include display-flex()
         flex-direction: column
@@ -63,6 +64,7 @@
             background: rgba(0,0,0,0.03)
             margin-bottom: $spacing-unit
             @include spacing($property: padding, $direction: all, $amount: 2)
+            animation: fade-in 200ms 1 linear
 
             &__title
                 flex-grow: 1
@@ -81,4 +83,6 @@
                 overflow: hidden
 
                 & > img
-                    object-fit: fill
+                    height: 100%
+                    width: 100%
+                    object-fit: cover

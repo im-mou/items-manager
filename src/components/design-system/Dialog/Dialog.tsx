@@ -9,11 +9,12 @@ export interface DialogProps {
     children: React.ReactNode;
     open: boolean;
     onClose: () => void;
+    keepMounted?: boolean;
 }
 
 const Dialog = (props: DialogProps) => {
     // Props
-    const { children, title, icon, open, onClose } = props;
+    const { children, title, icon, open, keepMounted = false, onClose } = props;
 
     // attach keyboard esc key listener to close the dialog
     React.useEffect(() => {
@@ -31,6 +32,8 @@ const Dialog = (props: DialogProps) => {
             onClose();
         }
     };
+
+    if (!keepMounted && !open) return null;
 
     return (
         <Popover open={open} closeOnClickAway={false} isDialog>

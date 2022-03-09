@@ -42,14 +42,16 @@ const sortByNumericValues = (orderby: IOrderByFilter) => (i1: IItem, i2: IItem) 
 };
 
 /**
- * Very simple indexOf string filter
+ * Very simple indexOf string filter.
+ * It takes an object where the keys are the '_id' and the value
+ * is sentence form which we have to search a substring.
  *
  * Ideally I would've used a fuzzy search but for this
  * test this funtion will do it.
  *
  * @param token string to search
- * @param haystack list of sentences form which we have to search the token
- * @returns list of id's of item with a match
+ * @param haystack list of sentencez form which we have to search the token
+ * @returns list of id's of items with a match
  */
 const searchString = (token: string, haystack: { [key: string]: string }) => {
     return Object.entries(haystack)
