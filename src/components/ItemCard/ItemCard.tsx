@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react';
 import { useStore } from '../../store';
 import { IItem } from '../../types/types';
-import { Button, FavoriteFilledIcon, FavoriteIcon, theme, Typography, UnfoldIcon } from '../design-system';
+import { Button, ExpandMoreIcon, FavoriteFilledIcon, FavoriteIcon, theme, Typography } from '../design-system';
 import './item-card.sass';
 
 export interface ItemCardProps {
@@ -14,7 +14,7 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
     const { ItemsStore } = useStore();
 
     // Check if item is added to favourite
-    const isItemFavourite = ItemsStore.favouriteitemsList.findIndex((_item) => _item._id === item._id) !== -1;
+    const isItemFavourite = ItemsStore.favouriteitemsList.findIndex(_item => _item._id === item._id) !== -1;
 
     // add item to favourite lisr
     const toggleItemToFavourite = () => {
@@ -47,13 +47,15 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                     <Typography variant="h1">{item.price}€</Typography>
                     <div>
                         <Button
+                            aria-label="View item Details"
                             onClick={openDetails}
                             variant="icon"
-                            icon={<UnfoldIcon color={theme.palette.gray[700]} />}
+                            icon={<ExpandMoreIcon color={theme.palette.gray[700]} />}
                         />
                         <Button
-                            className={clsx({ ['item-card__content__footers__liked']: isItemFavourite })}
+                            aria-label="Add item to favourite list"
                             variant="icon"
+                            className={clsx({ ['item-card__content__footers__liked']: isItemFavourite })}
                             onClick={toggleItemToFavourite}
                             icon={
                                 isItemFavourite ? (

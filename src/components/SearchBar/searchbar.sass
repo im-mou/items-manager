@@ -40,7 +40,9 @@
     margin-left: $spacing-unit * 2
     cursor: pointer
     @include display-flex()
+    justify-content: center
     align-items: center
+    flex-direction: row
     background-color: #E8E7E7
     @include spacing($property: padding, $direction: x, $amount: 1)
     @include transition($property: padding, $duration: 200ms, $easing: linear)
@@ -48,7 +50,7 @@
     // Hide price input/button on phablet
     display: none
     @include breakpoint($point: phablet)
-        display: inherit
+        @include display-flex()
 
     &--active
         @include active-input-color()
@@ -58,3 +60,7 @@
         & > svg
             height: 16px
             width: 16px
+
+    &__value
+        color: $primary-color
+        margin-right: $spacing-unit * 4

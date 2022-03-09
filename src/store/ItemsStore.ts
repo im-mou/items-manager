@@ -55,7 +55,7 @@ class ItemsStore {
         // We will create an object concatenating all the string (title, description, email) in a single string
         // to apply Regex or use indexOf to it. For the next searches, the data will be cached.
         if (Object.keys(this.searchTokens).length === 0) {
-            this.sourceItemsList.forEach((item) => {
+            this.sourceItemsList.forEach(item => {
                 this.searchTokens[item._id] = [item.title, item.email, item.description].join(' ').toLowerCase();
             });
         }
@@ -114,7 +114,7 @@ class ItemsStore {
         if (!id) throw new Error('No item id was provided');
 
         // Find the index of the item
-        const index = this.favouriteitemsList.findIndex((item) => item._id === id);
+        const index = this.favouriteitemsList.findIndex(item => item._id === id);
 
         if (index !== -1) {
             // inplace delete
@@ -129,9 +129,39 @@ class ItemsStore {
         if (!searchQuery) throw new Error('No search query was provided');
         this.search = searchQuery;
 
-        // Apply search
-        const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
-        this.searchitemsList = [...this.sourceItemsList].filter((item) => foundIds.includes(item._id));
+        // Create filter pipeline
+        const filterPipeLine = [];
+
+        // Apply string 'term' search filter 'term' if present
+        if (this.search.term.trim().length) {
+            // Create a filter for the pipeline
+            const textSearchFilter = (items: IItem[]) => {
+                const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
+                return items.filter((item: IItem) => foundIds.includes(item._id));
+            };
+
+            // push filter to pipeline
+            filterPipeLine.push(textSearchFilter);
+        }
+
+        // Apply price search if 'price' is present
+        if (this.search.price) {
+            const priceSearchFilter = (items: IItem[]) => {
+                return items.filter((item: IItem) => item.price == this.search.price);
+            };
+
+            // push filter to pipeline
+            filterPipeLine.push(priceSearchFilter);
+        }
+
+        // Todo: Add price range filter
+        // ...
+
+        // Check if we have filter in our pipeline
+        if (filterPipeLine.length > 0) {
+            // Run pipeline and save the output to store
+            this.searchitemsList = filterPipeLine.reduce((item, filter) => filter(item), this.sourceItemsList);
+        }
     }
 
     // clear search

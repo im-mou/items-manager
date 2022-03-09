@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, CloseIcon, EuroIcon, Input, Menu, Paper, SearchIcon, theme } from '../design-system';
+import { Button, CloseIcon, EuroIcon, Input, Menu, Paper, SearchIcon, theme, Typography } from '../design-system';
 import clsx from 'clsx';
 import { observer } from 'mobx-react';
 import { useStore } from '../../store';
@@ -22,7 +22,7 @@ const SearchBar = observer(function SearchBar() {
 
     // update search input value
     const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchInput((prev) => ({ ...prev, value: e.target.value }));
+        setSearchInput(prev => ({ ...prev, value: e.target.value }));
 
         // If search view is active and the user empties the input
         // we'll close the search view and go back to homepage.
@@ -71,6 +71,7 @@ const SearchBar = observer(function SearchBar() {
                 {ItemsStore.search.active === false ? (
                     // By default show search icon
                     <Button
+                        aria-label="Search button"
                         variant="icon"
                         className="text-search__icon"
                         icon={<SearchIcon color={theme.palette.gray[500]} />}
@@ -78,6 +79,7 @@ const SearchBar = observer(function SearchBar() {
                 ) : (
                     // Button to close search if a search query is active
                     <Button
+                        aria-label="Clear search button"
                         variant="icon"
                         className="text-search__icon"
                         onClick={() => ItemsStore.closeSearchView()}
@@ -99,14 +101,17 @@ const SearchBar = observer(function SearchBar() {
             </Paper>
 
             {/** Price input */}
-            <Paper
-                variant="outlined"
-                className={clsx('price-search', { ['price-search--active']: isPriceInputActive })}
-            >
-                <Menu
-                    trigger={(setOpen) => (
+            <Menu
+                trigger={(setOpen, isOpen) => (
+                    <Paper
+                        aria-label="filter price"
+                        onClick={setOpen}
+                        variant="outlined"
+                        className={clsx('price-search', { ['price-search--active']: isPriceInputActive })}
+                    >
+                        {/** Show button + price value if it is present */}
                         <Button
-                            onClick={setOpen}
+                            aria-label="filter price button"
                             variant="icon"
                             className="price-search__icon"
                             icon={
@@ -115,12 +120,18 @@ const SearchBar = observer(function SearchBar() {
                                 />
                             }
                         />
-                    )}
-                >
-                    {/** Price range Form */}
-                    <PriceRangeMenu minPriceRef={minPriceInputRef} isFormFilled={activatePriceInput} />
-                </Menu>
-            </Paper>
+                        {/** - Show price value in the button, if the price filter is applied */}
+                        {isPriceInputActive && !isOpen ? (
+                            <Typography className="price-search__value" variant="h3">
+                                {minPriceInputRef.current?.value}
+                            </Typography>
+                        ) : null}
+                    </Paper>
+                )}
+            >
+                {/** Price range Form */}
+                <PriceRangeMenu minPriceRef={minPriceInputRef} isFormFilled={activatePriceInput} />
+            </Menu>
         </div>
     );
 });

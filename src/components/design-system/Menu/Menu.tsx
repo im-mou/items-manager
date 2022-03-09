@@ -23,7 +23,7 @@ const Menu = (props: MenuProps) => {
     const triggerRef = React.useRef<HTMLDivElement>(null);
 
     // Re-calcualte menu position on window resize
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         // attach resize listener
         window.addEventListener('resize', calcualteMenuPosition);
 
