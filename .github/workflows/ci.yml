@@ -17,6 +17,8 @@ jobs:
             #   run: npm ci
             # - name: test
             #   run: npm test
+            - name: yarn
+              run: yarn install --frozen-lockfile
             - name: lint
               run: yarn lint
             - name: typescript
