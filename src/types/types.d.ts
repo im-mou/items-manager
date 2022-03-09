@@ -1,3 +1,5 @@
+import { ORDER_BY_KEYS } from '../utils/constants';
+
 // TYpes and interfaces
 
 // we use a raw item interface because we are not recieving
@@ -28,12 +30,18 @@ export interface IPaginator {
 export interface ISearchQuery {
     active: boolean;
     term: string;
-    price: [number | null, number | null];
+    price: string | undefined;
 }
 
-type TInputValue = string;
-export interface IPriceRangeForm {
-    value: TInputValue;
+export interface IFormInput {
+    value: string;
     error: boolean;
     errMsg: string;
 }
+
+export interface IOrderByFilter {
+    key: typeof ORDER_BY_KEYS[number];
+    asc: boolean;
+}
+
+export type TViewsKeys = 'home' | 'search';

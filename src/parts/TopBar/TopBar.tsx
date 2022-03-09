@@ -1,6 +1,6 @@
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
-import FavoriteItemsDialog from '../FavoriteItemsDialog';
+import FavoriteItemsDialog from '../../components/FavoriteItemsDialog';
 import './topbar.sass';
 
 const TopBar = () => {

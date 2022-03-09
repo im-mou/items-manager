@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { Button, Loader } from '../../components/design-system';
 import Hero from '../../components/Hero';
+import OrderByFilter from '../../components/OrderByFilter';
 import { useStore } from '../../store';
 import ItemsGrid from '../ItemsGrid';
 import './homeview.sass';
@@ -13,7 +14,13 @@ const HomeView = observer(function HomeView() {
     // Local state
     const [isLoading, setIsLoading] = React.useState(false);
 
-    // fake loading delay
+    // sort on mount page
+    React.useEffect(() => {
+        // Apply filter upon loading more items
+        ItemsStore.applyOrderByFilter('home');
+    }, []);
+
+    // fake loading delay upload loading more items
     const loadMoreItems = React.useCallback(() => {
         setIsLoading(true);
 
@@ -21,6 +28,10 @@ const HomeView = observer(function HomeView() {
         setTimeout(() => {
             // get more feed
             ItemsStore.feedItems();
+
+            // Apply filter upon loading more items
+            ItemsStore.applyOrderByFilter('home');
+
             setIsLoading(false);
         }, 500);
     }, []);
@@ -29,6 +40,11 @@ const HomeView = observer(function HomeView() {
         <div className="homeview">
             {/** Home view headers */}
             <Hero />
+
+            {/** Order BY Filter Button */}
+            <div className="homeview__toolbar">
+                <OrderByFilter view="home" />
+            </div>
 
             {/** View containing list of homeview items */}
             <ItemsGrid items={ItemsStore.homePageitemsList} />

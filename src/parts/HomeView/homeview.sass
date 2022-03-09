@@ -7,3 +7,9 @@
     &__footer
         @include spacing($property: margin, $direction: y, $amount: 8)
         text-align: center
+
+
+    &__toolbar
+        @include display-flex()
+        justify-content: flex-end
+        @include spacing($property: margin, $direction: x, $amount: 1)

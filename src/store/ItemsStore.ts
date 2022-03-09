@@ -1,7 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 import { itemsService } from '../services/items.service';
-import { IItem, IPaginator, ISearchQuery } from '../types/types';
+import { IItem, IOrderByFilter, IPaginator, ISearchQuery, TViewsKeys } from '../types/types';
 import { ITEMS_PER_PAGE } from '../utils/constants';
+import helpers from '../utils/helpers';
 
 // Reactive global Store for items
 // --------------------------------
@@ -17,13 +18,22 @@ class ItemsStore {
     search: ISearchQuery = {
         active: false,
         term: '',
-        price: [null, null],
+        price: undefined,
     };
+
+    // This variable with have (title, description, email) in a single string to apply regex for fast search
+    searchTokens: { [key: string]: string } = {};
 
     // Home page pagination info (Load more... button)
     pagination: IPaginator = {
         currentOffset: 0,
         lastPage: true,
+    };
+
+    // Order by filter
+    orderBy: IOrderByFilter = {
+        key: 'title',
+        asc: true,
     };
 
     // ctor
@@ -38,6 +48,17 @@ class ItemsStore {
 
         // pluck initial items to show on the home page
         this.feedItems();
+
+        // apply sort to home view list
+        this.applyOrderByFilter('home');
+
+        // We will create an object concatenating all the string (title, description, email) in a single string
+        // to apply Regex or use indexOf to it. For the next searches, the data will be cached.
+        if (Object.keys(this.searchTokens).length === 0) {
+            this.sourceItemsList.forEach((item) => {
+                this.searchTokens[item._id] = [item.title, item.email, item.description].join(' ').toLowerCase();
+            });
+        }
     }
 
     // Function to fetch all the item from the server
@@ -107,6 +128,10 @@ class ItemsStore {
     setSearchQuery(searchQuery: ISearchQuery) {
         if (!searchQuery) throw new Error('No search query was provided');
         this.search = searchQuery;
+
+        // Apply search
+        const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
+        this.searchitemsList = [...this.sourceItemsList].filter((item) => foundIds.includes(item._id));
     }
 
     // clear search
@@ -114,9 +139,29 @@ class ItemsStore {
         this.search = {
             active: false,
             term: '',
-            price: [null, null],
+            price: undefined,
         };
     }
+
+    // update orderby filter
+    setOrderByFilter = (orderBy: IOrderByFilter) => {
+        if (!orderBy) throw new Error('No data was provided');
+        this.orderBy = orderBy;
+    };
+
+    // function to sort items
+    applyOrderByFilter = (view: TViewsKeys) => {
+        // select sorter
+        let sorter = helpers.sortByStringValues;
+        if (this.orderBy.key === 'price') {
+            // sort numbers
+            sorter = helpers.sortByNumericValues;
+        }
+
+        // sort items
+        if (view === 'home') this.homePageitemsList.sort(sorter(this.orderBy));
+        if (view === 'search') this.searchitemsList.sort(sorter(this.orderBy));
+    };
 }
 
 export default ItemsStore;

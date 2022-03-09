@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { useStore } from '../../store';
 import './searchbar.sass';
 import PriceRangeMenu from '../PriceRangeMenu';
+import { IFormInput } from '../../types/types';
 
 // Main component
 const SearchBar = observer(function SearchBar() {
@@ -13,16 +14,10 @@ const SearchBar = observer(function SearchBar() {
 
     // refs
     const minPriceInputRef = React.useRef<HTMLInputElement>(null);
-    const maxPriceInputRef = React.useRef<HTMLInputElement>(null);
 
     // Local state
-    const [searchInput, setSearchInput] = React.useState({
-        value: '',
-        error: false,
-        errMsg: '',
-    });
-
-    const [isInputActive, setIsInputActive] = React.useState<boolean>(false);
+    const [searchInput, setSearchInput] = React.useState<IFormInput>({ value: '', error: false, errMsg: '' });
+    const [isSearchInputActive, setIsSearchInputActive] = React.useState<boolean>(false);
     const [isPriceInputActive, setIsPriceInputActive] = React.useState<boolean>(false);
 
     // update search input value
@@ -31,12 +26,12 @@ const SearchBar = observer(function SearchBar() {
     };
 
     // Toggle search input focus
-    const activateInput = (activate: boolean) => () => {
+    const activateSearchInput = (activate: boolean) => () => {
         // do not de-activate input if there is value present
         if (!activate && searchInput.value.length > 0) {
             return;
         }
-        setIsInputActive(activate);
+        setIsSearchInputActive(activate);
     };
 
     // Toggle price button to white to indicate that price filter has some value
@@ -53,16 +48,17 @@ const SearchBar = observer(function SearchBar() {
 
     // Submit search
     const submitSearch = () => {
+        // dispatch query action to store
         ItemsStore.setSearchQuery({
             active: true,
-            term: 'kajsdksahd',
-            price: [null, null],
+            term: searchInput.value.trim(),
+            price: minPriceInputRef.current?.value,
         });
     };
 
     return (
         <div className="searchbar-wrapper">
-            <Paper className={clsx('text-search', { ['text-search--active']: isInputActive })} variant="outlined">
+            <Paper className={clsx('text-search', { ['text-search--active']: isSearchInputActive })} variant="outlined">
                 {/**
                  * Search input left ICON / ACTION
                  * */}
@@ -90,8 +86,8 @@ const SearchBar = observer(function SearchBar() {
                     placeholder="Search items..."
                     value={searchInput.value}
                     onChange={searchInputHandler}
-                    onFocus={activateInput(true)}
-                    onBlur={activateInput(false)}
+                    onFocus={activateSearchInput(true)}
+                    onBlur={activateSearchInput(false)}
                     onKeyUp={enterKeyPress}
                 />
             </Paper>
@@ -115,12 +111,8 @@ const SearchBar = observer(function SearchBar() {
                         />
                     )}
                 >
-                    {/** Proce range form */}
-                    <PriceRangeMenu
-                        minPriceRef={minPriceInputRef}
-                        maxPriceRef={maxPriceInputRef}
-                        isFormFilled={activatePriceInput}
-                    />
+                    {/** Price range Form */}
+                    <PriceRangeMenu minPriceRef={minPriceInputRef} isFormFilled={activatePriceInput} />
                 </Menu>
             </Paper>
         </div>

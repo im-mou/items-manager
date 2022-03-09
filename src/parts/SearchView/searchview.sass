@@ -1,0 +1,22 @@
+// Search View
+@import ../../scss/_variables
+@import ../../scss/_utils
+
+// Search view header classes
+.searchview-header
+    @include display-flex()
+    align-items: center
+    flex-direction: column
+    justify-content: space-evenly
+
+    height: 180px
+
+    @include breakpoint($point: tablet)
+        flex-direction: row
+        justify-content: space-between
+
+    &__title
+        color: $gray-300
+
+    &__subtitle
+        color: $gray-500
