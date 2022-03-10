@@ -1,15 +1,16 @@
 import { makeAutoObservable } from 'mobx';
 import { itemsService } from '../services/items.service';
-import { IItem, IOrderByFilter, IPaginator, ISearchQuery, TViewsKeys } from '../types/types';
-import { ITEMS_PER_PAGE } from '../utils/constants';
+import { IItem, IOrderByFilter, ISearchQuery, TViewsKeys } from '../types/types';
 import helpers from '../utils/helpers';
 
 // Reactive global Store for items
 // --------------------------------
 
-class ItemsStore {
+class RootStore {
     // data variables
     sourceItemsList: IItem[] = [];
+
+    // Different views data which will be derived from this.sourceItemsList
     homePageitemsList: IItem[] = [];
     searchitemsList: IItem[] = [];
     favouriteitemsList: IItem[] = [];
@@ -21,17 +22,16 @@ class ItemsStore {
         price: undefined,
     };
 
+    // This variable will keep the paginated offset so when we come back from search view
+    // we're are at the same offset.
+    homepageOffset = 1;
+
     // This variable with have (title, description, email) in a single string to apply regex for fast search
     searchTokens: { [key: string]: string } = {};
 
-    // Home page pagination info (Load more... button)
-    pagination: IPaginator = {
-        currentOffset: 0,
-        lastPage: true,
-    };
-
     // Order by filter
     orderBy: IOrderByFilter = {
+        active: false,
         key: 'title',
         asc: true,
     };
@@ -45,12 +45,6 @@ class ItemsStore {
     async init() {
         // FEtch items from server
         await this.fetchAllItems();
-
-        // pluck initial items to show on the home page
-        this.feedItems();
-
-        // apply sort to home view list
-        this.applyOrderByFilter('home');
 
         // We will create an object concatenating all the string (title, description, email) in a single string
         // to apply Regex or use indexOf to it. For the next searches, the data will be cached.
@@ -76,28 +70,8 @@ class ItemsStore {
                 _id: `${item.title}--${+new Date()}--${index}`,
                 ...item,
             }));
-
-            // Set initial home page items data
-            if (response.items.length > 0) {
-                this.pagination.currentOffset = 1;
-                this.pagination.lastPage = false;
-            }
         } catch {
             throw new Error('Could not fetch data from server.');
-        }
-    };
-
-    // paginate items
-    feedItems = () => {
-        if (this.pagination.lastPage === false) {
-            // Pluck next 'ITEMS_PER_PAGE' items for the home page
-            this.homePageitemsList = this.sourceItemsList.slice(0, this.pagination.currentOffset * ITEMS_PER_PAGE);
-
-            // update pagination offset and determine if last page has arrived
-            this.pagination.currentOffset += 1;
-            if (this.pagination.currentOffset >= Math.ceil(this.sourceItemsList.length / ITEMS_PER_PAGE)) {
-                this.pagination.lastPage = true;
-            }
         }
     };
 
@@ -124,10 +98,10 @@ class ItemsStore {
         }
     };
 
-    // Set search query parametes
-    setSearchQuery(searchQuery: ISearchQuery) {
+    // Set search query parametes and execute query
+    searchItems(searchQuery: Omit<ISearchQuery, 'active'>) {
         if (!searchQuery) throw new Error('No search query was provided');
-        this.search = searchQuery;
+        this.search = { ...searchQuery, active: true };
 
         // Create filter pipeline
         const filterPipeLine = [];
@@ -135,8 +109,8 @@ class ItemsStore {
         // Apply string 'term' search filter 'term' if present
         if (this.search.term.trim().length) {
             // Create a filter for the pipeline
+            const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
             const textSearchFilter = (items: IItem[]) => {
-                const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
                 return items.filter((item: IItem) => foundIds.includes(item._id));
             };
 
@@ -192,6 +166,12 @@ class ItemsStore {
         if (view === 'home') this.homePageitemsList.sort(sorter(this.orderBy));
         if (view === 'search') this.searchitemsList.sort(sorter(this.orderBy));
     };
+
+    // Set homepage view offset count
+    setHomepageOffset = (offset: number) => {
+        if (!offset) throw new Error('No data was provided');
+        this.homepageOffset = offset;
+    };
 }
 
-export default ItemsStore;
+export default RootStore;

@@ -10,7 +10,7 @@ import { IFormInput } from '../../types/types';
 // Main component
 const SearchBar = observer(function SearchBar() {
     // Global state
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // refs
     const minPriceInputRef = React.useRef<HTMLInputElement>(null);
@@ -23,12 +23,6 @@ const SearchBar = observer(function SearchBar() {
     // update search input value
     const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(prev => ({ ...prev, value: e.target.value }));
-
-        // If search view is active and the user empties the input
-        // we'll close the search view and go back to homepage.
-        if (e.target.value.trim().length === 0 && ItemsStore.search.active) {
-            ItemsStore.closeSearchView();
-        }
     };
 
     // Toggle search input focus to apply White background to it.
@@ -46,17 +40,18 @@ const SearchBar = observer(function SearchBar() {
     };
 
     // Listen to enter key to trigger the submit query
-    const enterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const onEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            submitSearch();
+            if (isPriceInputActive || searchInput.value.trim().length) {
+                submitSearch();
+            }
         }
     };
 
     // Submit search
     const submitSearch = () => {
-        // dispatch query action to store
-        ItemsStore.setSearchQuery({
-            active: true,
+        // dispatch search query action to store
+        RootStore.searchItems({
             term: searchInput.value.trim(),
             price: minPriceInputRef.current?.value,
         });
@@ -68,7 +63,7 @@ const SearchBar = observer(function SearchBar() {
                 {/**
                  * Search input left ICON / ACTION
                  * */}
-                {ItemsStore.search.active === false ? (
+                {RootStore.search.active === false ? (
                     // By default show search icon
                     <Button
                         aria-label="Search button"
@@ -82,7 +77,7 @@ const SearchBar = observer(function SearchBar() {
                         aria-label="Clear search button"
                         variant="icon"
                         className="text-search__icon"
-                        onClick={() => ItemsStore.closeSearchView()}
+                        onClick={() => RootStore.closeSearchView()}
                         icon={<CloseIcon color={theme.palette.primary.main} />}
                     />
                 )}
@@ -96,7 +91,7 @@ const SearchBar = observer(function SearchBar() {
                     onChange={searchInputHandler}
                     onFocus={activateSearchInput(true)}
                     onBlur={activateSearchInput(false)}
-                    onKeyUp={enterKeyPress}
+                    onKeyUp={onEnterKeyPress}
                 />
             </Paper>
 
@@ -130,7 +125,11 @@ const SearchBar = observer(function SearchBar() {
                 )}
             >
                 {/** Price range Form */}
-                <PriceRangeMenu minPriceRef={minPriceInputRef} isFormFilled={activatePriceInput} />
+                <PriceRangeMenu
+                    minPriceRef={minPriceInputRef}
+                    isFormFilled={activatePriceInput}
+                    onEnterKeyPress={onEnterKeyPress}
+                />
             </Menu>
         </div>
     );

@@ -4,7 +4,7 @@
 import { IItem, IOrderByFilter } from '../types/types';
 
 const validatePriceValue = (value: string, lowerBound: number, upperBound: number) => {
-    const price = parseInt(value);
+    const price = +value;
 
     if (!isNaN(price)) {
         return price >= lowerBound && price < upperBound;
@@ -56,7 +56,7 @@ const sortByNumericValues = (orderby: IOrderByFilter) => (i1: IItem, i2: IItem) 
 const searchString = (token: string, haystack: { [key: string]: string }) => {
     return Object.entries(haystack)
         .filter(([, sentence]) => sentence.indexOf(token) !== -1)
-        .map((item) => item[0]); // return only found objects ids
+        .map(item => item[0]); // return only found objects ids
 };
 
 // let's not pollute the global namespace

@@ -11,18 +11,18 @@ export interface ItemCardProps {
 }
 
 const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps) {
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // Check if item is added to favourite
-    const isItemFavourite = ItemsStore.favouriteitemsList.findIndex(_item => _item._id === item._id) !== -1;
+    const isItemFavourite = RootStore.favouriteitemsList.findIndex(_item => _item._id === item._id) !== -1;
 
     // add item to favourite lisr
     const toggleItemToFavourite = () => {
         // add to favourite list if it's not there, otherwise remove it from the list
         if (isItemFavourite === false) {
-            ItemsStore.addItemToFavourite(item);
+            RootStore.addItemToFavourite(item);
         } else {
-            ItemsStore.removeItemfromFavourite(item._id);
+            RootStore.removeItemfromFavourite(item._id);
         }
     };
 

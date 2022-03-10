@@ -8,7 +8,7 @@ import { useStore } from './store';
 
 const App = observer(function App() {
     // Hooks
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // Local state
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ const App = observer(function App() {
     React.useEffect(() => {
         async function init() {
             // Initialize items store
-            await ItemsStore.init();
+            await RootStore.init();
 
             // fake delay
             setTimeout(() => {
@@ -41,7 +41,7 @@ const App = observer(function App() {
     return (
         <Container>
             <TopBar />
-            {ItemsStore.search.active ? (
+            {RootStore.search.active ? (
                 // Show search view if search is active
                 <SearchView />
             ) : (

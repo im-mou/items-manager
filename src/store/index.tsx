@@ -1,16 +1,16 @@
 import { createContext, useContext } from 'react';
-import ItemsStore from './ItemsStore';
+import RootStore from './RootStore';
 
 // Types and interfaces
 type TStores = {
-    ItemsStore: ItemsStore;
+    RootStore: RootStore;
 };
 
 /**
  * Instantiation of stores
  */
 const stores: TStores = {
-    ItemsStore: new ItemsStore(),
+    RootStore: new RootStore(),
 };
 
 /**

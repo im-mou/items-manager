@@ -19,10 +19,10 @@ import './favorite-items.sass';
 // Main component
 const FavoriteItemsList = observer(function FavoriteItemsList() {
     // Global state
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // Local state
-    const [localItemsList, setLocalItemsList] = React.useState(ItemsStore.favouriteitemsList); // keep a synced copy
+    const [localItemsList, setLocalItemsList] = React.useState(RootStore.favouriteitemsList); // keep a synced copy
     const [searchInputValue, setSearchInputValue] = React.useState('');
 
     // On mount
@@ -40,30 +40,28 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
 
         if (value.trim().length === 0) {
             // remove filter
-            setLocalItemsList(ItemsStore.favouriteitemsList);
+            setLocalItemsList(RootStore.favouriteitemsList);
 
             return;
         }
 
         // filter
-        setLocalItemsList(
-            ItemsStore.favouriteitemsList.filter((item) => item.title.toLowerCase().indexOf(value) !== -1),
-        );
+        setLocalItemsList(RootStore.favouriteitemsList.filter(item => item.title.toLowerCase().indexOf(value) !== -1));
     };
 
     // delete item
     const deleteItem = (id: string) => () => {
         // Delete from store
-        ItemsStore.removeItemfromFavourite(id);
+        RootStore.removeItemfromFavourite(id);
 
         // Update local state copy.
         // We have to do this in order to update the search results list (if search is active)
-        setLocalItemsList((prev) => prev.filter((item) => item._id !== id));
+        setLocalItemsList(prev => prev.filter(item => item._id !== id));
     };
 
     return (
         <div className="favorite-items">
-            {ItemsStore.favouriteitemsList.length ? (
+            {RootStore.favouriteitemsList.length ? (
                 <React.Fragment>
                     {/** info */}
                     <div className="favorite-items__toolbar">
@@ -82,7 +80,7 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
 
                     {/** items list */}
                     <div className="favorite-items__list">
-                        {localItemsList.map((item) => (
+                        {localItemsList.map(item => (
                             <Paper
                                 tabIndex={0}
                                 variant="outlined"

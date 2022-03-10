@@ -8,21 +8,21 @@ import './orderby-filter.sass';
 
 const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKeys }) {
     // Global State
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // Shorthand
-    const orderBy = ItemsStore.orderBy;
+    const orderBy = RootStore.orderBy;
 
     // handle order filter change
     const onChangeOrderBy = (key: typeof ORDER_BY_KEYS[number], asc: boolean) => () => {
         // save sort info in the store
-        ItemsStore.setOrderByFilter({
+        RootStore.setOrderByFilter({
             key,
             asc,
         });
 
         // Apply sort
-        ItemsStore.applyOrderByFilter(view);
+        RootStore.applyOrderByFilter(view);
     };
 
     // Filter items button + menu
@@ -44,7 +44,7 @@ const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKe
                         Choose your desired filter below
                     </Typography>
                     <div className="orderby-filter__list-container">
-                        {ORDER_BY_KEYS.map((key) => (
+                        {ORDER_BY_KEYS.map(key => (
                             <div key={key} className="orderby-filter__list-container__item">
                                 <Typography
                                     variant="h3"

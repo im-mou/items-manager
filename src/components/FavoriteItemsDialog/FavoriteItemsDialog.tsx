@@ -8,7 +8,7 @@ import FavoriteItemsList from './FavoriteItemsList';
 
 const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
     // Global state
-    const { ItemsStore } = useStore();
+    const { RootStore } = useStore();
 
     // Local state
     const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -36,7 +36,7 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
             </Dialog>
 
             {/** Text button : DESKTOP */}
-            <Badge className={clsx('favourite-button--desktop')} count={ItemsStore.favouriteitemsList.length}>
+            <Badge className={clsx('favourite-button--desktop')} count={RootStore.favouriteitemsList.length}>
                 <Button
                     onClick={openDialog}
                     aria-label="Open favorite items list"
@@ -47,7 +47,7 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
             </Badge>
 
             {/** Icon button : MOBILE */}
-            <Badge className={clsx('favourite-button--mobile')} count={ItemsStore.favouriteitemsList.length}>
+            <Badge className={clsx('favourite-button--mobile')} count={RootStore.favouriteitemsList.length}>
                 <Button
                     onClick={openDialog}
                     variant="icon"

@@ -25,6 +25,10 @@
 .searchview
     padding-bottom: $spacing-unit * 16
 
+    &__footer
+        @include spacing($property: margin, $direction: y, $amount: 8)
+        text-align: center
+
     &__empty-state
         @include display-flex()
         flex-direction: column

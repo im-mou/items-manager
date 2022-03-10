@@ -17,9 +17,14 @@ interface PriceRangeMenuProps {
     isFormFilled: (filled: boolean) => void;
     minPriceRef: React.RefObject<HTMLInputElement>;
     // maxPriceRef: React.RefObject<HTMLInputElement>;
+    onEnterKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const PriceRangeMenu = React.memo(function PriceRangeMenu({ isFormFilled, minPriceRef }: PriceRangeMenuProps) {
+const PriceRangeMenu = React.memo(function PriceRangeMenu({
+    isFormFilled,
+    minPriceRef,
+    onEnterKeyPress,
+}: PriceRangeMenuProps) {
     // Local state
     const [priceInput, setPriceInput] = React.useState<IFormInput>({
         value: '',
@@ -41,7 +46,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({ isFormFilled, minPri
     // price inputs onChange handler
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Update input values
-        setPriceInput((prev) => simplePriceValidation({ ...prev, value: e.target.value }));
+        setPriceInput(prev => simplePriceValidation({ ...prev, value: e.target.value }));
     };
 
     // Simple input price validation
@@ -53,12 +58,15 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({ isFormFilled, minPri
             if (!helpers.validatePriceValue(currentState.value.trim(), PRICE_MIN_VALUE, PRICE_MAX_VALUE)) {
                 partialState.errMsg = 'Please input a valid value';
                 partialState.error = true;
+
+                // return early to show error message
+                return partialState;
             }
-        } else {
-            // when input is empty, there should be no error
-            partialState.error = false;
-            partialState.errMsg = '';
         }
+
+        // when input is empty, there should be no error
+        partialState.error = false;
+        partialState.errMsg = '';
 
         // update state
         return partialState;
@@ -70,12 +78,13 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({ isFormFilled, minPri
             <Typography variant="caption">Input a price</Typography>
             <div className="price-range-menu__form">
                 <Input
+                    className="price-range-menu__form__input"
                     ref={minPriceRef}
                     value={priceInput.value}
                     error={priceInput.error}
                     onChange={onChange}
                     placeholder="Price..."
-                    className="price-range-menu__form__input"
+                    onKeyUp={onEnterKeyPress}
                 />
             </div>
             {/** Error message indicator */}
