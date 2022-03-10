@@ -2,10 +2,22 @@
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 
 @import ../../../scss/_utils
+@import ../../../scss/_variables
 
 // Classes
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 .menu-wrapper
     width: calc(100vw - 32px)
-    @include breakpoint($point: tablet)
+    @include breakpoint($point: phablet)
         width: initial
+
+    &--arrow
+        &:before
+            z-index: 5
+            content: ""
+            position: absolute
+            top: -14px
+            right: calc(50% - 15px)
+            border-style: solid
+            border-width: 0 15px 15px 15px
+            border-color: transparent transparent $white-color transparent

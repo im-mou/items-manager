@@ -2,7 +2,7 @@ import React from 'react';
 import { IFormInput } from '../../types/types';
 import { PRICE_MAX_VALUE, PRICE_MIN_VALUE } from '../../utils/constants';
 import helpers from '../../utils/helpers';
-import { Input, Typography } from '../design-system';
+import { Button, Input, Typography } from '../design-system';
 import './price-range-menu.sass';
 
 /**
@@ -17,13 +17,13 @@ interface PriceRangeMenuProps {
     isFormFilled: (filled: boolean) => void;
     minPriceRef: React.RefObject<HTMLInputElement>;
     // maxPriceRef: React.RefObject<HTMLInputElement>;
-    onEnterKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    submitSearch: () => void;
 }
 
 const PriceRangeMenu = React.memo(function PriceRangeMenu({
     isFormFilled,
     minPriceRef,
-    onEnterKeyPress,
+    submitSearch,
 }: PriceRangeMenuProps) {
     // Local state
     const [priceInput, setPriceInput] = React.useState<IFormInput>({
@@ -72,6 +72,18 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
         return partialState;
     };
 
+    // Listen to enter key to trigger the submit query
+    const onEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSubmit();
+        }
+    };
+
+    // run parent component submit method
+    const onSubmit = () => {
+        submitSearch();
+    };
+
     return (
         <div className="price-range-menu">
             <Typography variant="h4">Filter by price</Typography>
@@ -86,6 +98,14 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
                     placeholder="Price..."
                     onKeyUp={onEnterKeyPress}
                 />
+                <Button
+                    aria-label="apply search filter"
+                    color="primary"
+                    className="price-range-menu__form__submit"
+                    onClick={onSubmit}
+                >
+                    Apply Filter
+                </Button>
             </div>
             {/** Error message indicator */}
             {priceInput.error ? (

@@ -35,7 +35,7 @@ const SearchView = observer(function SearchView() {
     return (
         <div className="searchview">
             {/** Search view header */}
-            {searchResults.length > 0 ? (
+            {RootStore.searchitemsList.length > 0 ? (
                 <React.Fragment>
                     <div className="searchview-header">
                         <div>
@@ -43,7 +43,7 @@ const SearchView = observer(function SearchView() {
                                 Search Results
                             </Typography>
                             <Typography variant="h3" className="searchview-header__subtitle">
-                                Founds {searchResults.length} items
+                                Founds {RootStore.searchitemsList.length} items
                             </Typography>
                         </div>
 

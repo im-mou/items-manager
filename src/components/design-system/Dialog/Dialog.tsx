@@ -58,7 +58,7 @@ const Dialog = (props: DialogProps) => {
     if (!keepMounted && !open) return null;
 
     return (
-        <Popover ref={popoverRef} open={open} closeOnClickAway={false} isDialog>
+        <Popover ref={popoverRef} open={open} closeOnClickAway={false} showBackdrop>
             <Paper shadow className="dialog-wrapper">
                 {/** Dialog header */}
                 <div className="dialog-wrapper__title">

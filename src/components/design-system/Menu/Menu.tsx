@@ -70,18 +70,18 @@ const Menu = (props: MenuProps) => {
             // Get the vertical coord to place the menu
             // We will compensate the scroll position, because the menu will be placed
             // considering the top right corner of te visible screen as point (0,0).
-            const top = triggerRef.current.offsetTop + triggerRef.current.offsetHeight + 6 - window.scrollY;
+            const top = triggerRef.current.offsetTop + triggerRef.current.offsetHeight - window.scrollY;
 
             // set position props to popover
             popoverRef.current.style.left = left + 'px';
-            popoverRef.current.style.top = top + 'px';
+            popoverRef.current.style.top = top + 10 + 'px'; // compensate menu arrow height
         }
     };
 
     return (
         <>
-            <Popover ref={popoverRef} open={open} onClickAway={() => setOpen(false)} closeOnClickAway arrow>
-                <Paper shadow variant="outlined" className="menu-wrapper">
+            <Popover ref={popoverRef} open={open} onClickAway={() => setOpen(false)} closeOnClickAway>
+                <Paper shadow variant="outlined" className="menu-wrapper menu-wrapper--arrow">
                     {children}
                 </Paper>
             </Popover>

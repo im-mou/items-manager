@@ -43,19 +43,19 @@ const SearchBar = observer(function SearchBar() {
     // Listen to enter key to trigger the submit query
     const onEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            if (isPriceInputActive || searchInput.value.trim().length) {
-                submitSearch();
-            }
+            submitSearch();
         }
     };
 
     // Submit search
     const submitSearch = () => {
-        // dispatch search query action to store
-        RootStore.searchItems({
-            term: helpers.nomalizeSearchString(searchInput.value),
-            price: minPriceInputRef.current?.value,
-        });
+        if (isPriceInputActive || searchInput.value.trim().length) {
+            // dispatch search query action to store
+            RootStore.searchItems({
+                term: helpers.nomalizeSearchString(searchInput.value),
+                price: minPriceInputRef.current?.value,
+            });
+        }
     };
 
     return (
@@ -129,7 +129,7 @@ const SearchBar = observer(function SearchBar() {
                 <PriceRangeMenu
                     minPriceRef={minPriceInputRef}
                     isFormFilled={activatePriceInput}
-                    onEnterKeyPress={onEnterKeyPress}
+                    submitSearch={submitSearch}
                 />
             </Menu>
         </div>

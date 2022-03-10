@@ -9,14 +9,13 @@ export interface PopoverProps {
     onClickAway?: () => void;
     children: React.ReactNode;
     className?: string;
-    isDialog?: boolean;
-    arrow?: boolean;
+    showBackdrop?: boolean;
 }
 
 // component
 const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(function Popover(props: PopoverProps, popoverRef) {
     // Props
-    const { open, closeOnClickAway, children, className, isDialog, arrow, onClickAway } = props;
+    const { open, closeOnClickAway, children, className, showBackdrop, onClickAway } = props;
 
     // Actions when menu is visible
     React.useLayoutEffect(() => {
@@ -25,8 +24,6 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(function Popover(
 
         // Cleanup
         return () => {
-            // window.removeEventListener('resize', setPopOverPosition);
-
             // enable body scroll
             disableBodyScroll(false);
         };
@@ -59,7 +56,7 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(function Popover(
                     <div
                         onClick={closeDialog}
                         className={clsx('popover-portal__backdrop', {
-                            ['popover-portal__backdrop--visible']: isDialog,
+                            ['popover-portal__backdrop--visible']: showBackdrop,
                         })}
                     ></div>
 
@@ -69,7 +66,6 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(function Popover(
                         ref={popoverRef}
                         className={clsx({ [className as string]: className }, 'popover-portal__body', {
                             ['popover-portal__body--active']: open,
-                            ['popover-portal__body--arrow']: arrow,
                         })}
                     >
                         {children}
