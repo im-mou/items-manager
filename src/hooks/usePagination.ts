@@ -1,16 +1,18 @@
 import React from 'react';
+import { IItem, IOrderByFilter } from '../types/types';
 import { ITEMS_PER_PAGE } from '../utils/constants';
+import helpers from '../utils/helpers';
 
 interface IUsePaginationProps {
     itemsPerPage: number;
     initialOffset: number;
 }
 // Hook to paginate a list of items
-const usePagination = <T>({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Partial<IUsePaginationProps>) => {
+const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Partial<IUsePaginationProps>) => {
     // Internal State
-    const [sourceItems, setSourceItems] = React.useState<T[]>([]);
+    const [sourceItems, setSourceItems] = React.useState<IItem[]>([]);
     const [paginator, setPaginator] = React.useState<{
-        items: T[];
+        items: IItem[];
         currentOffset: number;
         lastPage: boolean;
     }>({
@@ -19,18 +21,29 @@ const usePagination = <T>({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: 
         lastPage: true,
     });
 
+    const [orderBy, setOrderBy] = React.useState<IOrderByFilter>({
+        key: 'title',
+        asc: true,
+    });
+
     /**
      * function to initialize the paginator with items array
      */
     const paginate = React.useCallback(
-        (initialItems: T[]) => {
+        (initialItems: IItem[]) => {
             if (initialItems.length > 0) {
+                // sort item by default upon loading the data
+                const sortedList = __internal_sort(initialItems, {
+                    key: 'title',
+                    asc: true,
+                });
+
                 // save source data
-                setSourceItems(initialItems);
+                setSourceItems(sortedList);
 
                 // Set initial home page items data
                 setPaginator({
-                    items: initialItems.slice(0, initialOffset * itemsPerPage),
+                    items: sortedList.slice(0, initialOffset * itemsPerPage),
                     currentOffset: initialOffset,
                     lastPage: itemsPerPage >= initialItems.length,
                 });
@@ -48,7 +61,7 @@ const usePagination = <T>({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: 
     );
 
     /**
-     * function to push the next page into the paginatior view
+     * function to push the next page into the pagination view
      */
     const feed = () => {
         if (paginator.lastPage === false) {
@@ -70,12 +83,49 @@ const usePagination = <T>({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: 
         }
     };
 
+    /**
+     * Function to sort the items
+     */
+    const sort = (orderBy: IOrderByFilter) => {
+        // sort
+        const sortedList = __internal_sort(sourceItems, orderBy);
+
+        // save source data
+        setSourceItems(sortedList);
+
+        // sort items and set state
+        setPaginator(prev => ({
+            ...prev,
+            items: sortedList.slice(0, initialOffset * itemsPerPage),
+        }));
+
+        // update orderby state
+        setOrderBy(orderBy);
+    };
+
+    // internal function to sort items
+    const __internal_sort = (items: IItem[], orderBy: IOrderByFilter) => {
+        // select sorter
+        let sorter = helpers.sortByStringValues;
+        if (orderBy.key === 'price') {
+            // sort numbers
+            sorter = helpers.sortByNumericValues;
+        }
+
+        return [...items].sort(sorter(orderBy));
+    };
+
+    // expose variables
     return {
         paginate,
+        feedItems: feed,
         items: paginator.items,
         isItLastPage: paginator.lastPage,
         currentOffset: paginator.currentOffset,
-        feedItems: feed,
+        orderBy: {
+            state: orderBy,
+            sort,
+        },
     };
 };
 

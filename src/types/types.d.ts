@@ -40,7 +40,6 @@ export interface IFormInput {
 }
 
 export interface IOrderByFilter {
-    active?: boolean;
     key: typeof ORDER_BY_KEYS[number];
     asc: boolean;
 }

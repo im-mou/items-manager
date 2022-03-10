@@ -5,7 +5,6 @@ import Hero from '../../components/Hero';
 import OrderByFilter from '../../components/OrderByFilter';
 import usePagination from '../../hooks/usePagination';
 import { useStore } from '../../store';
-import { IItem } from '../../types/types';
 import ItemsGrid from '../ItemsGrid';
 import './homeview.sass';
 
@@ -17,7 +16,14 @@ const HomeView = observer(function HomeView() {
     const [isLoading, setIsLoading] = React.useState(false);
 
     // Pagination hook
-    const { paginate, items, isItLastPage, feedItems, currentOffset } = usePagination<IItem>({
+    const {
+        paginate,
+        items,
+        isItLastPage,
+        feedItems,
+        currentOffset,
+        orderBy: { sort: sortItems, state: orderByState },
+    } = usePagination({
         initialOffset: RootStore.homepageOffset,
     });
 
@@ -50,7 +56,7 @@ const HomeView = observer(function HomeView() {
 
             {/** Order BY Filter Button */}
             <div className="homeview__toolbar">
-                <OrderByFilter view="home" />
+                <OrderByFilter orderByState={orderByState} sort={sortItems} />
             </div>
 
             {/** View containing list of homeview items */}

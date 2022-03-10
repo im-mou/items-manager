@@ -5,7 +5,6 @@ import { useStore } from '../../store';
 import ItemsGrid from '../ItemsGrid';
 import OrderByFilter from '../../components/OrderByFilter';
 import usePagination from '../../hooks/usePagination';
-import { IItem } from '../../types/types';
 import './searchview.sass';
 
 const SearchView = observer(function SearchView() {
@@ -13,7 +12,13 @@ const SearchView = observer(function SearchView() {
     const { RootStore } = useStore();
 
     // Pagination hook
-    const { paginate, items: searchResults, isItLastPage, feedItems } = usePagination<IItem>({ itemsPerPage: 8 });
+    const {
+        paginate,
+        items: searchResults,
+        isItLastPage,
+        feedItems,
+        orderBy: { sort: sortItems, state: orderByState },
+    } = usePagination({ itemsPerPage: 8 });
 
     // Update pagination data
     React.useEffect(() => {
@@ -43,7 +48,7 @@ const SearchView = observer(function SearchView() {
                         </div>
 
                         {/** Order BY Filter Button */}
-                        <OrderByFilter view="search" />
+                        <OrderByFilter sort={sortItems} orderByState={orderByState} />
                     </div>
 
                     {/** View containing list of homeview items or search items */}

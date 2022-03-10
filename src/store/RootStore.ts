@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { itemsService } from '../services/items.service';
-import { IItem, IOrderByFilter, ISearchQuery, TViewsKeys } from '../types/types';
+import { IItem, ISearchQuery } from '../types/types';
 import helpers from '../utils/helpers';
 
 // Reactive global Store for items
@@ -28,13 +28,6 @@ class RootStore {
 
     // This variable with have (title, description, email) in a single string to apply regex for fast search
     searchTokens: { [key: string]: string } = {};
-
-    // Order by filter
-    orderBy: IOrderByFilter = {
-        active: false,
-        key: 'title',
-        asc: true,
-    };
 
     // ctor
     constructor() {
@@ -146,26 +139,6 @@ class RootStore {
             price: undefined,
         };
     }
-
-    // update orderby filter
-    setOrderByFilter = (orderBy: IOrderByFilter) => {
-        if (!orderBy) throw new Error('No data was provided');
-        this.orderBy = orderBy;
-    };
-
-    // function to sort items
-    applyOrderByFilter = (view: TViewsKeys) => {
-        // select sorter
-        let sorter = helpers.sortByStringValues;
-        if (this.orderBy.key === 'price') {
-            // sort numbers
-            sorter = helpers.sortByNumericValues;
-        }
-
-        // sort items
-        if (view === 'home') this.homePageitemsList.sort(sorter(this.orderBy));
-        if (view === 'search') this.searchitemsList.sort(sorter(this.orderBy));
-    };
 
     // Set homepage view offset count
     setHomepageOffset = (offset: number) => {

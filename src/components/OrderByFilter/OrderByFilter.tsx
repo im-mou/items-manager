@@ -1,28 +1,26 @@
 import clsx from 'clsx';
-import { observer } from 'mobx-react';
+import React from 'react';
 import { Button, ExpandLessIcon, ExpandMoreIcon, Menu, theme, Typography } from '../../components/design-system';
-import { useStore } from '../../store';
-import { TViewsKeys } from '../../types/types';
+import { IOrderByFilter } from '../../types/types';
 import { ORDER_BY_KEYS } from '../../utils/constants';
 import './orderby-filter.sass';
 
-const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKeys }) {
-    // Global State
-    const { RootStore } = useStore();
+interface IorderByStateProps {
+    // state of the current sorting order applied
+    orderByState: IOrderByFilter;
 
-    // Shorthand
-    const orderBy = RootStore.orderBy;
+    // Function to sort items of the current view
+    sort: (orderBy: IOrderByFilter) => void;
+}
 
+const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: IorderByStateProps) {
     // handle order filter change
     const onChangeOrderBy = (key: typeof ORDER_BY_KEYS[number], asc: boolean) => () => {
-        // save sort info in the store
-        RootStore.setOrderByFilter({
+        // Apply sort
+        sort({
             key,
             asc,
         });
-
-        // Apply sort
-        RootStore.applyOrderByFilter(view);
     };
 
     // Filter items button + menu
@@ -33,9 +31,9 @@ const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKe
                     <Button onClick={setOpen} variant="text" endIcon={!open ? <ExpandMoreIcon /> : <ExpandLessIcon />}>
                         <span style={{ color: theme.palette.gray[500] }}>ORDER BY – </span>
                         <span style={{ color: theme.palette.primary.main }}>
-                            <strong>{orderBy.key.toUpperCase()}</strong>
+                            <strong>{orderByState.key.toUpperCase()}</strong>
                         </span>
-                        <span style={{ color: theme.palette.gray[500] }}> ({orderBy.asc ? 'asc' : 'desc'})</span>
+                        <span style={{ color: theme.palette.gray[500] }}> ({orderByState.asc ? 'asc' : 'desc'})</span>
                     </Button>
                 )}
             >
@@ -49,7 +47,7 @@ const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKe
                                 <Typography
                                     variant="h3"
                                     className={clsx({
-                                        ['orderby-filter__list-container__item--selected']: key === orderBy.key,
+                                        ['orderby-filter__list-container__item--selected']: key === orderByState.key,
                                     })}
                                 >
                                     {key}
@@ -65,7 +63,7 @@ const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKe
                                                 color={theme.palette.gray[700]}
                                                 className={clsx({
                                                     ['orderby-filter__list-container__item--selected']:
-                                                        key === orderBy.key && orderBy.asc === false,
+                                                        key === orderByState.key && orderByState.asc === false,
                                                 })}
                                             />
                                         }
@@ -79,7 +77,7 @@ const OrderByFilter = observer(function OrderByFilter({ view }: { view: TViewsKe
                                                 color={theme.palette.gray[700]}
                                                 className={clsx({
                                                     ['orderby-filter__list-container__item--selected']:
-                                                        key === orderBy.key && orderBy.asc === true,
+                                                        key === orderByState.key && orderByState.asc === true,
                                                 })}
                                             />
                                         }
