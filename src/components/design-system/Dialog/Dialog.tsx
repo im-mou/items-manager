@@ -16,15 +16,37 @@ const Dialog = (props: DialogProps) => {
     // Props
     const { children, title, icon, open, keepMounted = false, onClose } = props;
 
+    // refs
+    const popoverRef = React.useRef<HTMLDivElement>(null);
+
     // attach keyboard esc key listener to close the dialog
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if (open) {
+            // initial positioning
+            calcualtePosition();
+
             window.addEventListener('keyup', escapeKeyPress);
+            window.addEventListener('resize', calcualtePosition);
+
+            // Focus trap for accesibility
+            popoverRef.current?.focus();
         }
         return () => {
             window.removeEventListener('keyup', escapeKeyPress);
+            window.removeEventListener('resize', calcualtePosition);
         };
     }, [open]);
+
+    // function to calculate (top, left) position of the dialog
+    const calcualtePosition = () => {
+        if (popoverRef.current) {
+            /**
+             * Position the dialog to the central position.
+             *  */
+            popoverRef.current.style.top = `calc(50% - ${popoverRef.current.offsetHeight / 2}px)`;
+            popoverRef.current.style.left = `calc(50% - ${popoverRef.current.offsetWidth / 2}px)`;
+        }
+    };
 
     // keyboard Event handler to close the dialog
     const escapeKeyPress = (event: KeyboardEvent) => {
@@ -36,7 +58,7 @@ const Dialog = (props: DialogProps) => {
     if (!keepMounted && !open) return null;
 
     return (
-        <Popover open={open} closeOnClickAway={false} isDialog>
+        <Popover ref={popoverRef} open={open} closeOnClickAway={false} isDialog>
             <Paper shadow className="dialog-wrapper">
                 {/** Dialog header */}
                 <div className="dialog-wrapper__title">
