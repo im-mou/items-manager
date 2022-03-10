@@ -5,7 +5,7 @@ Simple web app to manage items.
 This project is made with:
 
 -   React
--   Custom design system (built fuuly from scratch)
+-   Custom design system (built fully from scratch)
 -   Typescript
 -   MobX for global state
 -   SASS
@@ -30,13 +30,13 @@ cd items-manager
 yarn
 ```
 
-In the project directory, you can run to following command to run the project.
+In the project directory, you can run to following command to run the app.
 
 ```
 yarn start
 ```
 
-> I should include a `.env.example` file for the user to copy it to a new file `.env` with the appropriate env variables data. However, this project does not require any sensitive data from user so I'm gonna make an exception and serve the `.env` file. (which I do not do normally :D)
+> I should include a `.env.example` file for the user to copy it to `.env` with the appropriate env variables data. However, this project does not require any sensitive data from user so I'm gonna make an exception and include the `.env` file in this repo. (which I do not do normally :D)
 
 <br />
 
@@ -48,7 +48,7 @@ For this project I had to create a design system from scratch using figma. Once 
 
 Apart from the components styling, every view / design element has it's own SASS file and the main app has global styles reset rules applied to it.
 
-This app was developed have responsiveness in mind.
+This app was developed having responsiveness in mind.
 
 ## Testing
 
@@ -63,8 +63,8 @@ This app was developed have responsiveness in mind.
 ## Notes
 
 -   Localization support was not added, but it would have been nice.
--   The search algorithms that are used are not the best. I would've loved to use a fuzzy search but I don't have enough time to implement it form scratch.
--   If this project belogned to a client, I would clarify multiples tings about the requirements:
-    -   What is there workflow to determine how to implement a good search bar.
+-   The search algorithms that are used are not the best. I would've loved to use a fuzzy search but I don't have enough time to implement it.
+-   If this project belogned to a client, I would clarify multiples things about the requirements:
+    -   How does user wans to use this to determine how to implement a good UX for search, filtering and navegation.
     -   How do they would like to search the price (absolute values, a range or both)
     -   etc...
