@@ -1,14 +1,18 @@
-import { theme, Typography } from '../design-system';
 import ItemManagerIcon from '../design-system/Icons/ItemManagerIcon';
+import { ReactComponent as FullLogo } from '../../asset/images/logo-full.svg';
 import './logo.sass';
+import { Button } from '../design-system';
 
 const Logo = () => {
     return (
         <a href="/" className="logo">
-            <ItemManagerIcon style={{ marginRight: theme.spacing(3) }} color={theme.palette.primary.main} />
-            <Typography className="logo__name" variant="h3">
-                Items <span className="logo__name--dimmed">Manager</span>
-            </Typography>
+            <FullLogo className="logo__desktop" />
+            <Button
+                aria-label="Items manager homepage"
+                className="logo__mobile"
+                variant="icon"
+                icon={<ItemManagerIcon className="logo__mobile" />}
+            />
         </a>
     );
 };

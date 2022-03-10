@@ -10,7 +10,7 @@ This project is made with:
 -   MobX for global state
 -   SASS
 
-> For this project I decided to use only SASS for styling. Normally, in my day to day FE tasks I also use JSX and styles components.
+> For this project I decided to use only SASS for styling. Normally, in my day to day FE tasks I also use JSX and styled components.
 
 <br />
 
@@ -46,7 +46,7 @@ Once your app is running, it will be available at [http://localhost:3000](http:/
 
 For this project I had to create a design system from scratch using figma. Once finished, I proceeded to create all the atomic UI components using react + SASS.
 
-Apart from the components styling, every view / design element has it's own SASS file and the main app has global styles reset rules applied to it.
+Apart from the components styling, every view / design element has it's own SASS file and the main app component has global styles reset rules applied to it.
 
 This app was developed having responsiveness in mind.
 

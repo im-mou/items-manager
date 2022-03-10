@@ -1,0 +1,26 @@
+{
+    "name": "Items Manager",
+    "short_name": "iManager",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/android-chrome-192x192.png?v=1.0",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-256x256.png?v=1.0",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "start_url": "http://items-manager.mohsinriaz.es",
+    "display": "standalone",
+    "orientation": "portrait"
+}

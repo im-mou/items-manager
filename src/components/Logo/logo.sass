@@ -1,22 +1,25 @@
 // Logo
 @import ../../scss/_utils
+@import ../../scss/_variables
 
 .logo
-    $self: &
-
     height: 40px
     @include display-flex()
     flex-direction: row
     align-items: center
+    justify-items: center
 
     & > svg
         height: 24px
-        width: 24px
 
-    &__name
+    &__desktop
         display: none
         @include breakpoint($point: laptop)
-            display: inherit
+            display: initial
 
-        &--dimmed
-            opacity: 0.5
+    &__mobile
+        display: initial
+        fill: $primary-color
+        @include breakpoint($point: laptop)
+            display: none
+
