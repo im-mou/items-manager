@@ -52,7 +52,7 @@ const SearchBar = observer(function SearchBar() {
     const submitSearch = () => {
         // dispatch search query action to store
         RootStore.searchItems({
-            term: searchInput.value.trim(),
+            term: searchInput.value.trim().toLowerCase(),
             price: minPriceInputRef.current?.value,
         });
     };

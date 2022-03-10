@@ -84,7 +84,7 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
                             value={searchInputValue}
                             onChange={onSearcInputChange}
                         />
-                        <Typography variant="caption">
+                        <Typography variant="caption" className="favorite-items__toolbar__info">
                             {localItemsList.length} {searchInputValue.length ? 'items found' : 'items added to list'}
                         </Typography>
                     </div>

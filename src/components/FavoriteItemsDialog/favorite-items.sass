@@ -47,7 +47,15 @@
         top: 0
 
         &__search
-            min-width: 50%
+            flex-grow: 1
+
+        &__info
+            display: none
+
+        // Responsive
+        @include breakpoint($point: phablet)
+            &__info
+                display: initial
 
     &__list
         @include display-flex()
