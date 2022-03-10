@@ -14,17 +14,19 @@ const ItemCardDetailed = ({ item }: ItemCardDetailedProps) => {
             </div>
             <div className="item-card__content">
                 <div className="item-card__content__title">
-                    <Typography variant="h3">{item.title}</Typography>
+                    <Typography variant="h3">{item.title ? item.title : '-'}</Typography>
                 </div>
                 <div className="item-card__content__body">
-                    <Typography variant="body">{item.description}</Typography>
+                    <Typography variant="body">{item.description ? item.description : '-'}</Typography>
                 </div>
                 <div className="item-card__content__user">
                     <FaceIcon />
-                    <Typography variant="caption">{item.email}</Typography>
+                    <Typography variant="caption">{item.email ? item.email : '-'}</Typography>
                 </div>
                 <div className="item-card__content__footers">
-                    <Typography variant="h1">{item.price}€</Typography>
+                    <Typography variant="h1">
+                        {item.price ? parseFloat(item.price).toLocaleString('es-ES') : '-'}€
+                    </Typography>
                 </div>
             </div>
         </article>

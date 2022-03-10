@@ -21,8 +21,8 @@ class RootStore {
         price: undefined,
     };
 
-    // This variable will keep the paginated offset so when we come back from search view
-    // we're are at the same offset.
+    // This variable will keep the paginated offset and order by so when we come back from search view
+    // we're are at the same offset and with the same ordering
     homepageOffset = 1;
 
     // This variable with have (title, description, email) in a single string to apply regex for fast search

@@ -33,18 +33,20 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
             </div>
             <div className="item-card__content">
                 <div className="item-card__content__title">
-                    <Typography variant="h3">{item.title}</Typography>
+                    <Typography variant="h3">{item.title ? item.title : '-'}</Typography>
                 </div>
                 <div className="item-card__content__user">
-                    <Typography variant="caption">{item.email}</Typography>
+                    <Typography variant="caption">{item.email ? item.email : ' '}</Typography>
                 </div>
                 <div className="item-card__content__body">
                     <Typography ellipsis={100} variant="body">
-                        {item.description}
+                        {item.description ? item.description : '-'}
                     </Typography>
                 </div>
                 <div className="item-card__content__footers">
-                    <Typography variant="h1">{item.price}€</Typography>
+                    <Typography variant="h1">
+                        {item.price ? parseFloat(item.price).toLocaleString('es-ES') : '-'}€
+                    </Typography>
                     <div>
                         <Button
                             aria-label="View item Details"
