@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# Items Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Simple web app to manage items.
 
-## Available Scripts
+This project is made with:
+- React
+- Custom design system (built fuuly from scratch)
+- Typescript
+- MobX for global state
+- SASS
 
-In the project directory, you can run:
+> For this project I decided to use only SASS for styling. Normally, in my day to day FE tasks I also use JSX and styles components.
 
-### `yarn start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node >= v16.x
+- Yarn >= v1.22.x
+- or NPM >= v8.3.x
 
-### `yarn build`
+Run the following commands:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+git clone https://github.com/im-mou/items-manager
+cd items-manager
+yarn
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In the project directory, you can run to following command to run the project.
 
-### `yarn eject`
+```
+yarn start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> I should include a ```.env.example``` file for the user to copy it to a new file ```.env``` with the appropriate env variables data.  However, this project does not require any sensitive data from user so I'm gonna make an exception and serve the ```.env``` file. (which I do not do normally :D)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Once your app is running, it will be available at [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+## Styling
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For this project I had to create a design system from scratch using figma. Once finished, I proceeded to create all the atomic UI components using react + SASS.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Apart from the components styling, every view / design element has it's own SASS file and the main app has global styles reset rules applied to it.
+
+This app was developed have responsiveness in mind.
+
+## Testing
+
+### `yarn test:unit`
+> in development...
+
+### `yarn test:integration`
+> in development...
+
+
+## Notes
+- Localization support was not added, but it would have been nice.
+- The search algorithms that are used are not the best. I would've loved to use a fuzzy search but I don't have enough time to implement it form scratch.
+- If this project belogned to a client, I would clarify multiples tings about the requirements:
+    - What is there workflow to determine how to implement a good search bar.
+    - How do they would like to search the price (absolute values, a range or both)
+    - etc...
