@@ -6,6 +6,7 @@ import { useStore } from '../../store';
 import './searchbar.sass';
 import PriceRangeMenu from '../PriceRangeMenu';
 import { IFormInput } from '../../types/types';
+import helpers from '../../utils/helpers';
 
 // Main component
 const SearchBar = observer(function SearchBar() {
@@ -52,7 +53,7 @@ const SearchBar = observer(function SearchBar() {
     const submitSearch = () => {
         // dispatch search query action to store
         RootStore.searchItems({
-            term: searchInput.value.trim().toLowerCase(),
+            term: helpers.nomalizeSearchString(searchInput.value),
             price: minPriceInputRef.current?.value,
         });
     };

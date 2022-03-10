@@ -12,6 +12,7 @@ import {
     Typography,
 } from '../../components/design-system';
 import { useStore } from '../../store';
+import helpers from '../../utils/helpers';
 import './favorite-items.sass';
 
 // component
@@ -46,16 +47,17 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
         }
 
         // filter
+        const searchQuery = helpers.nomalizeSearchString(value);
         setLocalItemsList(
             RootStore.favouriteitemsList.filter(
                 item =>
                     // Might not be the fastest way to search
                     // I'm tired... sorry
-                    item.title
-                        .toLowerCase()
+                    helpers
+                        .nomalizeSearchString(item.title)
                         .normalize('NFD')
                         .replace(/[\u0300-\u036f]/g, '')
-                        .indexOf(value) !== -1,
+                        .indexOf(searchQuery) !== -1,
             ),
         );
     };

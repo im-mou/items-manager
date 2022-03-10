@@ -105,7 +105,7 @@ class RootStore {
         // Apply string 'term' search filter 'term' if present
         if (this.search.term.trim().length) {
             // Create a filter for the pipeline
-            const foundIds = helpers.searchString(searchQuery.term, this.searchTokens);
+            const foundIds = helpers.searchString(helpers.nomalizeSearchString(searchQuery.term), this.searchTokens);
             const textSearchFilter = (items: IItem[]) => {
                 return items.filter((item: IItem) => foundIds.includes(item._id));
             };

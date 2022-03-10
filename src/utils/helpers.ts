@@ -59,6 +59,19 @@ const searchString = (token: string, haystack: { [key: string]: string }) => {
         .map(item => item[0]); // return only found objects ids
 };
 
+/**
+ * Function to parse string for search query
+ * - removes whitespaces
+ * - cvt to lowercase
+ *
+ * @param string string to be normalized
+ * @returns string that can be used to search
+ */
+const nomalizeSearchString = (string: string) => {
+    return string.trim().toLowerCase();
+    // Add other ops if necessary
+};
+
 // let's not pollute the global namespace
 export default {
     validatePriceValue,
@@ -66,4 +79,5 @@ export default {
     sortByStringValues,
     sortByNumericValues,
     searchString,
+    nomalizeSearchString,
 };
