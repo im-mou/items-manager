@@ -11,7 +11,6 @@ class RootStore {
     sourceItemsList: IItem[] = [];
 
     // Different views data which will be derived from this.sourceItemsList
-    homePageitemsList: IItem[] = [];
     searchitemsList: IItem[] = [];
     favouriteitemsList: IItem[] = [];
 
@@ -43,7 +42,11 @@ class RootStore {
         // to apply Regex or use indexOf to it. For the next searches, the data will be cached.
         if (Object.keys(this.searchTokens).length === 0) {
             this.sourceItemsList.forEach(item => {
-                this.searchTokens[item._id] = [item.title, item.email, item.description].join(' ').toLowerCase();
+                this.searchTokens[item._id] = [item.title, item.email, item.description]
+                    .join(' ') // concat into a string
+                    .toLowerCase() // self explanatory
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, ''); // remove special chars for the search
             });
         }
     }

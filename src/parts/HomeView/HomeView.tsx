@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Button, Loader } from '../../components/design-system';
+import { Button, Loader, Typography } from '../../components/design-system';
 import Hero from '../../components/Hero';
 import OrderByFilter from '../../components/OrderByFilter';
 import usePagination from '../../hooks/usePagination';
@@ -56,6 +56,9 @@ const HomeView = observer(function HomeView() {
 
             {/** Order BY Filter Button */}
             <div className="homeview__toolbar">
+                <Typography variant="body" className="homeview__toolbar__info">
+                    Showing {items.length} items of {RootStore.sourceItemsList.length}
+                </Typography>
                 <OrderByFilter orderByState={orderByState} sort={sortItems} />
             </div>
 

@@ -18,12 +18,12 @@ const SearchView = observer(function SearchView() {
         isItLastPage,
         feedItems,
         orderBy: { sort: sortItems, state: orderByState },
-    } = usePagination({ itemsPerPage: 8 });
+    } = usePagination({ itemsPerPage: 6 });
 
     // Update pagination data
     React.useEffect(() => {
         // Get initial 'x' items
-        paginate(RootStore.searchitemsList);
+        paginate(RootStore.searchitemsList, orderByState);
     }, [RootStore.searchitemsList]);
 
     // fake loading delay upload loading more items

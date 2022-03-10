@@ -8,8 +8,13 @@
         @include spacing($property: margin, $direction: y, $amount: 8)
         text-align: center
 
-
     &__toolbar
         @include display-flex()
-        justify-content: flex-end
+        justify-content: space-between
+        align-items: center
         @include spacing($property: margin, $direction: x, $amount: 1)
+
+        // typography color
+        &__info
+            margin-left: $spacing-unit * 2
+            color: $primary-color

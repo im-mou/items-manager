@@ -46,7 +46,18 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
         }
 
         // filter
-        setLocalItemsList(RootStore.favouriteitemsList.filter(item => item.title.toLowerCase().indexOf(value) !== -1));
+        setLocalItemsList(
+            RootStore.favouriteitemsList.filter(
+                item =>
+                    // Might not be the fastest way to search
+                    // I'm tired... sorry
+                    item.title
+                        .toLowerCase()
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .indexOf(value) !== -1,
+            ),
+        );
     };
 
     // delete item

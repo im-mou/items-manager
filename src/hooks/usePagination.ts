@@ -30,13 +30,16 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
      * function to initialize the paginator with items array
      */
     const paginate = React.useCallback(
-        (initialItems: IItem[]) => {
+        (initialItems: IItem[], initialOrderBy?: IOrderByFilter) => {
             if (initialItems.length > 0) {
                 // sort item by default upon loading the data
-                const sortedList = __internal_sort(initialItems, {
-                    key: 'title',
-                    asc: true,
-                });
+                const sortedList = __internal_sort(
+                    initialItems,
+                    initialOrderBy || {
+                        key: 'title',
+                        asc: true,
+                    },
+                );
 
                 // save source data
                 setSourceItems(sortedList);
