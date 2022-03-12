@@ -23,7 +23,8 @@
         "typescript": "tsc --project tsconfig.json --noEmit",
         "lint": "eslint src --color",
         "lint-staged": "lint-staged --config lint-staged.js",
-        "husky-install": "husky install"
+        "husky-install": "husky install",
+        "docker-start": "docker-compose -f docker-compose.yml up"
     },
     "eslintConfig": {
         "extends": [
