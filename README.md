@@ -60,6 +60,18 @@ yarn start
 
 Once the app is running, it will be available at [http://localhost:3000](http://localhost:3000)
 
+## Run app using docker
+
+Wana use docker? just make sure to have docker and docker compose installed and run the following command:
+
+```
+yarn docker-start
+```
+
+Once the docker container is up and running, the app will be available at [http://localhost:3000](http://localhost:3000)
+
+<br />
+
 ## Styling
 
 For this project I had to create a design system from scratch using Figma. Once finished, I proceeded to create all the atomic UI components using React + SASS.
