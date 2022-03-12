@@ -82,7 +82,7 @@ This app was developed having responsiveness in mind.
 
 ## Notes
 
--   No router was used for the app to keep it simple asnd to avoid using any additional external libraries other than react.
+-   No router was used for the app to keep it simple and to avoid using any additional external libraries other than react.
 -   Localization support is not added, but it would have been nice.
 -   The search algorithms that are used are not the best. I would've loved to use a fuzzy search but I don't have enough time to implement it.
 -   If this project belonged to a client, I would ask to clarify multiples things about the requirements:

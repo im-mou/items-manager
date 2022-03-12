@@ -30,7 +30,7 @@ export interface IPaginator {
 export interface ISearchQuery {
     active: boolean;
     term: string;
-    price: string | undefined;
+    price: { min: string; max: string };
 }
 
 export interface IFormInput {

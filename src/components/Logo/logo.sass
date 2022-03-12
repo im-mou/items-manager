@@ -15,10 +15,10 @@
     &__desktop
         display: none
         @include breakpoint($point: laptop)
-            display: initial
+            display: inherit
 
     &__mobile
-        display: initial
+        display: inherit
         fill: $primary-color
         @include breakpoint($point: laptop)
             display: none

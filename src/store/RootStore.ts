@@ -18,7 +18,10 @@ class RootStore {
     search: ISearchQuery = {
         active: false,
         term: '',
-        price: undefined,
+        price: {
+            min: '',
+            max: '',
+        },
     };
 
     // This variable will keep the paginated offset and order by so when we come back from search view
@@ -28,13 +31,15 @@ class RootStore {
     // This variable with have (title, description, email) in a single string to apply regex for fast search
     searchTokens: { [key: string]: string } = {};
 
+    initialized = false;
+
     // ctor
     constructor() {
         makeAutoObservable(this, {}, { deep: true });
     }
 
     // Store initializer
-    async init() {
+    init = async () => {
         // FEtch items from server
         await this.fetchAllItems();
 
@@ -49,7 +54,9 @@ class RootStore {
                     .replace(/[\u0300-\u036f]/g, ''); // remove special chars for the search
             });
         }
-    }
+
+        this.initialized = true;
+    };
 
     // Function to fetch all the item from the server
     fetchAllItems = async () => {
@@ -114,14 +121,24 @@ class RootStore {
             filterPipeLine.push(textSearchFilter);
         }
 
-        // Apply price search if 'price' is present
-        if (this.search.price) {
-            const priceSearchFilter = (items: IItem[]) => {
-                return items.filter((item: IItem) => item.price == this.search.price);
+        // Apply price search if min 'price' is present
+        if (helpers.isset(this.search.price.min)) {
+            const minPriceSearchFilter = (items: IItem[]) => {
+                return items.filter((item: IItem) => Number(item.price) >= Number(this.search.price.min));
             };
 
             // push filter to pipeline
-            filterPipeLine.push(priceSearchFilter);
+            filterPipeLine.push(minPriceSearchFilter);
+        }
+
+        // Apply price search if max 'price' is present
+        if (helpers.isset(this.search.price.max)) {
+            const maxPriceSearchFilter = (items: IItem[]) => {
+                return items.filter((item: IItem) => Number(item.price) <= Number(this.search.price.max));
+            };
+
+            // push filter to pipeline
+            filterPipeLine.push(maxPriceSearchFilter);
         }
 
         // Todo: Add price range filter
@@ -139,7 +156,7 @@ class RootStore {
         this.search = {
             active: false,
             term: '',
-            price: undefined,
+            price: { min: '', max: '' },
         };
     }
 

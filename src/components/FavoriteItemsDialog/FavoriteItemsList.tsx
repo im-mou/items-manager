@@ -76,7 +76,9 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
         <div className="favorite-items">
             {RootStore.favouriteitemsList.length ? (
                 <React.Fragment>
-                    {/** info */}
+                    {/**
+                     * Fav items list info + Search input
+                     * */}
                     <div className="favorite-items__toolbar">
                         <Input
                             className="favorite-items__toolbar__search"

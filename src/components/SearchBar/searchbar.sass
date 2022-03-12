@@ -62,5 +62,13 @@
             width: 16px
 
     &__value
-        color: $primary-color
+        @include display-flex()
+        flex-direction: row
+        align-items: center
         margin-right: $spacing-unit * 4
+
+        & > *
+            color: $primary-color
+
+    &__separator
+        @include spacing($property: margin, $direction: x, $amount: 2)

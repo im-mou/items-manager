@@ -16,12 +16,35 @@
         align-items: flex-end
         margin-top: $spacing-unit
 
-        &__input
-            width: 250px
-            flex-grow: 0.5
+// Price form
+.price-range-form
+    max-width: 300px
 
-        &__submit
-            margin-top: $spacing-unit * 3
+    &__body
+        @include display-flex()
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+
+    &__input
+        width: 100%
+        &:first-child
+            margin-right: $spacing-unit
+
+    &__footer
+        margin-top: $spacing-unit * 3
+        @include display-flex()
+        flex-direction: row
+        justify-content: flex-end
+        align-items: center
+
+        & > *
+            margin-left: $spacing-unit * 4
+
+// Error continee
+.errors
+    @include spacing($property: margin, $direction: y, $amount: 1)
 
     &__error-message
+        display: block
         color: $error-color

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react';
 import React from 'react';
 import { Badge, Button, FavoriteFilledIcon, theme } from '../../components/design-system';
 import Dialog from '../../components/design-system/Dialog';
@@ -24,7 +24,7 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
     }, [setDialogOpen]);
 
     return (
-        <>
+        <div>
             <Dialog
                 open={dialogOpen}
                 onClose={closeDialog}
@@ -56,7 +56,7 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
                     icon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
                 />
             </Badge>
-        </>
+        </div>
     );
 });
 

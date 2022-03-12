@@ -2,9 +2,31 @@
 // ----------------------
 
 import { IItem, IOrderByFilter } from '../types/types';
+import { PRICE_MAX_VALUE, PRICE_MIN_VALUE } from './constants';
 
-const validatePriceValue = (value: string, lowerBound: number, upperBound: number) => {
-    const price = +value;
+/**
+ * Function to determine if an input has value.
+ * @param value value to be checked
+ * @returns boolean flag indicating if value param has value
+ */
+const isset = (value: string | number) => {
+    return value !== undefined && value !== null && value.toString().trim().length > 0;
+};
+
+/**
+ * Function to validate a price input
+ *
+ * @param value Price value to be validated
+ * @param lowerBound Minimum numeric value that the value should have
+ * @param upperBound Maximum numeric value that the value should have
+ * @returns Boolean indicating if the validation conditions are met
+ */
+const validatePriceValue = (
+    value: string,
+    lowerBound: number = PRICE_MIN_VALUE,
+    upperBound: number = PRICE_MAX_VALUE,
+) => {
+    const price = Number(value.trim());
 
     if (!isNaN(price)) {
         return price >= lowerBound && price < upperBound;
@@ -13,13 +35,19 @@ const validatePriceValue = (value: string, lowerBound: number, upperBound: numbe
     }
 };
 
+/**
+ * Function to validate if price range is valid
+ * @param min minimum price value
+ * @param max maximum price value
+ * @returns Boolean flag indication if price range is valid
+ */
 const validatePriceRange = (min: string, max: string) => {
-    const minimum = +min;
-    const maximum = +max;
+    const minimum = +Number(min.trim());
+    const maximum = +Number(max.trim());
 
     // make sure min < max
     if (!isNaN(minimum) && !isNaN(maximum)) {
-        return !(minimum > maximum);
+        return !(minimum >= maximum);
     } else {
         return false;
     }
@@ -74,6 +102,7 @@ const nomalizeSearchString = (string: string) => {
 
 // let's not pollute the global namespace
 export default {
+    isset,
     validatePriceValue,
     validatePriceRange,
     sortByStringValues,

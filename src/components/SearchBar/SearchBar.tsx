@@ -3,10 +3,10 @@ import { Button, CloseIcon, EuroIcon, Input, Menu, Paper, SearchIcon, theme, Typ
 import clsx from 'clsx';
 import { observer } from 'mobx-react';
 import { useStore } from '../../store';
-import './searchbar.sass';
 import PriceRangeMenu from '../PriceRangeMenu';
 import { IFormInput } from '../../types/types';
 import helpers from '../../utils/helpers';
+import './searchbar.sass';
 
 // Main component
 const SearchBar = observer(function SearchBar() {
@@ -15,6 +15,7 @@ const SearchBar = observer(function SearchBar() {
 
     // refs
     const minPriceInputRef = React.useRef<HTMLInputElement>(null);
+    const maxPriceInputRef = React.useRef<HTMLInputElement>(null);
 
     // Local state
     const [searchInput, setSearchInput] = React.useState<IFormInput>({ value: '', error: false, errMsg: '' });
@@ -53,7 +54,10 @@ const SearchBar = observer(function SearchBar() {
             // dispatch search query action to store
             RootStore.searchItems({
                 term: helpers.nomalizeSearchString(searchInput.value),
-                price: minPriceInputRef.current?.value,
+                price: {
+                    min: minPriceInputRef.current ? minPriceInputRef.current.value : '',
+                    max: maxPriceInputRef.current ? maxPriceInputRef.current.value : '',
+                },
             });
         }
     };
@@ -75,6 +79,7 @@ const SearchBar = observer(function SearchBar() {
                 ) : (
                     // Button to close search if a search query is active
                     <Button
+                        data-test-id="clear-search"
                         aria-label="Clear search button"
                         variant="icon"
                         className="text-search__icon"
@@ -118,9 +123,19 @@ const SearchBar = observer(function SearchBar() {
                         />
                         {/** - Show price value in the button, if the price filter is applied */}
                         {isPriceInputActive && !isOpen ? (
-                            <Typography className="price-search__value" variant="h3">
-                                {minPriceInputRef.current?.value}
-                            </Typography>
+                            <div className="price-search__value">
+                                {minPriceInputRef.current?.value && (
+                                    <Typography variant="h3">{minPriceInputRef.current?.value}</Typography>
+                                )}
+                                {maxPriceInputRef.current?.value && (
+                                    <>
+                                        <Typography className="price-search__separator" variant="h3">
+                                            –
+                                        </Typography>
+                                        <Typography variant="h3">{maxPriceInputRef.current?.value}</Typography>
+                                    </>
+                                )}
+                            </div>
                         ) : null}
                     </Paper>
                 )}
@@ -128,6 +143,7 @@ const SearchBar = observer(function SearchBar() {
                 {/** Price range Form */}
                 <PriceRangeMenu
                     minPriceRef={minPriceInputRef}
+                    maxPriceRef={maxPriceInputRef}
                     isFormFilled={activatePriceInput}
                     submitSearch={submitSearch}
                 />

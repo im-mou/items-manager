@@ -1,13 +1,8 @@
 import React from 'react';
 import { IFormInput } from '../../types/types';
-import { PRICE_MAX_VALUE, PRICE_MIN_VALUE } from '../../utils/constants';
 import helpers from '../../utils/helpers';
 import { Button, Input, Typography } from '../design-system';
 import './price-range-menu.sass';
-
-/**
- * For a futur version, I would add in input range -> min - max
- */
 
 interface PriceRangeMenuProps {
     /**
@@ -16,60 +11,83 @@ interface PriceRangeMenuProps {
      */
     isFormFilled: (filled: boolean) => void;
     minPriceRef: React.RefObject<HTMLInputElement>;
-    // maxPriceRef: React.RefObject<HTMLInputElement>;
+    maxPriceRef: React.RefObject<HTMLInputElement>;
     submitSearch: () => void;
 }
 
 const PriceRangeMenu = React.memo(function PriceRangeMenu({
     isFormFilled,
     minPriceRef,
+    maxPriceRef,
     submitSearch,
 }: PriceRangeMenuProps) {
     // Local state
-    const [priceInput, setPriceInput] = React.useState<IFormInput>({
-        value: '',
-        error: false,
-        errMsg: '',
+    const [priceInputs, setPriceInputs] = React.useState<{ min: IFormInput; max: IFormInput }>({
+        min: { value: '', error: false, errMsg: '' },
+        max: { value: '', error: false, errMsg: '' },
     });
 
-    // Listen for changes in the input value to take furthur actions
+    // Listener for when the price inputs are changed
+    // - We'll verify is the form is filled correctly
+    // - If so, we'll tell the parent component that it can use price values for the search
     React.useEffect(() => {
-        // Indicate to the parent component that price form
-        // has some valid value and can be used for the query.
-        if (priceInput.error === false && priceInput.value.length > 0) {
-            isFormFilled(true);
+        if ([priceInputs.min.error, priceInputs.max.error].includes(true) === false) {
+            isFormFilled(helpers.isset(priceInputs.min.value) || helpers.isset(priceInputs.max.value));
         } else {
             isFormFilled(false);
         }
-    }, [priceInput]);
+    }, [priceInputs]);
 
     // price inputs onChange handler
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Update input values
-        setPriceInput(prev => simplePriceValidation({ ...prev, value: e.target.value }));
-    };
+    const onChange = (input: 'min' | 'max') => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
 
-    // Simple input price validation
-    const simplePriceValidation = (currentState: IFormInput) => {
-        const partialState = { ...currentState };
+        // set form value and also validate them
+        setPriceInputs(prev => {
+            const newFormState = { ...prev };
 
-        if (currentState.value.trim().length > 0) {
-            // only allow numbers and value should be between valid price bounds
-            if (!helpers.validatePriceValue(currentState.value.trim(), PRICE_MIN_VALUE, PRICE_MAX_VALUE)) {
-                partialState.errMsg = 'Please input a valid value';
-                partialState.error = true;
+            // reset input errors
+            newFormState.min = { value: newFormState.min.value, error: false, errMsg: '' };
+            newFormState.max = { value: newFormState.max.value, error: false, errMsg: '' };
 
-                // return early to show error message
-                return partialState;
+            // validate and set min price
+            if (input === 'min') {
+                newFormState.min.value = inputValue;
+
+                if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
+                    newFormState.min.error = true;
+                    newFormState.min.errMsg = 'invalid value';
+                }
             }
-        }
 
-        // when input is empty, there should be no error
-        partialState.error = false;
-        partialState.errMsg = '';
+            // validate max price -> max value is not required but if present it has to be valid.
+            if (input === 'max') {
+                newFormState.max.value = inputValue;
 
-        // update state
-        return partialState;
+                if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
+                    newFormState.max.error = true;
+                    newFormState.max.errMsg = 'invalid value';
+                }
+            }
+
+            // verify that if a max price is present, then there should be a min price too.
+            if (helpers.isset(newFormState.max.value) && !helpers.isset(newFormState.min.value)) {
+                newFormState.min.error = true;
+                newFormState.min.errMsg = 'must must have value';
+            }
+
+            // Varify that if min and max price is present, the price range is valid.
+            if (
+                helpers.isset(newFormState.max.value) &&
+                helpers.isset(newFormState.min.value) &&
+                !helpers.validatePriceRange(newFormState.min.value, newFormState.max.value)
+            ) {
+                newFormState.max.error = true;
+                newFormState.max.errMsg = 'must be greater than minimum price';
+            }
+
+            return newFormState;
+        });
     };
 
     // Listen to enter key to trigger the submit query
@@ -79,40 +97,79 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
         }
     };
 
-    // run parent component submit method
+    // Submit function
     const onSubmit = () => {
-        submitSearch();
+        // If there is no error, we'll submit
+        if ([priceInputs.min.error, priceInputs.max.error].includes(true) === false) {
+            submitSearch();
+        }
+    };
+
+    // Clear from state
+    const clearForm = () => {
+        isFormFilled(false);
+
+        // Reset state
+        const emptyForm = { value: '', error: false, errMsg: '' };
+        setPriceInputs({ min: emptyForm, max: emptyForm });
     };
 
     return (
         <div className="price-range-menu">
             <Typography variant="h4">Filter by price</Typography>
             <Typography variant="caption">Input a price</Typography>
-            <div className="price-range-menu__form">
-                <Input
-                    className="price-range-menu__form__input"
-                    ref={minPriceRef}
-                    value={priceInput.value}
-                    error={priceInput.error}
-                    onChange={onChange}
-                    placeholder="Price..."
-                    onKeyUp={onEnterKeyPress}
-                />
-                <Button
-                    aria-label="apply search filter"
-                    color="primary"
-                    className="price-range-menu__form__submit"
-                    onClick={onSubmit}
-                >
-                    Apply Filter
-                </Button>
+            <div className="price-range-form">
+                <div className="price-range-form__body">
+                    <Input
+                        className="price-range-form__input"
+                        ref={minPriceRef}
+                        value={priceInputs.min.value}
+                        error={priceInputs.min.error}
+                        onChange={onChange('min')}
+                        placeholder="Min price..."
+                        onKeyUp={onEnterKeyPress}
+                    />
+                    <Input
+                        className="price-range-form__input"
+                        ref={maxPriceRef}
+                        value={priceInputs.max.value}
+                        error={priceInputs.max.error}
+                        onChange={onChange('max')}
+                        placeholder="No limit"
+                        onKeyUp={onEnterKeyPress}
+                    />
+                </div>
+
+                <div className="errors">
+                    {/** Error message indicator */}
+                    {priceInputs.min.error ? (
+                        <Typography variant="caption" className="errors__error-message">
+                            Min price: {priceInputs.min.errMsg}
+                        </Typography>
+                    ) : null}
+                    {priceInputs.max.error ? (
+                        <Typography variant="caption" className="errors__error-message">
+                            Max price: {priceInputs.max.errMsg}
+                        </Typography>
+                    ) : null}
+                </div>
+
+                <div className="price-range-form__footer">
+                    <a
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault();
+                            clearForm();
+                        }}
+                    >
+                        <Typography variant="caption">Clear form</Typography>
+                    </a>
+
+                    <Button aria-label="apply search filter" color="primary" onClick={onSubmit}>
+                        Apply Filter
+                    </Button>
+                </div>
             </div>
-            {/** Error message indicator */}
-            {priceInput.error ? (
-                <Typography variant="caption" className="price-range-menu__error-message">
-                    {priceInput.errMsg}
-                </Typography>
-            ) : null}
         </div>
     );
 });
