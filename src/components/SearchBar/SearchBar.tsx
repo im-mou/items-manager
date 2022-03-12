@@ -125,14 +125,14 @@ const SearchBar = observer(function SearchBar() {
                         {isPriceInputActive && !isOpen ? (
                             <div className="price-search__value">
                                 {minPriceInputRef.current?.value && (
-                                    <Typography variant="h3">{minPriceInputRef.current?.value}</Typography>
+                                    <Typography variant="h3">{minPriceInputRef.current?.value}€</Typography>
                                 )}
                                 {maxPriceInputRef.current?.value && (
                                     <>
                                         <Typography className="price-search__separator" variant="h3">
                                             –
                                         </Typography>
-                                        <Typography variant="h3">{maxPriceInputRef.current?.value}</Typography>
+                                        <Typography variant="h3">{maxPriceInputRef.current?.value}€</Typography>
                                     </>
                                 )}
                             </div>

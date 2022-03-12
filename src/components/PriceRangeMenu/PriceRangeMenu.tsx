@@ -50,40 +50,35 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
             newFormState.min = { value: newFormState.min.value, error: false, errMsg: '' };
             newFormState.max = { value: newFormState.max.value, error: false, errMsg: '' };
 
-            // validate and set min price
-            if (input === 'min') {
-                newFormState.min.value = inputValue;
+            // validate and set min/max price
+            newFormState[input].value = inputValue;
 
-                if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
-                    newFormState.min.error = true;
-                    newFormState.min.errMsg = 'invalid value';
-                }
+            if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
+                newFormState[input].error = true;
+                newFormState[input].errMsg = 'invalid value';
+
+                // early exit if any of the input fail individual validation
+                return newFormState;
             }
 
-            // validate max price -> max value is not required but if present it has to be valid.
-            if (input === 'max') {
-                newFormState.max.value = inputValue;
-
-                if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
-                    newFormState.max.error = true;
-                    newFormState.max.errMsg = 'invalid value';
-                }
-            }
+            // Validate price range
+            const maxValueExists = helpers.isset(newFormState.max.value);
+            const minValueExists = helpers.isset(newFormState.min.value);
 
             // verify that if a max price is present, then there should be a min price too.
-            if (helpers.isset(newFormState.max.value) && !helpers.isset(newFormState.min.value)) {
+            if (maxValueExists && !minValueExists) {
                 newFormState.min.error = true;
                 newFormState.min.errMsg = 'must must have value';
             }
 
-            // Varify that if min and max price is present, the price range is valid.
-            if (
-                helpers.isset(newFormState.max.value) &&
-                helpers.isset(newFormState.min.value) &&
-                !helpers.validatePriceRange(newFormState.min.value, newFormState.max.value)
-            ) {
-                newFormState.max.error = true;
-                newFormState.max.errMsg = 'must be greater than minimum price';
+            // Verify that if min and max price is present, the price range is valid.
+            if (maxValueExists && minValueExists) {
+                const isPriceRangeValid = helpers.validatePriceRange(newFormState.min.value, newFormState.max.value);
+
+                if (isPriceRangeValid === false) {
+                    newFormState.max.error = true;
+                    newFormState.max.errMsg = 'must be greater than minimum price';
+                }
             }
 
             return newFormState;

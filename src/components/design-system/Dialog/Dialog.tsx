@@ -31,6 +31,8 @@ const Dialog = (props: DialogProps) => {
             // Focus trap for accesibility
             popoverRef.current?.focus();
         }
+
+        // cleanup
         return () => {
             window.removeEventListener('keyup', escapeKeyPress);
             window.removeEventListener('resize', calcualtePosition);

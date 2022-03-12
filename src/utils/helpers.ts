@@ -27,12 +27,10 @@ const validatePriceValue = (
     upperBound: number = PRICE_MAX_VALUE,
 ) => {
     const price = Number(value.trim());
-
     if (!isNaN(price)) {
         return price >= lowerBound && price < upperBound;
-    } else {
-        return false;
     }
+    return false;
 };
 
 /**

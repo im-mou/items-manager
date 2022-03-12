@@ -54,10 +54,10 @@ const Menu = (props: MenuProps) => {
                 triggerRef.current.offsetLeft + triggerRef.current.offsetWidth / 2 - popoverRef.current.offsetWidth / 2;
 
             // menu top-right corner point to check if it overflows the screen
-            const popoverTopRightPoint = left + popoverRef.current.offsetWidth / 2;
+            const popoverTopRightPoint = left + popoverRef.current.offsetWidth;
 
             // Do not let the menu overflow fron the right
-            if (popoverTopRightPoint > document.body.clientWidth) {
+            if (popoverTopRightPoint >= document.body.clientWidth) {
                 const overlap = Math.abs(popoverTopRightPoint - document.body.clientWidth);
                 // calculate the position of the mwnu, which will be touching the right side of the window
                 left = left - overlap - 16;

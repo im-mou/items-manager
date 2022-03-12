@@ -39,11 +39,14 @@ const SearchView = observer(function SearchView() {
                 <React.Fragment>
                     <div className="searchview-header">
                         <div>
-                            <Typography variant="h2" className="searchview-header__title">
+                            <Typography variant="h1" className="searchview-header__title">
                                 Search Results
                             </Typography>
                             <Typography variant="h3" className="searchview-header__subtitle">
                                 Founds {RootStore.searchitemsList.length} items
+                            </Typography>
+                            <Typography variant="body" className="searchview-header__pagination-info">
+                                Showing {searchResults.length} items of {RootStore.searchitemsList.length}
                             </Typography>
                         </div>
 

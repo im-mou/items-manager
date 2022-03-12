@@ -109,18 +109,6 @@ class RootStore {
         // Create filter pipeline
         const filterPipeLine = [];
 
-        // Apply string 'term' search filter 'term' if present
-        if (this.search.term.trim().length) {
-            // Create a filter for the pipeline
-            const foundIds = helpers.searchString(helpers.nomalizeSearchString(searchQuery.term), this.searchTokens);
-            const textSearchFilter = (items: IItem[]) => {
-                return items.filter((item: IItem) => foundIds.includes(item._id));
-            };
-
-            // push filter to pipeline
-            filterPipeLine.push(textSearchFilter);
-        }
-
         // Apply price search if min 'price' is present
         if (helpers.isset(this.search.price.min)) {
             const minPriceSearchFilter = (items: IItem[]) => {
@@ -141,8 +129,17 @@ class RootStore {
             filterPipeLine.push(maxPriceSearchFilter);
         }
 
-        // Todo: Add price range filter
-        // ...
+        // Apply string 'term' search filter 'term' if present
+        if (this.search.term.trim().length) {
+            // Create a filter for the pipeline
+            const foundIds = helpers.searchString(helpers.nomalizeSearchString(searchQuery.term), this.searchTokens);
+            const textSearchFilter = (items: IItem[]) => {
+                return items.filter((item: IItem) => foundIds.includes(item._id));
+            };
+
+            // push filter to pipeline
+            filterPipeLine.push(textSearchFilter);
+        }
 
         // Check if we have filter in our pipeline
         if (filterPipeLine.length > 0) {

@@ -5,11 +5,13 @@
 // Search view header classes
 .searchview-header
     @include display-flex()
-    align-items: center
+    align-items: flex-end
     flex-direction: column
     justify-content: space-evenly
 
-    height: 180px
+    @include spacing($property: margin, $direction: y, $amount: 2)
+    @include spacing($property: margin, $direction: x, $amount: 1)
+    height: 160px
 
     @include breakpoint($point: tablet)
         flex-direction: row
@@ -20,6 +22,10 @@
 
     &__subtitle
         color: $gray-500
+
+    &__pagination-info
+        margin-top: $spacing-unit * 6
+        color: $primary-color
 
 // search view classes
 .searchview

@@ -32,7 +32,7 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                      * Orderby Menu Button Trigger
                      */
                     <Button
-                        size="small"
+                        size="xs"
                         variant="text"
                         onClick={setOpen}
                         endIcon={!open ? <ExpandMoreIcon /> : <ExpandLessIcon />}
