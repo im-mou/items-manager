@@ -41,13 +41,13 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                     <Typography variant="caption" className="orderby-filter__label">
                         Choose your desired filter below
                     </Typography>
-                    <div className="orderby-filter__list-container">
+                    <div className="list-container">
                         {ORDER_BY_KEYS.map(key => (
-                            <div key={key} className="orderby-filter__list-container__item">
+                            <div key={key} className="list-container__item">
                                 <Typography
                                     variant="h3"
                                     className={clsx({
-                                        ['orderby-filter__list-container__item--selected']: key === orderByState.key,
+                                        ['list-container__item--selected']: key === orderByState.key,
                                     })}
                                 >
                                     {key}
@@ -62,7 +62,7 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                                             <ExpandMoreIcon
                                                 color={theme.palette.gray[700]}
                                                 className={clsx({
-                                                    ['orderby-filter__list-container__item--selected']:
+                                                    ['list-container__item--selected']:
                                                         key === orderByState.key && orderByState.asc === false,
                                                 })}
                                             />
@@ -76,7 +76,7 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                                             <ExpandLessIcon
                                                 color={theme.palette.gray[700]}
                                                 className={clsx({
-                                                    ['orderby-filter__list-container__item--selected']:
+                                                    ['list-container__item--selected']:
                                                         key === orderByState.key && orderByState.asc === true,
                                                 })}
                                             />

@@ -46,51 +46,53 @@
         position: sticky
         top: 0
 
-        &__search
-            flex-grow: 1
+    &__search
+        flex-grow: 1
 
+    &__info
+        display: none
+
+    // Responsive
+    @include breakpoint($point: phablet)
         &__info
-            display: none
-
-        // Responsive
-        @include breakpoint($point: phablet)
-            &__info
-                display: initial
+            display: initial
 
     &__list
-        @include display-flex()
-        flex-direction: column
         margin-bottom: $spacing-unit * 2
-
         @include spacing($property: padding, $direction: x, $amount: 4)
         @include spacing($property: padding, $direction: y, $amount: 2)
 
-        &__item
-            $self: &
-            align-items: center
+// Items list
+.items-list
+    @include display-flex()
+    flex-direction: column
+
+    &__item
+        $self: &
+        align-items: center
+        width: 100%
+        background: rgba(0,0,0,0.03)
+        margin-bottom: $spacing-unit
+        @include spacing($property: padding, $direction: all, $amount: 2)
+        animation: fade-in 200ms 1 linear
+
+    &__title
+        flex-grow: 1
+
+    &__action
+        min-height: 44px
+        min-width: 44px
+
+    &__image
+        margin-right: $spacing-unit * 4
+        height: 60px
+        width: 60px
+        min-height: 60px
+        min-width: 60px
+        border-radius: $spacing-unit
+        overflow: hidden
+
+        & > img
+            height: 100%
             width: 100%
-            background: rgba(0,0,0,0.03)
-            margin-bottom: $spacing-unit
-            @include spacing($property: padding, $direction: all, $amount: 2)
-            animation: fade-in 200ms 1 linear
-
-            &__title
-                flex-grow: 1
-
-            &__action
-                min-height: 44px
-                min-width: 44px
-
-            &__image
-                margin-right: $spacing-unit * 4
-                height: 60px
-                width: 60px
-                min-height: 60px
-                min-width: 60px
-                border-radius: $spacing-unit
-                overflow: hidden
-
-                & > img
-                    height: 100%
-                    width: 100%
-                    object-fit: cover
+            object-fit: cover

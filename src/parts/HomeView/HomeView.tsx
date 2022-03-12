@@ -56,7 +56,7 @@ const HomeView = observer(function HomeView() {
 
             {/** Order BY Filter Button */}
             <div className="homeview__toolbar">
-                <Typography variant="body" className="homeview__toolbar__info">
+                <Typography variant="body" className="homeview__pagination-info">
                     Showing {items.length} items of {RootStore.sourceItemsList.length}
                 </Typography>
                 <OrderByFilter orderByState={orderByState} sort={sortItems} />

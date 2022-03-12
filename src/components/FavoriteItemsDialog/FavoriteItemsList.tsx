@@ -81,34 +81,34 @@ const FavoriteItemsList = observer(function FavoriteItemsList() {
                      * */}
                     <div className="favorite-items__toolbar">
                         <Input
-                            className="favorite-items__toolbar__search"
+                            className="favorite-items__search"
                             variant="naked"
                             startIcon={<SearchIcon color={theme.palette.primary.main} />}
                             placeholder="Seach your favourite items..."
                             value={searchInputValue}
                             onChange={onSearcInputChange}
                         />
-                        <Typography variant="caption" className="favorite-items__toolbar__info">
+                        <Typography variant="caption" className="favorite-items__info">
                             {localItemsList.length} {searchInputValue.length ? 'items found' : 'items added to list'}
                         </Typography>
                     </div>
 
                     {/** items list */}
-                    <div className="favorite-items__list">
+                    <div className="favorite-items__list items-list">
                         {localItemsList.map(item => (
                             <Paper
                                 tabIndex={0}
                                 variant="outlined"
                                 key={`${item.title}_${item.email}`}
-                                className="favorite-items__list__item"
+                                className="items-list__item"
                             >
-                                <div className="favorite-items__list__item__image">
+                                <div className="items-list__image">
                                     <img src={item.image} alt={item.title} />
                                 </div>
-                                <div className="favorite-items__list__item__title">
+                                <div className="items-list__title">
                                     <Typography variant="h3">{item.title}</Typography>
                                 </div>
-                                <div className="favorite-items__list__item__action">
+                                <div className="items-list__action">
                                     <Button
                                         tabIndex={0}
                                         variant="icon"

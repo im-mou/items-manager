@@ -98,43 +98,43 @@ $sparation-width: $spacing-unit
             padding-bottom: $spacing-unit
             @include spacing($property: padding, $direction: x, $amount: 3)
 
-        &__title
-            color: lighten($gray-100, 10%)
+    &__title
+        color: lighten($gray-100, 10%)
 
-        &__user
-            @include display-flex()
-            align-items: center
-            flex-direction: row
-            color: darken($primary-color, 5%)
-            margin-bottom: $spacing-unit * 3
+    &__user
+        @include display-flex()
+        align-items: center
+        flex-direction: row
+        color: darken($primary-color, 5%)
+        margin-bottom: $spacing-unit * 3
 
-        &__body
-            flex-grow: 1
-            line-height: 1.2
-            color: lighten($gray-300, 15%)
+    &__body
+        flex-grow: 1
+        line-height: 1.2
+        color: lighten($gray-300, 15%)
 
-        &__footers
-            @include display-flex()
-            flex-direction: row
-            justify-content: space-between
-            align-items: flex-end
+    &__footers
+        @include display-flex()
+        flex-direction: row
+        justify-content: space-between
+        align-items: flex-end
 
-            & > h1
-                color: $gray-100
+        & > h1
+            color: $gray-100
 
-            @include breakpoint($point: desktop)
-                margin-top: $spacing-unit * 2
+        @include breakpoint($point: desktop)
+            margin-top: $spacing-unit * 2
 
-            // Animate on click 'add to favourite' button
-            &__liked
-                animation: heartbeat 200ms 1 linear
+    // Animate on click 'add to favourite' button
+    &__liked-button
+        animation: heartbeat 200ms 1 linear
 
-    // Detailed card
-    &.detailed
+    // Detailed card variant
+    &--detailed
         box-shadow: none
         flex-direction: column
 
-        #{ $self }__image
+        #{$self}__image
             height: 70%
             width: 100%
             cursor: initial
@@ -143,26 +143,26 @@ $sparation-width: $spacing-unit
                 transform: none
                 transition: none
 
-        #{ $self }__content
-            &__title
-                color: $gray-100
-                @include spacing($property: margin, $direction: y, $amount: 2)
+        #{$self}__title
+            color: $gray-100
+            @include spacing($property: margin, $direction: y, $amount: 2)
 
-                & > *
-                    font-size: 20px
+            & > *
+                font-size: 20px
 
-            &__user
-                margin-top: $spacing-unit * 4
-                & > span
-                    font-size: 12px
-                & > svg
-                    height: 24px
-                    width: 24px
-                    fill: $primary-color
-                    margin-right: $spacing-unit * 2
-            &__body
-                & > p
-                    font-size: 16px
-            &__footers
-                & > *
-                    font-size: 30px
+        #{$self}__user
+            margin-top: $spacing-unit * 4
+            & > span
+                font-size: 12px
+            & > svg
+                height: 24px
+                width: 24px
+                fill: $primary-color
+                margin-right: $spacing-unit * 2
+
+        #{$self}__body
+            & > p
+                font-size: 16px
+        #{$self}__footers
+            & > *
+                font-size: 30px

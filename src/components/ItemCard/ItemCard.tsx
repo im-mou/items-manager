@@ -32,18 +32,18 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                 <img src={item.image} alt={item.title} />
             </div>
             <div className="item-card__content">
-                <div className="item-card__content__title">
+                <div className="item-card__title">
                     <Typography variant="h3">{item.title ? item.title : '-'}</Typography>
                 </div>
-                <div className="item-card__content__user">
+                <div className="item-card__user">
                     <Typography variant="caption">{item.email ? item.email : ' '}</Typography>
                 </div>
-                <div className="item-card__content__body">
+                <div className="item-card__body">
                     <Typography ellipsis={100} variant="body">
                         {item.description ? item.description : '-'}
                     </Typography>
                 </div>
-                <div className="item-card__content__footers">
+                <div className="item-card__footers">
                     <Typography variant="h1">
                         {item.price ? parseFloat(item.price).toLocaleString('es-ES') : '-'}€
                     </Typography>
@@ -57,7 +57,7 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                         <Button
                             aria-label="Add item to favourite list"
                             variant="icon"
-                            className={clsx({ ['item-card__content__footers__liked']: isItemFavourite })}
+                            className={clsx({ ['item-card__liked-button']: isItemFavourite })}
                             onClick={toggleItemToFavourite}
                             icon={
                                 isItemFavourite ? (

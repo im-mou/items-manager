@@ -2,7 +2,6 @@
 @import ../../scss/_variables
 @import ../../scss/_utils
 
-
 // orderby filter menu classes
 .orderby-filter
     @include spacing($property: padding, $direction: y, $amount: 2)
@@ -13,26 +12,27 @@
     &__label
         @include spacing($property: padding, $direction: x, $amount: 4)
 
-    &__list-container
+// list container
+.list-container
+    @include display-flex()
+    flex-direction: column
+    &__item
+        $self: &
         @include display-flex()
-        flex-direction: column
-        &__item
-            $self: &
-            @include display-flex()
-            flex-direction: row
-            align-items: center
-            justify-content: space-between
-            text-transform: capitalize
-            @include spacing($property: padding, $direction: y, $amount: 1)
-            @include spacing($property: padding, $direction: x, $amount: 4)
-            border-bottom: 1px solid rgba(0,0,0,0.07)
+        flex-direction: row
+        align-items: center
+        justify-content: space-between
+        text-transform: capitalize
+        @include spacing($property: padding, $direction: y, $amount: 1)
+        @include spacing($property: padding, $direction: x, $amount: 4)
+        border-bottom: 1px solid rgba(0,0,0,0.07)
 
-            &--selected
-                color: $primary-color
-                fill: $primary-color
+        &--selected
+            color: $primary-color
+            fill: $primary-color
 
-            &:last-child
-                border-bottom: none
+        &:last-child
+            border-bottom: none
 
-            &:hover
-                background: rgba(#000, 0.04)
+        &:hover
+            background: rgba(#000, 0.04)
