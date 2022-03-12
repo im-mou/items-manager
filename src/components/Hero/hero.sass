@@ -3,6 +3,9 @@
 @import ../../scss/_utils
 @import ../../scss/_animations
 
+// Gradient list
+$gradient: $gray-900 0%, transparent 100%
+
 .hero
     @include display-flex()
     flex-direction: column
@@ -12,6 +15,15 @@
     position: relative
     text-align: center
     overflow: hidden
+
+    &::before
+        content: ""
+        position: absolute
+        bottom: 0
+        left: 0
+        height: 40px
+        width: 100%
+        @include gradient($direction: to top, $list: $gradient)
 
     &__title
         color: $gray-300

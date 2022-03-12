@@ -58,3 +58,10 @@ $spacing-unit: 4px
     @else if $point == mobileonly
         @media (max-width: 37.5em)
             @content
+
+// Lieanr gradient
+@mixin gradient($direction, $list)
+    background: -webkit-linear-gradient($direction, $list)
+    background: -moz-linear-gradient($direction, $list)
+    background: -o-linear-gradient($direction, $list)
+    background: linear-gradient($direction, $list)

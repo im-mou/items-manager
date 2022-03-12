@@ -6,6 +6,7 @@ import './button.sass';
 export interface IButton
     extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     variant?: 'contained' | 'text' | 'icon';
+    size?: 'default' | 'small';
     color?: 'default' | 'primary';
     children?: React.ReactNode;
     startIcon?: React.ReactNode;
@@ -15,10 +16,21 @@ export interface IButton
 
 const Button = React.forwardRef<HTMLButtonElement, IButton>(function Button(props: IButton, ref) {
     // initial variant value is set to 'contained'
-    const { variant = 'contained', color = 'default', icon, startIcon, endIcon, children, className, ...other } = props;
+    const {
+        variant = 'contained',
+        color = 'default',
+        size = 'default',
+        icon,
+        startIcon,
+        endIcon,
+        children,
+        className,
+        ...other
+    } = props;
+
     return (
         <button
-            className={clsx('button', `button--color-${color}`, `button--variant-${variant}`, {
+            className={clsx('button', `button--color-${color}`, `button--variant-${variant}`, `button--size-${size}`, {
                 [className as string]: className,
             })}
             ref={ref}

@@ -28,7 +28,15 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
         <>
             <Menu
                 trigger={(setOpen, open) => (
-                    <Button onClick={setOpen} variant="text" endIcon={!open ? <ExpandMoreIcon /> : <ExpandLessIcon />}>
+                    /**
+                     * Orderby Menu Button Trigger
+                     */
+                    <Button
+                        size="small"
+                        variant="text"
+                        onClick={setOpen}
+                        endIcon={!open ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                    >
                         <span style={{ color: theme.palette.gray[500] }}>ORDER BY – </span>
                         <span style={{ color: theme.palette.primary.main }}>
                             <strong>{orderByState.key.toUpperCase()}</strong>
@@ -37,6 +45,9 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                     </Button>
                 )}
             >
+                {/**
+                 * Orderby Menu Content
+                 */}
                 <div className="orderby-filter">
                     <Typography variant="caption" className="orderby-filter__label">
                         Choose your desired filter below
