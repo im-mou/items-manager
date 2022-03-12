@@ -38,20 +38,22 @@ const SearchView = observer(function SearchView() {
             {RootStore.searchitemsList.length > 0 ? (
                 <React.Fragment>
                     <div className="searchview-header">
-                        <div>
+                        <div className="searchview-header__heading">
                             <Typography variant="h1" className="searchview-header__title">
                                 Search Results
                             </Typography>
                             <Typography variant="h3" className="searchview-header__subtitle">
                                 Founds {RootStore.searchitemsList.length} items
                             </Typography>
+                        </div>
+                        <div className="searchview-header__toolbar">
                             <Typography variant="body" className="searchview-header__pagination-info">
                                 Showing {searchResults.length} items of {RootStore.searchitemsList.length}
                             </Typography>
-                        </div>
 
-                        {/** Order BY Filter Button */}
-                        <OrderByFilter sort={sortItems} orderByState={orderByState} />
+                            {/** Order BY Filter Button */}
+                            <OrderByFilter sort={sortItems} orderByState={orderByState} />
+                        </div>
                     </div>
 
                     {/** View containing list of homeview items or search items */}

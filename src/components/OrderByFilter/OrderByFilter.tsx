@@ -35,7 +35,11 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
                         size="xs"
                         variant="text"
                         onClick={setOpen}
-                        endIcon={!open ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                        endIcon={
+                            <ExpandMoreIcon
+                                className={clsx('menu-toggle-icon', { ['menu-toggle-icon--active']: open })}
+                            />
+                        }
                     >
                         <span style={{ color: theme.palette.gray[500] }}>ORDER BY – </span>
                         <span style={{ color: theme.palette.primary.main }}>

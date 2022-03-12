@@ -1,21 +1,29 @@
 // Search View
 @import ../../scss/_variables
 @import ../../scss/_utils
+@import ../../scss/_animations
 
 // Search view header classes
 .searchview-header
     @include display-flex()
-    align-items: flex-end
     flex-direction: column
-    justify-content: space-evenly
+    margin-top: $spacing-unit * 11
+    @include spacing($property: margin, $direction: x, $amount: 3)
 
-    @include spacing($property: margin, $direction: y, $amount: 2)
-    @include spacing($property: margin, $direction: x, $amount: 1)
-    height: 160px
+    &__heading
+        @include display-flex()
+        flex-direction: column
+        margin-bottom: $spacing-unit * 12
+        animation: 500ms linear 0s 1 fade-in, 250ms linear 0s 1 search-heading-slide-in
 
-    @include breakpoint($point: tablet)
-        flex-direction: row
+    &__toolbar
+        @include display-flex()
+        flex-direction: column
         justify-content: space-between
+        align-items: center
+
+        @include breakpoint($point: tablet)
+            flex-direction: row
 
     &__title
         color: $gray-300
@@ -24,7 +32,6 @@
         color: $gray-500
 
     &__pagination-info
-        margin-top: $spacing-unit * 6
         color: $primary-color
 
 // search view classes
@@ -52,3 +59,6 @@
             fill: rgba(0,0,0, 0.1)
             height: 140px
             width: 140px
+
+// animation
+@include slide-in($name: search-heading-slide-in, $start: 10%, $finish: 0%)

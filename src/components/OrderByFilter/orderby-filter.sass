@@ -2,6 +2,12 @@
 @import ../../scss/_variables
 @import ../../scss/_utils
 
+.menu-toggle-icon
+    transform: rotate(0deg)
+    @include transition($property: transform, $duration: 200ms, $easing: linear)
+    &--active
+        transform: rotate(-180deg)
+
 // orderby filter menu classes
 .orderby-filter
     @include spacing($property: padding, $direction: y, $amount: 2)
@@ -16,8 +22,8 @@
 .list-container
     @include display-flex()
     flex-direction: column
+
     &__item
-        $self: &
         @include display-flex()
         flex-direction: row
         align-items: center
