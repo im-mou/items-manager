@@ -95,6 +95,15 @@ I do have hands-on experience with jest and cypress and I would've loved to test
 ### `yarn test:unit`
 
 Runs the unit test that I time to write.
+Tis repo includes the following components tests:
+
+-   [searchBar.spec.tsx](./src/components/SearchBar/searchBar.spec.tsx)
+-   [PriceRangeMenu.spec.tsx](./src/components/PriceRangeMenu/PriceRangeMenu.spec.tsx)
+-   [PriceRangeTrigger.spec.tsx](./src/components/PriceRangeMenu/PriceRangeTrigger.spec.tsx)
+-   [OrderByFilter.spec.tsx](./src/components/OrderByFilter/OrderByFilter.spec.tsx)
+-   [ItemCard.spec.tsx](./src/components/ItemCard/ItemCard.spec.tsx)
+-   [ItemCardDetailed.spec.tsx](./src/components/ItemCard/ItemCardDetailed.spec.tsx)
+-   [usePagination.spec.ts](./src/hooks/usePagination.spec.ts)
 
 ## Notes
 

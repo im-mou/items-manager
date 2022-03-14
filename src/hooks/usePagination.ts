@@ -26,11 +26,24 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
         asc: true,
     });
 
+    // ref to avoid memory leak
+    // Avoid doing ops when the component is un mounted
+    const mounted = React.useRef({ mounted: false });
+    React.useEffect(() => {
+        mounted.current.mounted = true;
+        return () => {
+            mounted.current.mounted = false;
+        };
+    });
+
     /**
      * function to initialize the paginator with items array
      */
     const paginate = React.useCallback(
         (initialItems: IItem[], initialOrderBy?: IOrderByFilter) => {
+            // DO NOT proceed if component has been unmounted
+            if (mounted.current.mounted === false) return;
+
             if (initialItems.length > 0) {
                 // sort item by default upon loading the data
                 const sortedList = __internal_sort(
@@ -67,6 +80,9 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
      * function to push the next page into the pagination view
      */
     const feed = () => {
+        // DO NOT proceed if component has been unmounted
+        if (mounted.current.mounted === false) return;
+
         if (paginator.lastPage === false) {
             const newState = { ...paginator };
 
@@ -90,6 +106,9 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
      * Function to sort the items
      */
     const sort = (orderBy: IOrderByFilter) => {
+        // DO NOT proceed if component has been unmounted
+        if (mounted.current.mounted === false) return;
+
         // sort
         const sortedList = __internal_sort(sourceItems, orderBy);
 
@@ -122,6 +141,7 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
     return {
         paginate,
         feedItems: feed,
+        sourceItems: sourceItems,
         items: paginator.items,
         isItLastPage: paginator.lastPage,
         currentOffset: paginator.currentOffset,
