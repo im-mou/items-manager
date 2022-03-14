@@ -24,7 +24,7 @@ const SearchView = observer(function SearchView() {
     React.useEffect(() => {
         // Get initial 'x' items
         paginate(RootStore.searchitemsList, orderByState);
-    }, [RootStore.searchitemsList]);
+    }, [RootStore.searchitemsList, orderByState]);
 
     // fake loading delay upload loading more items
     const loadMoreItems = () => {

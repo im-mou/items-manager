@@ -80,14 +80,11 @@ describe('Item Card', () => {
             expect(priceElText).toBe(`${parseFloat(ITEM.price).toLocaleString('es-ES')}€`);
         });
 
-        // it('should invoke favourite function on heart button click', () => {
-        //     wrapper.find('[data-testid="item-card-favourite-button"]').find('button').simulate('click');
+        it('should open modal in clicking expand button', () => {
+            wrapper.find('[data-testid="item-card-expand-button"] > button').simulate('click');
 
-        //     const addItemToFavouriteSpy = jest.spyOn(useStore().RootStore, 'addItemToFavourite');
-
-        //     console.log(addItemToFavouriteSpy);
-        //     expect(addItemToFavouriteSpy).toBeCalled();
-        // });
+            expect(openDetailsCallback).toBeCalled();
+        });
     });
 
     describe('Props have invalid item value', () => {

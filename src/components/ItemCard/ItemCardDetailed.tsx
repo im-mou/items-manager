@@ -24,7 +24,7 @@ const ItemCardDetailed = ({ item }: ItemCardDetailedProps) => {
                     <Typography variant="caption">{item.email ? item.email : '-'}</Typography>
                 </div>
                 <div className="item-card__footers">
-                    <Typography variant="h1">
+                    <Typography variant="h1" data-testid="item-card-price">
                         {item.price ? parseFloat(item.price).toLocaleString('es-ES') : '-'}€
                     </Typography>
                 </div>

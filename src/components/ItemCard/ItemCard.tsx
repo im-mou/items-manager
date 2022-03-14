@@ -49,6 +49,7 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                     </Typography>
                     <div>
                         <Button
+                            data-testid="item-card-expand-button"
                             aria-label="View item Details"
                             onClick={openDetails}
                             variant="icon"

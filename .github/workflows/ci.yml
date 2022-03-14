@@ -1,9 +1,9 @@
 name: CI
 on:
     push:
-        branches: [production]
+        branches: [master,production]
     pull_request:
-        branches: [master]
+        branches: [master,production]
 jobs:
     react-app-workflow:
         runs-on: ubuntu-latest
