@@ -95,7 +95,8 @@ I do have hands-on experience with jest and cypress and I would've loved to test
 ### `yarn test:unit`
 
 Runs the unit test that I time to write.
-Tis repo includes the following components tests:
+
+This repo includes the following components tests:
 
 -   [searchBar.spec.tsx](./src/components/SearchBar/searchBar.spec.tsx)
 -   [PriceRangeMenu.spec.tsx](./src/components/PriceRangeMenu/PriceRangeMenu.spec.tsx)
