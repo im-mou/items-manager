@@ -1,21 +1,26 @@
-import React from 'react';
-import { Button, CloseIcon, EuroIcon, Input, Menu, Paper, SearchIcon, theme, Typography } from '../design-system';
+import React, { useRef } from 'react';
+import { Button, CloseIcon, Input, Menu, Paper, SearchIcon, theme } from '../design-system';
 import clsx from 'clsx';
-import { observer } from 'mobx-react';
-import { useStore } from '../../store';
-import PriceRangeMenu from '../PriceRangeMenu';
-import { IFormInput } from '../../types/types';
+import { PriceRangeMenu, PriceRangeTrigger } from '../PriceRangeMenu';
+import { IFormInput, ISearchQuery } from '../../types/types';
 import helpers from '../../utils/helpers';
 import './searchbar.sass';
 
+// Interfaces
+interface SearchBarProps {
+    isSearchActive: boolean;
+    submitSearch: (searchQuery: Omit<ISearchQuery, 'active'>) => void;
+    clearSearch: () => void;
+}
+
 // Main component
-const SearchBar = observer(function SearchBar() {
-    // Global state
-    const { RootStore } = useStore();
+const SearchBar = (props: SearchBarProps) => {
+    // Props
+    const { isSearchActive, submitSearch, clearSearch } = props;
 
     // refs
-    const minPriceInputRef = React.useRef<HTMLInputElement>(null);
-    const maxPriceInputRef = React.useRef<HTMLInputElement>(null);
+    const minPriceInputRef = useRef<HTMLInputElement>(null);
+    const maxPriceInputRef = useRef<HTMLInputElement>(null);
 
     // Local state
     const [searchInput, setSearchInput] = React.useState<IFormInput>({ value: '', error: false, errMsg: '' });
@@ -25,6 +30,9 @@ const SearchBar = observer(function SearchBar() {
     // update search input value
     const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(prev => ({ ...prev, value: e.target.value }));
+
+        // set input active state if the input has value
+        setIsSearchInputActive(e.target.value.length > 0);
     };
 
     // Toggle search input focus to apply White background to it.
@@ -44,15 +52,15 @@ const SearchBar = observer(function SearchBar() {
     // Listen to enter key to trigger the submit query
     const onEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            submitSearch();
+            submitSearchHandler();
         }
     };
 
     // Submit search
-    const submitSearch = () => {
+    const submitSearchHandler = () => {
         if (isPriceInputActive || searchInput.value.trim().length) {
             // dispatch search query action to store
-            RootStore.searchItems({
+            submitSearch({
                 term: helpers.nomalizeSearchString(searchInput.value),
                 price: {
                     min: minPriceInputRef.current ? minPriceInputRef.current.value : '',
@@ -62,13 +70,18 @@ const SearchBar = observer(function SearchBar() {
         }
     };
 
+    // function to clear search and go back to main page
+    const clearSearchHandler = () => {
+        clearSearch();
+    };
+
     return (
         <div className="searchbar-wrapper">
             <Paper className={clsx('text-search', { ['text-search--active']: isSearchInputActive })} variant="outlined">
                 {/**
                  * Search input left ICON / ACTION
                  * */}
-                {RootStore.search.active === false ? (
+                {isSearchActive === false ? (
                     // By default show search icon
                     <Button
                         aria-label="Search button"
@@ -79,11 +92,11 @@ const SearchBar = observer(function SearchBar() {
                 ) : (
                     // Button to close search if a search query is active
                     <Button
-                        data-test-id="clear-search"
+                        data-testid="clear-search"
                         aria-label="Clear search button"
                         variant="icon"
                         className="text-search__icon"
-                        onClick={() => RootStore.closeSearchView()}
+                        onClick={clearSearchHandler}
                         icon={<CloseIcon color={theme.palette.primary.main} />}
                     />
                 )}
@@ -101,55 +114,30 @@ const SearchBar = observer(function SearchBar() {
                 />
             </Paper>
 
-            {/** Price input */}
+            {/** Price input Menu */}
             <Menu
                 trigger={(setOpen, isOpen) => (
-                    <Paper
-                        aria-label="filter price"
-                        onClick={setOpen}
-                        variant="outlined"
-                        className={clsx('price-search', { ['price-search--active']: isPriceInputActive })}
-                    >
-                        {/** Show button + price value if it is present */}
-                        <Button
-                            aria-label="filter price button"
-                            variant="icon"
-                            className="price-search__icon"
-                            icon={
-                                <EuroIcon
-                                    color={isPriceInputActive ? theme.palette.primary.main : theme.palette.gray[500]}
-                                />
-                            }
-                        />
-                        {/** - Show price value in the button, if the price filter is applied */}
-                        {isPriceInputActive && !isOpen ? (
-                            <div className="price-search__value">
-                                {minPriceInputRef.current?.value && (
-                                    <Typography variant="h3">{minPriceInputRef.current?.value}€</Typography>
-                                )}
-                                {maxPriceInputRef.current?.value && (
-                                    <>
-                                        <Typography className="price-search__separator" variant="h3">
-                                            –
-                                        </Typography>
-                                        <Typography variant="h3">{maxPriceInputRef.current?.value}€</Typography>
-                                    </>
-                                )}
-                            </div>
-                        ) : null}
-                    </Paper>
+                    /** Price input Trigger button */
+                    <PriceRangeTrigger
+                        isMenuOpen={isOpen}
+                        openMenu={setOpen}
+                        isPriceInputActive={isPriceInputActive}
+                        minPriceValue={minPriceInputRef.current?.value}
+                        maxPriceValue={maxPriceInputRef.current?.value}
+                    />
                 )}
             >
                 {/** Price range Form */}
                 <PriceRangeMenu
+                    data-testid="price-range-menu"
                     minPriceRef={minPriceInputRef}
                     maxPriceRef={maxPriceInputRef}
-                    isFormFilled={activatePriceInput}
-                    submitSearch={submitSearch}
+                    setIsFormFilled={activatePriceInput}
+                    submitSearch={submitSearchHandler}
                 />
             </Menu>
         </div>
     );
-});
+};
 
 export default SearchBar;

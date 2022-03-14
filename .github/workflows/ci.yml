@@ -1,9 +1,9 @@
 name: CI
 on:
     push:
-        branches: [development]
+        branches: [production]
     pull_request:
-        branches: [development]
+        branches: [master]
 jobs:
     react-app-workflow:
         runs-on: ubuntu-latest
@@ -13,15 +13,18 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: 16.x
-            # - name: npm ci
-            #   run: npm ci
-            # - name: test
-            #   run: npm test
+
             - name: yarn
               run: yarn install --frozen-lockfile
+
             - name: lint
               run: yarn lint
+
             - name: typescript
               run: yarn typescript
+
+            - name: test:unit
+              run: yarn test:unit
+
             - name: build
               run: yarn build --if-present

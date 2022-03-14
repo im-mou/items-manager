@@ -65,3 +65,7 @@ $spacing-unit: 4px
     background: -moz-linear-gradient($direction, $list)
     background: -o-linear-gradient($direction, $list)
     background: linear-gradient($direction, $list)
+
+@mixin active-input-color($color)
+    background-color: $color
+    @include box-shadow($left: 0, $top: 9px, $blur: 20px, $color: rgba(0,0,0,0.1))

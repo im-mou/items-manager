@@ -10,11 +10,19 @@
     margin-top: $spacing-unit * 11
     @include spacing($property: margin, $direction: x, $amount: 3)
 
+    &__go-back
+        margin-left: -$spacing-unit
+        margin-bottom: $spacing-unit * 6
+        & svg
+            transform: rotate(-90deg)
+
     &__heading
         @include display-flex()
         flex-direction: column
-        margin-bottom: $spacing-unit * 12
+        margin-bottom: $spacing-unit * 6
+        padding-bottom: $spacing-unit * 6
         animation: 500ms linear 0s 1 fade-in, 250ms linear 0s 1 search-heading-slide-in
+        border-bottom: 2px solid rgba(0,0,0,0.07)
 
     &__toolbar
         @include display-flex()
@@ -26,7 +34,7 @@
             flex-direction: row
 
     &__title
-        color: $gray-300
+        color: $gray-100
 
     &__subtitle
         color: $gray-500

@@ -1,15 +1,10 @@
-import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import { Backdrop, Container, Typography } from './components/design-system';
-import HomeView from './parts/HomeView';
-import SearchView from './parts/SearchView';
 import TopBar from './parts/TopBar';
-import { useStore } from './store';
+import Router from './Router';
+import stores, { StoreProvider } from './store';
 
-const App = observer(function App() {
-    // Hooks
-    const { RootStore } = useStore();
-
+const App = () => {
     // Local state
     const [isLoading, setIsLoading] = useState(true);
 
@@ -17,7 +12,7 @@ const App = observer(function App() {
     React.useEffect(() => {
         async function init() {
             // Initialize items store
-            await RootStore.init();
+            await stores.RootStore.init();
 
             // fake delay
             setTimeout(() => {
@@ -39,17 +34,18 @@ const App = observer(function App() {
     }
 
     return (
-        <Container>
-            <TopBar />
-            {RootStore.search.active ? (
-                // Show search view if search is active
-                <SearchView />
-            ) : (
-                // Show home view by default
-                <HomeView />
-            )}
-        </Container>
+        <StoreProvider>
+            <Container>
+                <TopBar />
+                {/**
+                 * Simple Router to switch between:
+                 * - homepage
+                 * - search page
+                 * */}
+                <Router />
+            </Container>
+        </StoreProvider>
     );
-});
+};
 
 export default App;

@@ -68,6 +68,12 @@ Wana use docker? just make sure to have docker and docker compose installed and 
 yarn docker-start
 ```
 
+Or
+
+```
+sudo docker-compose -f docker-compose.yml up
+```
+
 Once the docker container is up and running, the app will be available at [http://localhost:3000](http://localhost:3000)
 
 <br />
@@ -84,13 +90,11 @@ This app was developed having responsiveness in mind.
 
 ## Testing
 
+I do have hands-on experience with jest and cypress and I would've loved to test very single component that I've developed. But due to time constraint I couldn't do extensive testing.
+
 ### `yarn test:unit`
 
-> in development...
-
-### `yarn test:integration`
-
-> in development...
+Runs the unit test that I time to write.
 
 ## Notes
 
@@ -101,3 +105,4 @@ This app was developed having responsiveness in mind.
     -   How does the user wants to use this app to determine how to implement a good UX for searching, filtering and navegation in general.
     -   How do they would like to search the price (exact values, a range or both)
     -   etc...
+-   Due to my day job, it took me way too long to create all the components, and because of that I couldn't do extensive testing. :(

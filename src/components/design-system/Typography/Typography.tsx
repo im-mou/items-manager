@@ -44,17 +44,13 @@ const Typography = (props: TypographyProps) => {
         }
     }
 
-    return (
-        <>
-            {React.cloneElement(
-                <Component />,
-                {
-                    className: clsx('typography', `typography--${variant}`, { [className as string]: className }),
-                    ...other,
-                },
-                body,
-            )}
-        </>
+    return React.cloneElement(
+        <Component />,
+        {
+            className: clsx('typography', `typography--${variant}`, { [className as string]: className }),
+            ...other,
+        },
+        body,
     );
 };
 

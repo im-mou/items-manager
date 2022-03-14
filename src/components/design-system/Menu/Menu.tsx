@@ -79,14 +79,14 @@ const Menu = (props: MenuProps) => {
     };
 
     return (
-        <>
+        <div>
             <Popover ref={popoverRef} open={open} onClickAway={() => setOpen(false)} closeOnClickAway>
                 <Paper shadow variant="outlined" className="menu-wrapper menu-wrapper--arrow">
                     {children}
                 </Paper>
             </Popover>
             <div ref={triggerRef}>{trigger(openMenu, open)}</div>
-        </>
+        </div>
     );
 };
 

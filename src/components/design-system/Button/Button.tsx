@@ -5,7 +5,7 @@ import './button.sass';
 // Button component
 export interface IButton
     extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-    variant?: 'contained' | 'text' | 'icon';
+    variant?: 'contained' | 'text' | 'icon' | 'link';
     size?: 'default' | 'xs';
     color?: 'default' | 'primary';
     children?: React.ReactNode;

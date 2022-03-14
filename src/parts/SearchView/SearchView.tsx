@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Button, FlagIcon, Typography } from '../../components/design-system';
+import { Button, ExpandLessIcon, FlagIcon, Typography } from '../../components/design-system';
 import { useStore } from '../../store';
 import ItemsGrid from '../ItemsGrid';
 import OrderByFilter from '../../components/OrderByFilter';
@@ -32,12 +32,27 @@ const SearchView = observer(function SearchView() {
         feedItems();
     };
 
+    // function to clear search and go back to main page
+    const clearSearch = () => {
+        RootStore.closeSearchView();
+    };
+
     return (
         <div className="searchview">
             {/** Search view header */}
             {RootStore.searchitemsList.length > 0 ? (
                 <React.Fragment>
                     <div className="searchview-header">
+                        <div>
+                            <Button
+                                onClick={clearSearch}
+                                variant="link"
+                                className="searchview-header__go-back"
+                                startIcon={<ExpandLessIcon />}
+                            >
+                                Go Back
+                            </Button>
+                        </div>
                         <div className="searchview-header__heading">
                             <Typography variant="h1" className="searchview-header__title">
                                 Search Results

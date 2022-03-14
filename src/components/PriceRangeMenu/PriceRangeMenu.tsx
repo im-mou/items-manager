@@ -1,5 +1,6 @@
 import React from 'react';
 import { IFormInput } from '../../types/types';
+import { ERRORS } from '../../utils/constants';
 import helpers from '../../utils/helpers';
 import { Button, Input, Typography } from '../design-system';
 import './price-range-menu.sass';
@@ -9,14 +10,14 @@ interface PriceRangeMenuProps {
      * This method is used to tell the parent component to
      * activate an indicator that price filter is being used.
      */
-    isFormFilled: (filled: boolean) => void;
+    setIsFormFilled: (filled: boolean) => void;
     minPriceRef: React.RefObject<HTMLInputElement>;
     maxPriceRef: React.RefObject<HTMLInputElement>;
     submitSearch: () => void;
 }
 
 const PriceRangeMenu = React.memo(function PriceRangeMenu({
-    isFormFilled,
+    setIsFormFilled,
     minPriceRef,
     maxPriceRef,
     submitSearch,
@@ -32,9 +33,9 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
     // - If so, we'll tell the parent component that it can use price values for the search
     React.useEffect(() => {
         if ([priceInputs.min.error, priceInputs.max.error].includes(true) === false) {
-            isFormFilled(helpers.isset(priceInputs.min.value) || helpers.isset(priceInputs.max.value));
+            setIsFormFilled(helpers.isset(priceInputs.min.value) || helpers.isset(priceInputs.max.value));
         } else {
-            isFormFilled(false);
+            setIsFormFilled(false);
         }
     }, [priceInputs]);
 
@@ -55,7 +56,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
 
             if (helpers.isset(inputValue) && !helpers.validatePriceValue(inputValue)) {
                 newFormState[input].error = true;
-                newFormState[input].errMsg = 'invalid value';
+                newFormState[input].errMsg = ERRORS.priceRange.invalidValue;
 
                 // early exit if any of the input fail individual validation
                 return newFormState;
@@ -68,7 +69,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
             // verify that if a max price is present, then there should be a min price too.
             if (maxValueExists && !minValueExists) {
                 newFormState.min.error = true;
-                newFormState.min.errMsg = 'must must have value';
+                newFormState.min.errMsg = ERRORS.priceRange.missingValue;
             }
 
             // Verify that if min and max price is present, the price range is valid.
@@ -77,7 +78,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
 
                 if (isPriceRangeValid === false) {
                     newFormState.max.error = true;
-                    newFormState.max.errMsg = 'must be greater than minimum price';
+                    newFormState.max.errMsg = ERRORS.priceRange.rangeNotValid;
                 }
             }
 
@@ -94,15 +95,22 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
 
     // Submit function
     const onSubmit = () => {
-        // If there is no error, we'll submit
-        if ([priceInputs.min.error, priceInputs.max.error].includes(true) === false) {
-            submitSearch();
+        // Submit if there is value in atleast min input
+        if (priceInputs.min.value.trim().length === 0) {
+            return;
         }
+
+        // check If there is any error
+        if ([priceInputs.min.error, priceInputs.max.error].includes(true)) {
+            return;
+        }
+
+        submitSearch();
     };
 
     // Clear from state
     const clearForm = () => {
-        isFormFilled(false);
+        setIsFormFilled(false);
 
         // Reset state
         const emptyForm = { value: '', error: false, errMsg: '' };
@@ -123,6 +131,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
                         onChange={onChange('min')}
                         placeholder="Min price..."
                         onKeyUp={onEnterKeyPress}
+                        data-testid="price-range-input-min"
                     />
                     <Input
                         className="price-range-form__input"
@@ -132,6 +141,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
                         onChange={onChange('max')}
                         placeholder="No limit"
                         onKeyUp={onEnterKeyPress}
+                        data-testid="price-range-input-max"
                     />
                 </div>
 
@@ -152,6 +162,7 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
                 <div className="price-range-form__footer">
                     <a
                         href="#"
+                        data-testid="price-range-menu-reset"
                         onClick={e => {
                             e.preventDefault();
                             clearForm();
@@ -160,7 +171,12 @@ const PriceRangeMenu = React.memo(function PriceRangeMenu({
                         <Typography variant="caption">Clear form</Typography>
                     </a>
 
-                    <Button aria-label="apply search filter" color="primary" onClick={onSubmit}>
+                    <Button
+                        aria-label="apply search filter"
+                        color="primary"
+                        onClick={onSubmit}
+                        data-testid="price-range-menu-submit"
+                    >
                         Apply Filter
                     </Button>
                 </div>

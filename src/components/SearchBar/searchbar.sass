@@ -2,11 +2,6 @@
 @import ../../scss/_utils
 @import ../../scss/_variables
 
-// Mixin
-@mixin active-input-color()
-    background-color: $white-color
-    @include box-shadow($left: 0, $top: 9px, $blur: 20px, $color: rgba(0,0,0,0.1))
-
 // Searchbar wrapper
 .searchbar-wrapper
     @include display-flex()
@@ -25,7 +20,7 @@
     @include transition($property: background, $duration: 200ms, $easing: linear)
 
     &--active
-        @include active-input-color()
+        @include active-input-color($white-color)
 
     &__icon
         margin-left: -$spacing-unit * 2
@@ -33,42 +28,3 @@
 
     &__input
         width: 100%
-
-// Price input
-.price-search
-    $self: &
-    margin-left: $spacing-unit * 2
-    cursor: pointer
-    @include display-flex()
-    justify-content: center
-    align-items: center
-    flex-direction: row
-    background-color: #E8E7E7
-    @include spacing($property: padding, $direction: x, $amount: 1)
-    @include transition($property: padding, $duration: 200ms, $easing: linear)
-
-    // Hide price input/button on phablet
-    display: none
-    @include breakpoint($point: phablet)
-        @include display-flex()
-
-    &--active
-        @include active-input-color()
-
-    &__icon
-        min-width: 20px
-        & > svg
-            height: 16px
-            width: 16px
-
-    &__value
-        @include display-flex()
-        flex-direction: row
-        align-items: center
-        margin-right: $spacing-unit * 4
-
-        & > *
-            color: $primary-color
-
-    &__separator
-        @include spacing($property: margin, $direction: x, $amount: 2)

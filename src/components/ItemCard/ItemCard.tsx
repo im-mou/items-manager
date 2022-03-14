@@ -44,7 +44,7 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                     </Typography>
                 </div>
                 <div className="item-card__footers">
-                    <Typography variant="h1">
+                    <Typography variant="h1" data-testid="item-card-price">
                         {item.price ? parseFloat(item.price).toLocaleString('es-ES') : '-'}€
                     </Typography>
                     <div>
@@ -55,6 +55,7 @@ const ItemCard = observer(function ItemCard({ item, openDetails }: ItemCardProps
                             icon={<ExpandMoreIcon color={theme.palette.gray[700]} />}
                         />
                         <Button
+                            data-testid="item-card-favourite-button"
                             aria-label="Add item to favourite list"
                             variant="icon"
                             className={clsx({ ['item-card__liked-button']: isItemFavourite })}

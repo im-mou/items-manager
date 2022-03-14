@@ -25,85 +25,84 @@ const OrderByFilter = React.memo(function OrderByFilter({ orderByState, sort }: 
 
     // Filter items button + menu
     return (
-        <>
-            <Menu
-                trigger={(setOpen, open) => (
-                    /**
-                     * Orderby Menu Button Trigger
-                     */
-                    <Button
-                        size="xs"
-                        variant="text"
-                        onClick={setOpen}
-                        endIcon={
-                            <ExpandMoreIcon
-                                className={clsx('menu-toggle-icon', { ['menu-toggle-icon--active']: open })}
-                            />
-                        }
-                    >
-                        <span style={{ color: theme.palette.gray[500] }}>ORDER BY – </span>
-                        <span style={{ color: theme.palette.primary.main }}>
-                            <strong>{orderByState.key.toUpperCase()}</strong>
-                        </span>
-                        <span style={{ color: theme.palette.gray[500] }}> ({orderByState.asc ? 'asc' : 'desc'})</span>
-                    </Button>
-                )}
-            >
-                {/**
-                 * Orderby Menu Content
-                 */}
-                <div className="orderby-filter">
-                    <Typography variant="caption" className="orderby-filter__label">
-                        Choose your desired filter below
-                    </Typography>
-                    <div className="list-container">
-                        {ORDER_BY_KEYS.map(key => (
-                            <div key={key} className="list-container__item">
-                                <Typography
-                                    variant="h3"
-                                    className={clsx({
-                                        ['list-container__item--selected']: key === orderByState.key,
-                                    })}
-                                >
-                                    {key}
-                                </Typography>
+        <Menu
+            trigger={(setOpen, open) => (
+                /**
+                 * Orderby Menu Button Trigger
+                 */
+                <Button
+                    data-testid="orderby-filter-trigger"
+                    size="xs"
+                    variant="text"
+                    onClick={setOpen}
+                    endIcon={
+                        <ExpandMoreIcon className={clsx('menu-toggle-icon', { ['menu-toggle-icon--active']: open })} />
+                    }
+                >
+                    <span style={{ color: theme.palette.gray[500] }}>ORDER BY – </span>
+                    <span style={{ color: theme.palette.primary.main }}>
+                        <strong>{orderByState.key.toUpperCase()}</strong>
+                    </span>
+                    <span style={{ color: theme.palette.gray[500] }}> ({orderByState.asc ? 'asc' : 'desc'})</span>
+                </Button>
+            )}
+        >
+            {/**
+             * Orderby Menu Content
+             */}
+            <div className="orderby-filter">
+                <Typography variant="caption" className="orderby-filter__label">
+                    Choose your desired filter below
+                </Typography>
+                <div className="list-container">
+                    {ORDER_BY_KEYS.map(key => (
+                        <div key={key} className="list-container__item">
+                            <Typography
+                                variant="h3"
+                                className={clsx({
+                                    ['list-container__item--selected']: key === orderByState.key,
+                                })}
+                            >
+                                {key}
+                            </Typography>
 
-                                <div>
-                                    {/** Descending order Button  */}
-                                    <Button
-                                        onClick={onChangeOrderBy(key, false)}
-                                        variant="icon"
-                                        icon={
-                                            <ExpandMoreIcon
-                                                color={theme.palette.gray[700]}
-                                                className={clsx({
-                                                    ['list-container__item--selected']:
-                                                        key === orderByState.key && orderByState.asc === false,
-                                                })}
-                                            />
-                                        }
-                                    />
-                                    {/** Ascending order Button  */}
-                                    <Button
-                                        onClick={onChangeOrderBy(key, true)}
-                                        variant="icon"
-                                        icon={
-                                            <ExpandLessIcon
-                                                color={theme.palette.gray[700]}
-                                                className={clsx({
-                                                    ['list-container__item--selected']:
-                                                        key === orderByState.key && orderByState.asc === true,
-                                                })}
-                                            />
-                                        }
-                                    />
-                                </div>
+                            <div>
+                                {/** Descending order Button  */}
+                                <Button
+                                    data-testid="orderby-filter-desc"
+                                    onClick={onChangeOrderBy(key, false)}
+                                    variant="icon"
+                                    icon={
+                                        <ExpandMoreIcon
+                                            color={theme.palette.gray[700]}
+                                            className={clsx({
+                                                ['list-container__item--selected']:
+                                                    key === orderByState.key && orderByState.asc === false,
+                                            })}
+                                        />
+                                    }
+                                />
+                                {/** Ascending order Button  */}
+                                <Button
+                                    data-testid="orderby-filter-asc"
+                                    onClick={onChangeOrderBy(key, true)}
+                                    variant="icon"
+                                    icon={
+                                        <ExpandLessIcon
+                                            color={theme.palette.gray[700]}
+                                            className={clsx({
+                                                ['list-container__item--selected']:
+                                                    key === orderByState.key && orderByState.asc === true,
+                                            })}
+                                        />
+                                    }
+                                />
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
-            </Menu>
-        </>
+            </div>
+        </Menu>
     );
 });
 

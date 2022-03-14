@@ -76,6 +76,16 @@
         border-radius: 100px
         @include spacing($property: padding, $direction: all, $amount: 2)
 
+    &--variant-link
+        padding: 0
+        background: none
+        border: none
+        &:hover
+            color: $primary-color
+            text-decoration: underline
+            & svg
+                fill: $primary-color
+
     // Color
     &--color-default
         color: $gray-300

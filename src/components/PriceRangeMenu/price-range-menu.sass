@@ -48,3 +48,42 @@
     &__error-message
         display: block
         color: $error-color
+
+// Price input
+.price-menu-trigger
+    $self: &
+    cursor: pointer
+    background-color: #E8E7E7
+    @include display-flex()
+    justify-content: center
+    align-items: center
+    flex-direction: row
+    @include spacing($property: margin, $direction: x, $amount: 2)
+    @include spacing($property: padding, $direction: x, $amount: 1)
+    @include transition($property: padding, $duration: 200ms, $easing: linear)
+
+    // Hide price input/button on phablet
+    display: none
+    @include breakpoint($point: phablet)
+        @include display-flex()
+
+    &--active
+        @include active-input-color($white-color)
+
+    &__button
+        min-width: 20px
+        & > svg
+            height: 16px
+            width: 16px
+
+    &__value
+        @include display-flex()
+        flex-direction: row
+        align-items: center
+        margin-right: $spacing-unit * 4
+
+        & > *
+            color: $primary-color
+
+    &__separator
+        @include spacing($property: margin, $direction: x, $amount: 2)
