@@ -125,7 +125,8 @@ const usePagination = ({ itemsPerPage = ITEMS_PER_PAGE, initialOffset = 1 }: Par
         setOrderBy(orderBy);
     };
 
-    // internal function to sort items
+    // Internal function to sort items.
+    // This function could be outside but it is oly needed here so imma leave it here for now.
     const __internal_sort = (items: IItem[], orderBy: IOrderByFilter) => {
         // select sorter
         let sorter = helpers.sortByStringValues;

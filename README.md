@@ -105,6 +105,8 @@ This repo includes the following components tests:
 -   [ItemCard.spec.tsx](./src/components/ItemCard/ItemCard.spec.tsx)
 -   [ItemCardDetailed.spec.tsx](./src/components/ItemCard/ItemCardDetailed.spec.tsx)
 -   [usePagination.spec.ts](./src/hooks/usePagination.spec.ts)
+-   [Logo.spec.tsx](./src/components/Logo/Logo.spec.tsx)
+-   [Hero.spec.tsx](./src/components/Hero/Hero.spec.tsx)
 
 ## Notes
 

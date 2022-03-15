@@ -3,7 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { HTMLAttributes } from 'react';
 import SearchBar from './SearchBar';
 
-// Configure enzyme for react 16
+// Configure enzyme for react 17
 Enzyme.configure({ adapter: new Adapter() });
 
 // mocks

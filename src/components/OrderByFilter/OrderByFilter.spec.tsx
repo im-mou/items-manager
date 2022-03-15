@@ -3,7 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import OrderByFilter from './';
 import { ORDER_BY_KEYS } from '../../utils/constants';
 
-// Configure enzyme for react 16
+// Configure enzyme for react 17
 Enzyme.configure({ adapter: new Adapter() });
 
 // mocks

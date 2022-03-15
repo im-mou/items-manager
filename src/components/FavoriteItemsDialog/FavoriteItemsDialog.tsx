@@ -1,15 +1,10 @@
 import clsx from 'clsx';
-import { observer } from 'mobx-react';
 import React from 'react';
 import { Badge, Button, FavoriteFilledIcon, theme } from '../../components/design-system';
 import Dialog from '../../components/design-system/Dialog';
-import { useStore } from '../../store';
 import FavoriteItemsList from './FavoriteItemsList';
 
-const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
-    // Global state
-    const { RootStore } = useStore();
-
+const FavoriteItemsDialog = React.memo(function FavoriteItemsDialog({ itemsCount }: { itemsCount: number }) {
     // Local state
     const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -26,6 +21,7 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
     return (
         <div>
             <Dialog
+                data-testid="favourite-items-dialog"
                 open={dialogOpen}
                 onClose={closeDialog}
                 icon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
@@ -36,8 +32,9 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
             </Dialog>
 
             {/** Text button : DESKTOP */}
-            <Badge className={clsx('favourite-button--desktop')} count={RootStore.favouriteitemsList.length}>
+            <Badge className={clsx('favourite-button--desktop')} count={itemsCount} data-testid="favourite-items-badge">
                 <Button
+                    data-testid="favourite-items-button"
                     onClick={openDialog}
                     aria-label="Open favorite items list"
                     startIcon={<FavoriteFilledIcon color={theme.palette.primary.main} />}
@@ -47,8 +44,9 @@ const FavoriteItemsDialog = observer(function FavoriteItemsDialog() {
             </Badge>
 
             {/** Icon button : MOBILE */}
-            <Badge className={clsx('favourite-button--mobile')} count={RootStore.favouriteitemsList.length}>
+            <Badge className={clsx('favourite-button--mobile')} count={itemsCount} data-testid="favourite-items-badge">
                 <Button
+                    data-testid="favourite-items-button-mobile"
                     onClick={openDialog}
                     variant="icon"
                     color="primary"

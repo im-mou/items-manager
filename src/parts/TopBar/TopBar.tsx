@@ -1,9 +1,9 @@
 import Logo from '../../components/Logo';
 import SearchBar from '../../components/SearchBar';
 import FavoriteItemsDialog from '../../components/FavoriteItemsDialog';
-import './topbar.sass';
 import { observer } from 'mobx-react';
 import { useStore } from '../../store';
+import './topbar.sass';
 
 const TopBar = observer(function TopBar() {
     // Global state
@@ -22,7 +22,7 @@ const TopBar = observer(function TopBar() {
             />
 
             {/** Whishlist Button + dialog */}
-            <FavoriteItemsDialog />
+            <FavoriteItemsDialog itemsCount={RootStore.favouriteitemsList.length} />
         </header>
     );
 });

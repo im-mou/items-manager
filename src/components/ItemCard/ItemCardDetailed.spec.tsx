@@ -3,7 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { IItem } from '../../types/types';
 import ItemCardDetailed from './ItemCardDetailed';
 
-// Configure enzyme for react 16
+// Configure enzyme for react 17
 Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('../../store', () => ({

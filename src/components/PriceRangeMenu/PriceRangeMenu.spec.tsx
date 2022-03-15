@@ -4,7 +4,7 @@ import PriceRangeMenu from './PriceRangeMenu';
 import React, { HTMLAttributes } from 'react';
 import { ERRORS, PRICE_MAX_VALUE } from '../../utils/constants';
 
-// Configure enzyme for react 16
+// Configure enzyme for react 17
 Enzyme.configure({ adapter: new Adapter() });
 
 // mocks

@@ -2,7 +2,7 @@ import Enzyme, { mount, ReactWrapper } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { PriceRangeTrigger } from './';
 
-// Configure enzyme for react 16
+// Configure enzyme for react 17
 Enzyme.configure({ adapter: new Adapter() });
 
 // mocks

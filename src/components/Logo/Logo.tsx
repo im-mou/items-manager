@@ -1,7 +1,7 @@
 import ItemManagerIcon from '../design-system/Icons/ItemManagerIcon';
 import { ReactComponent as FullLogo } from '../../asset/images/logo-full.svg';
-import './logo.sass';
 import { Button } from '../design-system';
+import './logo.sass';
 
 const Logo = () => {
     return (

@@ -84,12 +84,12 @@
             "!src/services /**/*.{ts,tsx}"
         ],
         "moduleNameMapper": {
-            "^@/(.*)$": "<rootDir>/src/$1",
-            "^.+\\.svg$": "jest-svg-transformer"
+            "^@/(.*)$": "<rootDir>/src/$1"
         },
         "transform": {
             "^.+\\.(ts|tsx)$": "ts-jest",
-            "^.+\\.scss$": "<rootDir>/jest/styleFileTransformer.ts"
+            "^.+\\.scss$": "<rootDir>/jest/styleFileTransformer.ts",
+            "^.+\\.svg$": "<rootDir>/jest/svgFileTransformer.ts"
         }
     }
 }
