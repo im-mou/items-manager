@@ -94,7 +94,12 @@ const searchString = (token: string, haystack: { [key: string]: string }) => {
  * @returns string that can be used to search
  */
 const nomalizeSearchString = (string: string) => {
-    return string.trim().toLowerCase();
+    return string
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
     // Add other ops if necessary
 };
 

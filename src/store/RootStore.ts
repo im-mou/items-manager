@@ -25,13 +25,11 @@ class RootStore {
     };
 
     // This variable will keep the paginated offset and order by so when we come back from search view
-    // we're are at the same offset and with the same ordering
+    // we're are at the same offset.
     homepageOffset = 1;
 
     // This variable with have (title, description, email) in a single string to apply regex for fast search
     searchTokens: { [key: string]: string } = {};
-
-    initialized = false;
 
     // ctor
     constructor() {
@@ -40,7 +38,7 @@ class RootStore {
 
     // Store initializer
     init = async () => {
-        // FEtch items from server
+        // Fetch items from server
         await this.fetchAllItems();
 
         // We will create an object concatenating all the string (title, description, email) in a single string
@@ -54,8 +52,6 @@ class RootStore {
                     .replace(/[\u0300-\u036f]/g, ''); // remove special chars for the search
             });
         }
-
-        this.initialized = true;
     };
 
     // Function to fetch all the item from the server
@@ -131,8 +127,10 @@ class RootStore {
 
         // Apply string 'term' search filter 'term' if present
         if (this.search.term.trim().length) {
-            // Create a filter for the pipeline
+            // Use the "searchString" helper to find the list of id's of items that matched with the search term.
             const foundIds = helpers.searchString(helpers.nomalizeSearchString(searchQuery.term), this.searchTokens);
+
+            // Apply filter to the found item ids
             const textSearchFilter = (items: IItem[]) => {
                 return items.filter((item: IItem) => foundIds.includes(item._id));
             };
