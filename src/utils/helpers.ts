@@ -40,9 +40,8 @@ const validatePriceValue = (
  * @returns Boolean flag indication if price range is valid
  */
 const validatePriceRange = (min: string, max: string) => {
-    const minimum = +Number(min.trim());
-    const maximum = +Number(max.trim());
-
+    const minimum = Number(min.trim());
+    const maximum = Number(max.trim());
     // make sure min < max
     if (!isNaN(minimum) && !isNaN(maximum)) {
         return !(minimum >= maximum);
