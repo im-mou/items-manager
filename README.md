@@ -7,7 +7,8 @@
 
    <h3 align="center">Items Manager</h3>
    <p align="center">
-  Simple web app to manage items.
+  Simple web app to manage items.<br />
+  <sup>For Wallapop Take home test</sup>
    </p>
    <br/>
    <p align="center" style="align: center;">
@@ -80,7 +81,7 @@ Once the docker container is up and running, the app will be available at [http:
 
 ## Styling
 
-For this project I had to create a design system from scratch using Figma. Once finished, I proceeded to create all the atomic UI components using React + SASS.
+For this project I had to create a design system *from scratch* using Figma. Once finished, I proceeded to create all the atomic UI components using React + SASS.
 
 Apart from the components styling, every view / design element has it's own SASS file and the main app component has global styles reset rules applied to it.
 
